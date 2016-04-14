@@ -31,7 +31,9 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -46,10 +48,13 @@ public class menu extends JFrame {
     JTextField pesquisa = new JTextField(20);
     DefaultListModel dlm = new DefaultListModel();
     JList lista = new JList(dlm);
-    JButton botao_exibir_listagem = new JButton("Abrir Registros");
+    JButton botao_exibir_listagem = new JButton();
+    JButton botao_exibir_listagem2 = new JButton();
+    
     JLabel x = new JLabel("Formulário de cadastrar");
     JLabel x2 = new JLabel("Fazer backup do banco");
-    JPanel painel_direito = new JPanel();
+    JLabel l_lixeira = new JLabel("Lixeira");
+    JPanel painel_direito = new JPanel(new GridBagLayout());
     
     
     public menu() {
@@ -80,8 +85,52 @@ public class menu extends JFrame {
         return painel;
     }
     
+    /* \/ adiciona os componentes no painel, onde este conjunto 
+    de comnponente representa um cadastro (Uma tabela de registros para exibir); \/ */
+    private JPanel cadastro_exibir(JPanel painel, GBHelper pos, JButton botao, String titulo, String subtitulo_){
+        
+        JLabel l1 = new JLabel(titulo);
+        JLabel subtitulo = new JLabel(subtitulo_);
+//        JButton botao = new JButton(nome_botao);
+        botao.setText("Abrir");
+        
+        Font f = l1.getFont();
+        l1.setFont(f.deriveFont(f.getStyle() | Font.BOLD));// negrito
+        
+        painel.add(l1, pos.nextRow().expandW());
+        painel.add(subtitulo, pos.nextRow().expandW());
+        painel.add(botao, pos.nextCol().expandW());
+        painel.add(new Gap(GAP) , pos.nextRow());  // Add a gap below
+        painel.add(new JSeparator(SwingConstants.HORIZONTAL), pos.nextRow().width(2).expandW());
+        
+        painel.add(new Gap(GAP) , pos.nextRow());  // Add a gap below
+        
+        return painel;
+    }
     
-    private void lista(){
+    /* \/ monta um painel para exibir uma lista dos cadastros existentes; 
+    seguindo de um botão para exibir para cadastro; \/*/
+    private JPanel painel_listas_cadastros(){
+        JPanel painel = new JPanel(new GridBagLayout());
+        GBHelper pos = new GBHelper();
+        
+        
+        painel = cadastro_exibir(painel, pos, 
+                this.botao_exibir_listagem, 
+                "Cadastro de Clientes", 
+                "Subtitulo para Cadastro de Clientes");
+        
+//        painel = cadastro_exibir(painel, pos, 
+//                this.botao_exibir_listagem2, 
+//                "Cadastro de Modelos", 
+//                "Subtitulo para Cadastro de Modelos de todos os Carros");
+        
+        
+        
+        return painel;
+    }
+    
+    private JPanel lista(){
         String[] colunas = new String[] {
             "Id", "Name", "Hourly Rate", "Part Time", "Endereço", "CPF", "Sobrenome", "Caso Pendente",
             "campo-1", "campo-2", "campo-3", "campo-4"
@@ -95,9 +144,9 @@ public class menu extends JFrame {
             dados_da_tabela.add(data);
         }        
         
-        exibir_listagem l = new exibir_listagem("Lista de Clientes", colunas, dados_da_tabela);
+//        exibir_listagem l = new exibir_listagem("Lista de Clientes", colunas, dados_da_tabela);
         
-//       return new exibir_listagem().obj("Lista de Clientes", colunas, dados_da_tabela);
+       return new exibir_listagem().obj("Lista de Clientes", colunas, dados_da_tabela);
     }
     
      private JPanel gui() {
@@ -108,6 +157,7 @@ public class menu extends JFrame {
         lista = m.lista();
         JScrollPane scroll = new JScrollPane(lista);
         scroll.setPreferredSize(new Dimension(300, 0));
+        scroll.setMinimumSize(new Dimension(300, 0));
          
         
         JLabel imageLbl = new JLabel();
@@ -124,7 +174,7 @@ public class menu extends JFrame {
         content.setBorder(BorderFactory.createEmptyBorder(BORDER, BORDER, BORDER, BORDER));
 
 //\\//\\//\\//\\//\\ GridBagLayout code begins here
-        GBHelper pos = new GBHelper();  // Create GridBag helper object.
+        final GBHelper pos = new GBHelper();  // Create GridBag helper object.
         
         
         //... First row
@@ -155,13 +205,27 @@ public class menu extends JFrame {
                          remover_componentes_painel(painel_direito);
                          painel_direito.add(x);
                          break;
+//                    case 1:
+//                        remover_componentes_painel(painel_direito);
+//                        JLabel pl = new JLabel("Exibir painel de listagem: ");
+//                        painel_direito.add(pl);
+//                        painel_direito.add(botao_exibir_listagem);
+//                        break;
+                    case 2:
+                        remover_componentes_painel(painel_direito);
+                        painel_direito.add(l_lixeira);
+                        break;
                     case 1:
                         remover_componentes_painel(painel_direito);
-                        JLabel pl = new JLabel("Exibir painel de listagem: ");
-                        painel_direito.add(pl);
-                        painel_direito.add(botao_exibir_listagem);
+                        
+                        JPanel painel_lis_cad = painel_listas_cadastros();
+                        
+                        JScrollPane scroll_painel_lis_cad = new JScrollPane(painel_lis_cad);
+                        scroll_painel_lis_cad.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                        
+                        painel_direito.add(scroll_painel_lis_cad ,pos.expandir());
                         break;
-                    case 2:
+                    case 3:
                         remover_componentes_painel(painel_direito);
                         painel_direito.add(x2);
                         break;
@@ -191,9 +255,10 @@ public class menu extends JFrame {
         botao_exibir_listagem.addActionListener(new ActionListener(){
              @Override
              public void actionPerformed(ActionEvent ae) {
-                 lista();
-//                 remover_componentes_painel(painel_direito);
-//                 painel_direito.add(lista());
+//                 lista();
+                 JPanel pl = lista();
+                 remover_componentes_painel(painel_direito);
+                 painel_direito.add(pl, pos.expandir());
              }
         });
         
@@ -210,11 +275,12 @@ class MarioList {
 
     public JList lista() {
         
-        String[] nameList = {"Cadastrar", "Pesquisar/Editar", "Backup"};
+        String[] nameList = {"Cadastrar", "Pesquisar/Editar", "Lixeira","Backup"};
         
         try {
             map.put("Cadastrar", new ImageIcon("icones/cadastrar.png"));
             map.put("Pesquisar/Editar", new ImageIcon("icones/pesquisar_e_editar.png"));
+            map.put("Lixeira", new ImageIcon("icones/lixo2.png"));
             map.put("Backup", new ImageIcon("icones/1460597575_document-save.png"));
         } catch (Exception ex) {
             ex.printStackTrace();

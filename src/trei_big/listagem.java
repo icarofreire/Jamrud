@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 //////////////////////////////////////////////////////////////////// DemoGridBag
-public class listagem extends JFrame {
+public class listagem extends JPanel {
     //================================================================ constants
     private static final int BORDER = 12;  // Window border in pixels.
     private static final int GAP    = 5;   // Default gap btwn components.
@@ -39,7 +39,8 @@ public class listagem extends JFrame {
     
     
 //    JDialog   replaceDialog = new JDialog();
-    public JFrame   replaceDialog = new JFrame();
+//    public JFrame   replaceDialog = new JFrame();
+    public JPanel   replaceDialog = new JPanel();
     
     private void selecionar_linha_tabela(JTable table, int linha){
         linha--;
@@ -94,14 +95,17 @@ public class listagem extends JFrame {
         deletar.setEnabled(false);
         
         //... Create a dialog box with GridBag content pane.
-        replaceDialog.setContentPane(createContentPane());
-        replaceDialog.setTitle(this.titulo_listagem);
-        replaceDialog.pack();
-        replaceDialog.setLocationRelativeTo(this);
+//        replaceDialog.setContentPane(createContentPane());
+//        replaceDialog.setTitle(this.titulo_listagem);
+//        replaceDialog.pack();
+//        replaceDialog.setLocationRelativeTo(this);
+//        
+//        replaceDialog.setSize(new Dimension(900, 600));
+//        replaceDialog.setVisible(true);
         
-        replaceDialog.setSize(new Dimension(900, 600));
-        replaceDialog.setVisible(true);
 //            replaceDialog.add( createContentPane() );
+        replaceDialog = createContentPane();
+  
         
         /*
         //... Create a button for the window to display this dialog.
@@ -142,7 +146,7 @@ public class listagem extends JFrame {
 
         final JTable table = new JTable();
         JScrollPane scroll = new JScrollPane(table);
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);//AUTO_RESIZE_OFF <= para aparecer a barra de scroll horizontal;
         
         
         for (int count = 0; count < this.dados_tabela.size(); count++) {
@@ -345,7 +349,7 @@ class exibir_listagem {
     exibir_listagem(){};
     public JPanel obj(final String titulo_listagem, final String[] nomes_colunas, final ArrayList<Object[]> dados_da_tabela){
         listagem window = new listagem(titulo_listagem, nomes_colunas, dados_da_tabela);
-//        p1 = window.replaceDialog;
+        p1 = window.replaceDialog;
         return p1;
     }
     
