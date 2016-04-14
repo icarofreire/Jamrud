@@ -46,7 +46,7 @@ public class menu extends JFrame {
     JTextField pesquisa = new JTextField(20);
     DefaultListModel dlm = new DefaultListModel();
     JList lista = new JList(dlm);
-    JButton botao_exibir_listagem = new JButton("---> Exibir Listagem <---");
+    JButton botao_exibir_listagem = new JButton("Abrir Registros");
     JLabel x = new JLabel("Formulário de cadastrar");
     JLabel x2 = new JLabel("Fazer backup do banco");
     JPanel painel_direito = new JPanel();
@@ -80,6 +80,26 @@ public class menu extends JFrame {
         return painel;
     }
     
+    
+    private void lista(){
+        String[] colunas = new String[] {
+            "Id", "Name", "Hourly Rate", "Part Time", "Endereço", "CPF", "Sobrenome", "Caso Pendente",
+            "campo-1", "campo-2", "campo-3", "campo-4"
+        };
+        
+        ArrayList<Object[]> dados_da_tabela = new ArrayList<Object[]>();
+        
+        for (int count = 0; count < 200; count++) {
+            Object[] data = new Object[]{ (count+1), "John", 40.0, false, "testee", "testee", "testee", "testee",
+            "--teste-1", "--teste-2", "--teste-3", "--teste-4"}; 
+            dados_da_tabela.add(data);
+        }        
+        
+        exibir_listagem l = new exibir_listagem("Lista de Clientes", colunas, dados_da_tabela);
+        
+//       return new exibir_listagem().obj("Lista de Clientes", colunas, dados_da_tabela);
+    }
+    
      private JPanel gui() {
 //        selectionCB.setEnabled(false);
         
@@ -92,7 +112,7 @@ public class menu extends JFrame {
         
         JLabel imageLbl = new JLabel();
         imageLbl.setBounds(0, 0, 286, 40);
-        imageLbl.setIcon(new ImageIcon("/home/icaro/NetBeansProjects/Jamrud/icones/pesquisar.png"));
+        imageLbl.setIcon(new ImageIcon("icones/pesquisar.png"));
         
         pesquisa.setBounds(50, 0, 286, 40);
         
@@ -101,8 +121,7 @@ public class menu extends JFrame {
         
         //... Create GridBagLayout content pane; set border.
         JPanel content = new JPanel(new GridBagLayout());
-        content.setBorder(BorderFactory.createEmptyBorder(BORDER, BORDER, 
-                BORDER, BORDER));
+        content.setBorder(BorderFactory.createEmptyBorder(BORDER, BORDER, BORDER, BORDER));
 
 //\\//\\//\\//\\//\\ GridBagLayout code begins here
         GBHelper pos = new GBHelper();  // Create GridBag helper object.
@@ -116,7 +135,7 @@ public class menu extends JFrame {
         painel_direito.setBorder(BorderFactory.createTitledBorder(""));
 //        pane.add(pesquisa);
         
-        content.add(painel_direito, pos.nextCol().expandW().expandH());
+        content.add(painel_direito, pos.nextCol().expandir());
         
         
         lista.addMouseListener(new MouseListener(){
@@ -138,6 +157,8 @@ public class menu extends JFrame {
                          break;
                     case 1:
                         remover_componentes_painel(painel_direito);
+                        JLabel pl = new JLabel("Exibir painel de listagem: ");
+                        painel_direito.add(pl);
                         painel_direito.add(botao_exibir_listagem);
                         break;
                     case 2:
@@ -152,22 +173,27 @@ public class menu extends JFrame {
 
              @Override
              public void mousePressed(MouseEvent me) {
-//                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
              }
 
              @Override
              public void mouseReleased(MouseEvent me) {
-//                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
              }
 
              @Override
              public void mouseEntered(MouseEvent me) {
-//                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
              }
 
              @Override
              public void mouseExited(MouseEvent me) {
-//                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+             }
+        });
+        
+        botao_exibir_listagem.addActionListener(new ActionListener(){
+             @Override
+             public void actionPerformed(ActionEvent ae) {
+                 lista();
+//                 remover_componentes_painel(painel_direito);
+//                 painel_direito.add(lista());
              }
         });
         
@@ -187,10 +213,9 @@ class MarioList {
         String[] nameList = {"Cadastrar", "Pesquisar/Editar", "Backup"};
         
         try {
-            map.put("Cadastrar", new ImageIcon("/home/icaro/NetBeansProjects/Jamrud/icones/cadastrar.png"));
-            map.put("Pesquisar/Editar", new ImageIcon("/home/icaro/NetBeansProjects/Jamrud/icones/pesquisar_e_editar.png"));
-//            map.put("Listagens", new ImageIcon("/home/icaro/NetBeansProjects/Jamrud/icones/listagem.png"));
-            map.put("Backup", new ImageIcon("/home/icaro/NetBeansProjects/Jamrud/icones/1460597575_document-save.png"));
+            map.put("Cadastrar", new ImageIcon("icones/cadastrar.png"));
+            map.put("Pesquisar/Editar", new ImageIcon("icones/pesquisar_e_editar.png"));
+            map.put("Backup", new ImageIcon("icones/1460597575_document-save.png"));
         } catch (Exception ex) {
             ex.printStackTrace();
         }

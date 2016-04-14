@@ -39,7 +39,7 @@ public class listagem extends JFrame {
     
     
 //    JDialog   replaceDialog = new JDialog();
-    JFrame   replaceDialog = new JFrame();
+    public JFrame   replaceDialog = new JFrame();
     
     private void selecionar_linha_tabela(JTable table, int linha){
         linha--;
@@ -48,7 +48,7 @@ public class listagem extends JFrame {
     }
     
     //--
-    public static void scrollToCenter(JTable table, int rowIndex, int vColIndex) {
+    private static void scrollToCenter(JTable table, int rowIndex, int vColIndex) {
 
         JViewport viewport = (JViewport) table.getParent();
         Rectangle rect = table.getCellRect(rowIndex, vColIndex, true);
@@ -67,15 +67,8 @@ public class listagem extends JFrame {
         viewport.scrollRectToVisible(rect);
     }
     
-//    public static void rolar_scroll_tabela(JTable table, int rowIndex) {
-//        
-//        int columnIndex = 0;
-//        boolean includeSpacing = true;
-//        Rectangle cellRect = table.getCellRect(rowIndex, columnIndex, includeSpacing);
-//        table.scrollRectToVisible(cellRect);
-//    }
         
-    public int comparacao_dados_coluna(JTable table, int indice_coluna, String dado_pesquisar){
+    private int comparacao_dados_coluna(JTable table, int indice_coluna, String dado_pesquisar){
         int p_indice = -1;
         TableModel tb = table.getModel();
         for(int j=0; j<table.getRowCount(); j++)
@@ -107,28 +100,32 @@ public class listagem extends JFrame {
         replaceDialog.setLocationRelativeTo(this);
         
         replaceDialog.setSize(new Dimension(900, 600));
+        replaceDialog.setVisible(true);
+//            replaceDialog.add( createContentPane() );
         
+        /*
         //... Create a button for the window to display this dialog.
-        JButton showDialogBtn = new JButton("---> Exibir Listagem <---");
-        showDialogBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                replaceDialog.setVisible(true);
-            }
-        });
-
-        //... Create content pane with one button and set window attributes.
-        JPanel windowContent = new JPanel();
-        windowContent.setLayout(new BorderLayout());
-        windowContent.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        windowContent.add(showDialogBtn, BorderLayout.CENTER);
-        
-        
-        //... Set the window characteristics.
-        super.setContentPane(windowContent);
-        super.pack();                               // Layout components.
-        super.setTitle("DemoGridBag");
-        super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        super.setLocationRelativeTo(null);          // Center window.
+//        JButton showDialogBtn = new JButton("---> Exibir Listagem <---");
+//        showDialogBtn.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                replaceDialog.setVisible(true);
+//            }
+//        });
+//
+//        //... Create content pane with one button and set window attributes.
+//        JPanel windowContent = new JPanel();
+//        windowContent.setLayout(new BorderLayout());
+//        windowContent.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+//        windowContent.add(showDialogBtn, BorderLayout.CENTER);
+//        
+//        
+//        //... Set the window characteristics.
+//        super.setContentPane(windowContent);
+//        super.pack();                               // Layout components.
+//        super.setTitle("DemoGridBag");
+//        super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        super.setLocationRelativeTo(null);          // Center window.
+        */
     }
 
     private Component TableExample()
@@ -306,7 +303,7 @@ public class listagem extends JFrame {
         content.add(new Gap(GAP) , pos.nextRow());  // Add a gap below
         content.add(new Gap(GAP) , pos.nextRow());  // Add a gap below
         
-        content.add(TableExample(), pos.width(this.n_colunas_tabela+1).expandW().expandH());
+        content.add(TableExample(), pos.width(this.n_colunas_tabela+1).expandir());
         
         content.add(new Gap(GAP) , pos.nextRow());  // Add a gap below
         content.add(new Gap(GAP) , pos.nextRow());  // Add a gap below
@@ -327,7 +324,7 @@ public class listagem extends JFrame {
 }
 
 class exibir_listagem {
-
+    public JPanel p1;
     exibir_listagem(final String titulo_listagem, final String[] nomes_colunas, final ArrayList<Object[]> dados_da_tabela)
     {
         //... Set Look and Feel.
@@ -344,6 +341,12 @@ class exibir_listagem {
                 window.setVisible(true);
             }
         });
+    }
+    exibir_listagem(){};
+    public JPanel obj(final String titulo_listagem, final String[] nomes_colunas, final ArrayList<Object[]> dados_da_tabela){
+        listagem window = new listagem(titulo_listagem, nomes_colunas, dados_da_tabela);
+//        p1 = window.replaceDialog;
+        return p1;
     }
     
 }

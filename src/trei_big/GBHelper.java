@@ -55,6 +55,14 @@ public class GBHelper extends GridBagConstraints {
         return duplicate;
     }
     
+    //expandir horizontalmente e verticalmente;
+    public GBHelper expandir() {
+        GBHelper duplicate = (GBHelper)this.clone();
+        duplicate.weightx = 1.0;
+        duplicate.weighty = 1.0;
+        return duplicate;
+    }
+    
     //==================================================================== width
     /* Sets the width of the area in terms of number of columns. */
     public GBHelper width(int colsWide) {
