@@ -25,6 +25,7 @@ import javax.swing.table.TableModel;
 
 //////////////////////////////////////////////////////////////////// DemoGridBag
 public class listagem extends JPanel {
+    
     //================================================================ constants
     private static final int BORDER = 12;  // Window border in pixels.
     private static final int GAP    = 5;   // Default gap btwn components.
@@ -152,24 +153,6 @@ public class listagem extends JPanel {
         this.n_colunas_tabela = colunas.length;
 
         final JTable table = new JTable();
-//        {
-//    public TableCellRenderer getCellRenderer(int row, int column) {
-//	if ((row == 0) && (column == 0)) {
-//	    return new DefaultTableCellRenderer() {
-//               public Component getTableCellRendererComponent(JTable table, Object value,
-//                  boolean isSelected, boolean hasFocus, int row, int column) {
-//                  Component c = super.getTableCellRendererComponent(
-//                table, value, isSelected, hasFocus, row, column);
-//                  
-//                  c.setBackground(Color.green);
-//                  return c;
-//               }
-//           };
-//       }
-//	// else...
-//	return super.getCellRenderer(row, column);
-//    }
-//};
         JScrollPane scroll = new JScrollPane(table);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);//AUTO_RESIZE_OFF <= para aparecer a barra de scroll horizontal;
         
@@ -181,9 +164,9 @@ public class listagem extends JPanel {
         table.setModel(model);      
         
         
-        table.setDefaultRenderer(Object.class, new MyRenderer(estado));
+        table.setDefaultRenderer(Object.class, new colorir_linha_tabela(estado));
         
-        TableCellEditor fce = new FiveCharacterEditor();
+        TableCellEditor fce = new editar_celula_tabela();
         table.setDefaultEditor(Object.class, fce);
         
         
@@ -208,22 +191,18 @@ public class listagem extends JPanel {
 
             @Override
             public void mousePressed(MouseEvent me) {
-//                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
 
             @Override
             public void mouseReleased(MouseEvent me) {
-//                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
 
             @Override
             public void mouseEntered(MouseEvent me) {
-//                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
 
             @Override
             public void mouseExited(MouseEvent me) {
-//                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
 
         });
@@ -358,115 +337,4 @@ public class listagem extends JPanel {
     
 
 }
-
-class exibir_listagem {
-    public JPanel p1;
-    exibir_listagem(final String titulo_listagem, final String[] nomes_colunas, final ArrayList<Object[]> dados_da_tabela)
-    {
-        //... Set Look and Feel.
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception unused) {
-            // Nothing can be done, so just ignore it.
-        }
-        
-        //... Start up GUI.
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                listagem window = new listagem(titulo_listagem, nomes_colunas, dados_da_tabela);
-                window.setVisible(true);
-            }
-        });
-    }
-    exibir_listagem(){};
-    public JPanel obj(final String titulo_listagem, final String[] nomes_colunas, final ArrayList<Object[]> dados_da_tabela){
-        listagem window = new listagem(titulo_listagem, nomes_colunas, dados_da_tabela);
-        p1 = window.replaceDialog;
-        return p1;
-    }
-    
-}
-
-///---
-
- class FiveCharacterEditor extends DefaultCellEditor
-    {
-        FiveCharacterEditor()
-        {
-            super( new JTextField() );
-        }
-
-        public boolean stopCellEditing()
-        {
-            try
-            {
-                String editingValue = (String)getCellEditorValue();
-
-                if(editingValue.length() == 0)
-                {
-                    JTextField textField = (JTextField)getComponent();
-                    textField.setBorder(new LineBorder(Color.red));
-                    textField.selectAll();
-                    textField.requestFocusInWindow();
-
-                    JOptionPane.showMessageDialog(
-                        null,
-                        "Insira alguma informação.",
-                        "Erro!",JOptionPane.ERROR_MESSAGE);
-                    
-                    return false;
-                }
-            }
-            catch(ClassCastException exception)
-            {
-                return false;
-            }
-
-            return super.stopCellEditing();
-        }
-
-        public Component getTableCellEditorComponent(
-            JTable table, Object value, boolean isSelected, int row, int column)
-        {
-            Component c = super.getTableCellEditorComponent(
-                table, value, isSelected, row, column);
-            ((JComponent)c).setBorder(new LineBorder(Color.black));
-            
-
-            return c;
-        }
-
-    }// fim class FiveCharacterEditor;
-
-   class MyRenderer extends DefaultTableCellRenderer {
-
-        Color backgroundColor = getBackground();
-        estado_editar estado;
-        
-        public MyRenderer(estado_editar estado) {
-            this.estado = estado;
-        }
-        
-
-        public Component getTableCellRendererComponent(
-            JTable table, Object value, boolean isSelected,
-            boolean hasFocus, final int row, final int column) {
-            
-            final Component c = super.getTableCellRendererComponent(
-                table, value, isSelected, hasFocus, row, column);
-            
-                boolean linha_modificada_ = estado.se_linha_esta_na_lista(row);
-                if ( linha_modificada_ ) 
-                {
-                    c.setBackground(Color.GREEN);
-
-                } else {
-                    if(!isSelected){
-                        c.setBackground(backgroundColor);
-                    }
-                }
-          
-            return c;
-        }
-    }
 
