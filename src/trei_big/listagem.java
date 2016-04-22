@@ -33,7 +33,7 @@ public class listagem extends JPanel {
     private ArrayList<Object[]> dados_tabela;
     private String titulo_listagem;
     
-    public static int linha_modificada = -1;
+    estado_editar estado = new estado_editar();
     
     //=================================================================== fields
     //... GUI components
@@ -181,7 +181,7 @@ public class listagem extends JPanel {
         table.setModel(model);      
         
         
-        table.setDefaultRenderer(Object.class, new MyRenderer());
+        table.setDefaultRenderer(Object.class, new MyRenderer(estado));
         
         TableCellEditor fce = new FiveCharacterEditor();
         table.setDefaultEditor(Object.class, fce);
@@ -234,7 +234,7 @@ public class listagem extends JPanel {
             @Override
             public void tableChanged(TableModelEvent tme) {
                   System.out.println("celula modificada: " +  tme.getLastRow() );
-                  linha_modificada = tme.getLastRow();
+                  estado.setLinha_modificada(tme.getLastRow());
                   editar.setEnabled(true);
             }
         });
@@ -441,6 +441,12 @@ class exibir_listagem {
    class MyRenderer extends DefaultTableCellRenderer {
 
         Color backgroundColor = getBackground();
+        estado_editar estado;
+        
+        public MyRenderer(estado_editar estado) {
+            this.estado = estado;
+        }
+        
 
         public Component getTableCellRendererComponent(
             JTable table, Object value, boolean isSelected,
@@ -448,21 +454,18 @@ class exibir_listagem {
             
             final Component c = super.getTableCellRendererComponent(
                 table, value, isSelected, hasFocus, row, column);
-
-            System.out.println("linha_mod: " + listagem.linha_modificada);
             
-            if ( listagem.linha_modificada != -1 && row == listagem.linha_modificada) 
-            {
-                c.setBackground(Color.GREEN);
-                
-            } else if(listagem.linha_modificada != -1 && row != listagem.linha_modificada ){
-                if(!isSelected){
-                    c.setBackground(backgroundColor);
+                boolean linha_modificada_ = estado.se_linha_esta_na_lista(row);
+                if ( linha_modificada_ ) 
+                {
+                    c.setBackground(Color.GREEN);
+
+                } else {
+                    if(!isSelected){
+                        c.setBackground(backgroundColor);
+                    }
                 }
-            }
-            
-
-            
+          
             return c;
         }
     }
