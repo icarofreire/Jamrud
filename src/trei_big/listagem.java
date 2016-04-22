@@ -34,7 +34,8 @@ public class listagem extends JPanel {
     private ArrayList<Object[]> dados_tabela;
     private String titulo_listagem;
     
-    estado_editar estado = new estado_editar();
+    private estado_editar estado = new estado_editar();
+    private exibir_celula popup = new exibir_celula();
     
     //=================================================================== fields
     //... GUI components
@@ -182,10 +183,13 @@ public class listagem extends JPanel {
                     int linha = table.rowAtPoint(me.getPoint());
                     int coluna = table.columnAtPoint(me.getPoint());
                     
-                    JOptionPane.showMessageDialog(listagem.this, 
-                            table.getValueAt(linha, coluna).toString(), 
-                            table.getColumnName(coluna) + ": " + table.getValueAt(linha, 0), 
-                            JOptionPane.INFORMATION_MESSAGE);
+//                    JOptionPane.showMessageDialog(listagem.this, 
+//                            table.getValueAt(linha, coluna).toString(), 
+//                            table.getColumnName(coluna) + ": " + table.getValueAt(linha, 0), 
+//                            JOptionPane.INFORMATION_MESSAGE);
+                    
+                    popup.exibir_valor_celula(table.getColumnName(coluna) + ": " + table.getValueAt(linha, 0), 
+                            table.getValueAt(linha, coluna).toString());
                 }
             }
 
