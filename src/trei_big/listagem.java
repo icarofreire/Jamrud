@@ -13,9 +13,14 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
 //////////////////////////////////////////////////////////////////// DemoGridBag
@@ -27,6 +32,8 @@ public class listagem extends JPanel {
     private String[] colunas;
     private ArrayList<Object[]> dados_tabela;
     private String titulo_listagem;
+    
+    public static int linha_modificada = -1;
     
     //=================================================================== fields
     //... GUI components
@@ -145,6 +152,24 @@ public class listagem extends JPanel {
         this.n_colunas_tabela = colunas.length;
 
         final JTable table = new JTable();
+//        {
+//    public TableCellRenderer getCellRenderer(int row, int column) {
+//	if ((row == 0) && (column == 0)) {
+//	    return new DefaultTableCellRenderer() {
+//               public Component getTableCellRendererComponent(JTable table, Object value,
+//                  boolean isSelected, boolean hasFocus, int row, int column) {
+//                  Component c = super.getTableCellRendererComponent(
+//                table, value, isSelected, hasFocus, row, column);
+//                  
+//                  c.setBackground(Color.green);
+//                  return c;
+//               }
+//           };
+//       }
+//	// else...
+//	return super.getCellRenderer(row, column);
+//    }
+//};
         JScrollPane scroll = new JScrollPane(table);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);//AUTO_RESIZE_OFF <= para aparecer a barra de scroll horizontal;
         
@@ -154,6 +179,12 @@ public class listagem extends JPanel {
         }
         
         table.setModel(model);      
+        
+        
+        table.setDefaultRenderer(Object.class, new MyRenderer());
+        
+        TableCellEditor fce = new FiveCharacterEditor();
+        table.setDefaultEditor(Object.class, fce);
         
         
         table.addMouseListener(new MouseListener(){
@@ -203,6 +234,7 @@ public class listagem extends JPanel {
             @Override
             public void tableChanged(TableModelEvent tme) {
                   System.out.println("celula modificada: " +  tme.getLastRow() );
+                  linha_modificada = tme.getLastRow();
                   editar.setEnabled(true);
             }
         });
@@ -354,3 +386,84 @@ class exibir_listagem {
     }
     
 }
+
+///---
+
+ class FiveCharacterEditor extends DefaultCellEditor
+    {
+        FiveCharacterEditor()
+        {
+            super( new JTextField() );
+        }
+
+        public boolean stopCellEditing()
+        {
+            try
+            {
+                String editingValue = (String)getCellEditorValue();
+
+                if(editingValue.length() == 0)
+                {
+                    JTextField textField = (JTextField)getComponent();
+                    textField.setBorder(new LineBorder(Color.red));
+                    textField.selectAll();
+                    textField.requestFocusInWindow();
+
+                    JOptionPane.showMessageDialog(
+                        null,
+                        "Insira alguma informação.",
+                        "Erro!",JOptionPane.ERROR_MESSAGE);
+                    
+                    return false;
+                }
+            }
+            catch(ClassCastException exception)
+            {
+                return false;
+            }
+
+            return super.stopCellEditing();
+        }
+
+        public Component getTableCellEditorComponent(
+            JTable table, Object value, boolean isSelected, int row, int column)
+        {
+            Component c = super.getTableCellEditorComponent(
+                table, value, isSelected, row, column);
+            ((JComponent)c).setBorder(new LineBorder(Color.black));
+            
+
+            return c;
+        }
+
+    }// fim class FiveCharacterEditor;
+
+   class MyRenderer extends DefaultTableCellRenderer {
+
+        Color backgroundColor = getBackground();
+
+        public Component getTableCellRendererComponent(
+            JTable table, Object value, boolean isSelected,
+            boolean hasFocus, final int row, final int column) {
+            
+            final Component c = super.getTableCellRendererComponent(
+                table, value, isSelected, hasFocus, row, column);
+
+            System.out.println("linha_mod: " + listagem.linha_modificada);
+            
+            if ( listagem.linha_modificada != -1 && row == listagem.linha_modificada) 
+            {
+                c.setBackground(Color.GREEN);
+                
+            } else if(listagem.linha_modificada != -1 && row != listagem.linha_modificada ){
+                if(!isSelected){
+                    c.setBackground(backgroundColor);
+                }
+            }
+            
+
+            
+            return c;
+        }
+    }
+

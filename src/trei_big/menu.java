@@ -32,6 +32,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
@@ -84,6 +85,71 @@ public class menu extends JFrame {
         }
         return painel;
     }
+    
+    private JPanel painel_p_cadastrar(){
+        
+        JPanel painel = new JPanel(new GridBagLayout());
+        GBHelper pos = new GBHelper();
+        
+//        painel.setLayout(new GridLayout(6, 2, GAP, GAP));
+        
+        JLabel lcmp1 = new JLabel("Nome:");
+        JTextField cmp1 = new JTextField(20);
+        
+        JLabel lcmp2 = new JLabel("Endereço:");
+        JTextField cmp2 = new JTextField(20);
+        
+        JLabel lcmp3 = new JLabel("Telefone:");
+        JTextField cmp3 = new JTextField(20);
+        
+        JLabel lcmp4 = new JLabel("Data:");
+        JTextField cmp4 = new JTextField(20);
+        
+        JLabel l1 = new JLabel();
+        Font f = l1.getFont();
+        l1.setFont(f.deriveFont(f.getStyle() | Font.BOLD));// negrito
+        
+        JButton btn_cadastrar = new JButton("Cadastrar");
+        JButton btn_cancelar = new JButton("Cancelar");
+        
+        JLabel lobs = new JLabel("Observações:");
+        JTextArea observacoes = new JTextArea();
+        
+        observacoes.setColumns(20);
+        observacoes.setRows(5);
+        JScrollPane scroll_observacoes = new JScrollPane();
+        scroll_observacoes.setViewportView(observacoes);
+        
+        painel.add(lcmp1, pos.expandW());
+        painel.add(cmp1, pos.nextCol().expandW());
+        
+        
+        painel.add(lcmp2, pos.nextRow().expandW());
+        painel.add(cmp2, pos.nextCol().expandW());
+        
+        
+        painel.add(lcmp3, pos.nextRow().expandW());
+        painel.add(cmp3, pos.nextCol().expandW());
+        
+        
+        painel.add(lcmp4, pos.nextRow().expandW());
+        painel.add(cmp4, pos.nextCol().expandW());
+        
+        
+        painel.add(lobs, pos.nextRow().expandW());
+        painel.add(scroll_observacoes, pos.nextCol().expandW());
+        
+        
+        painel.add(new Gap(GAP) , pos.nextRow());  // Add a gap below
+        painel.add(btn_cadastrar, pos.nextRow().expandW());
+        painel.add(btn_cancelar, pos.nextCol().expandW());
+        
+        painel.add(new Gap(GAP) , pos.nextRow());  // Add a gap below
+        
+        return painel;
+    }
+    
+    
     
     /* \/ adiciona os componentes no painel, onde este conjunto 
     de comnponente representa um cadastro (Uma tabela de registros para exibir); \/ */
@@ -153,7 +219,7 @@ public class menu extends JFrame {
 //        selectionCB.setEnabled(false);
         
       
-         MarioList m = new MarioList();
+        MenuLateral m = new MenuLateral();
         lista = m.lista();
         JScrollPane scroll = new JScrollPane(lista);
         scroll.setPreferredSize(new Dimension(300, 0));
@@ -203,7 +269,14 @@ public class menu extends JFrame {
                  {
                     case 0:
                          remover_componentes_painel(painel_direito);
-                         painel_direito.add(x);
+                         
+                         JPanel painel_cadastrar = painel_p_cadastrar();
+                         
+                         JScrollPane scroll_painel_cadastrar = new JScrollPane(painel_cadastrar);
+                         scroll_painel_cadastrar.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                         
+                         scroll_painel_cadastrar.setViewportBorder(null);// <= remover a borda quadrada do scroll dentro do painel;
+                         painel_direito.add(scroll_painel_cadastrar, pos.expandir());
                          break;
 //                    case 1:
 //                        remover_componentes_painel(painel_direito);
@@ -218,12 +291,15 @@ public class menu extends JFrame {
                     case 1:
                         remover_componentes_painel(painel_direito);
                         
-                        JPanel painel_lis_cad = painel_listas_cadastros();
+//                        JPanel painel_lis_cad = painel_listas_cadastros();
+//                        JScrollPane scroll_painel_lis_cad = new JScrollPane(painel_lis_cad);
+//                        scroll_painel_lis_cad.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+//                        
+//                        painel_direito.add(scroll_painel_lis_cad ,pos.expandir());
                         
-                        JScrollPane scroll_painel_lis_cad = new JScrollPane(painel_lis_cad);
-                        scroll_painel_lis_cad.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-                        
-                        painel_direito.add(scroll_painel_lis_cad ,pos.expandir());
+                        JPanel pl = lista();
+                        remover_componentes_painel(painel_direito);
+                        painel_direito.add(pl, pos.expandir());
                         break;
                     case 3:
                         remover_componentes_painel(painel_direito);
@@ -252,15 +328,14 @@ public class menu extends JFrame {
              }
         });
         
-        botao_exibir_listagem.addActionListener(new ActionListener(){
-             @Override
-             public void actionPerformed(ActionEvent ae) {
-//                 lista();
-                 JPanel pl = lista();
-                 remover_componentes_painel(painel_direito);
-                 painel_direito.add(pl, pos.expandir());
-             }
-        });
+//        botao_exibir_listagem.addActionListener(new ActionListener(){
+//             @Override
+//             public void actionPerformed(ActionEvent ae) {
+//                 JPanel pl = lista();
+//                 remover_componentes_painel(painel_direito);
+//                 painel_direito.add(pl, pos.expandir());
+//             }
+//        });
         
  //\\//\\//\\//\\//\\ GridBagLayout code ends here
         return content;
@@ -269,29 +344,34 @@ public class menu extends JFrame {
     
 }
 
-class MarioList {
+class MenuLateral {
 
     private Map<String, ImageIcon> map = new HashMap<>();
 
     public JList lista() {
         
-        String[] nameList = {"Cadastrar", "Pesquisar/Editar", "Lixeira","Backup"};
+        String[] nomes_do_menu = {
+            "Cadastrar",
+            "Pesquisar/Editar",
+            "Lixeira",
+            "Backup"
+        };
         
         try {
-            map.put("Cadastrar", new ImageIcon("icones/cadastrar.png"));
-            map.put("Pesquisar/Editar", new ImageIcon("icones/pesquisar_e_editar.png"));
-            map.put("Lixeira", new ImageIcon("icones/lixo2.png"));
-            map.put("Backup", new ImageIcon("icones/1460597575_document-save.png"));
+            map.put(nomes_do_menu[0], new ImageIcon("icones/cadastrar.png"));
+            map.put(nomes_do_menu[1], new ImageIcon("icones/pesquisar_e_editar.png"));
+            map.put(nomes_do_menu[2], new ImageIcon("icones/lixo2.png"));
+            map.put(nomes_do_menu[3], new ImageIcon("icones/1460597575_document-save.png"));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
                 
-        JList list = new JList(nameList);
-        list.setCellRenderer(new MarioListRenderer());
+        JList list = new JList(nomes_do_menu);
+        list.setCellRenderer(new MenuLateralRenderer());
         return list;
     }
 
-    private class MarioListRenderer extends DefaultListCellRenderer {
+    private class MenuLateralRenderer extends DefaultListCellRenderer {
 
         Font font = new Font("helvitica", Font.BOLD, 24);
 
