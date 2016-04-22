@@ -24,4 +24,8 @@ public class estado_editar {
         return this.linhas_modificadas.contains(linha);
     }
     
+    public void apagar_linhas() {
+        this.linhas_modificadas.clear();
+    }
+    
 }

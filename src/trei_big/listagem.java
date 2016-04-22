@@ -29,6 +29,7 @@ public class listagem extends JPanel {
     //================================================================ constants
     private static final int BORDER = 12;  // Window border in pixels.
     private static final int GAP    = 5;   // Default gap btwn components.
+    private static final int BOTAO_DIREITO_MOUSE = 3;
     private int n_colunas_tabela = 0;
     private String[] colunas;
     private ArrayList<Object[]> dados_tabela;
@@ -178,18 +179,15 @@ public class listagem extends JPanel {
                 System.out.println("deletar linha: " + table.getSelectedRow() + " => " + me.getButton() );
                 deletar.setEnabled(true);
                 
-                if( me.getButton() == 3 ){// <= se clicado com o botão direito do mouse;
+                if( me.getButton() == BOTAO_DIREITO_MOUSE ){// <= se clicado com o botão direito do mouse;
                     
                     int linha = table.rowAtPoint(me.getPoint());
                     int coluna = table.columnAtPoint(me.getPoint());
                     
-//                    JOptionPane.showMessageDialog(listagem.this, 
-//                            table.getValueAt(linha, coluna).toString(), 
-//                            table.getColumnName(coluna) + ": " + table.getValueAt(linha, 0), 
-//                            JOptionPane.INFORMATION_MESSAGE);
-                    
-                    popup.exibir_valor_celula(table.getColumnName(coluna) + ": " + table.getValueAt(linha, 0), 
-                            table.getValueAt(linha, coluna).toString());
+                    popup.exibir_valor_celula(
+                            table.getColumnName(coluna) + ": " + table.getValueAt(linha, 0), 
+                            table.getValueAt(linha, coluna).toString()
+                    );
                 }
             }
 
@@ -233,6 +231,7 @@ public class listagem extends JPanel {
                         "Deseja realmente apagar este registro ?",
                         "Deletar registro: " + model.getValueAt(table.getSelectedRow(), 0), 
                         dialogButton);
+                
                 if(dialogResult == 0) {
                   System.out.println("Deletar registro: " + model.getValueAt(table.getSelectedRow(), 0) );
                  
@@ -244,7 +243,9 @@ public class listagem extends JPanel {
         editar.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent ae) {
-               
+                    estado.apagar_linhas();
+                    editar.setEnabled(false);
+                    
                   System.out.println("Editar registros.");
                   
                   // \/ Todos os conteúdos da tabela atual a serem salvos \/;
@@ -255,6 +256,7 @@ public class listagem extends JPanel {
 //                    }
 //                  }
                   
+                  JOptionPane.showMessageDialog(listagem.this, "Registros atualizados com sucesso!", "OK!", JOptionPane.INFORMATION_MESSAGE);
             }
         });
         
