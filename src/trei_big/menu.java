@@ -80,8 +80,7 @@ public class menu extends JFrame {
     private JPanel remover_componentes_painel(JPanel painel){
         if(painel.getComponents().length >= 1){
             painel.removeAll();
-            painel.revalidate();
-            painel.repaint();
+            operacoes_painel.atualizar_painel(painel);
         }
         return painel;
     }
@@ -208,12 +207,13 @@ public class menu extends JFrame {
                          remover_componentes_painel(painel_direito);
                          
                          JPanel painel_cadastrar = new painel_cadastro().painel_p_cadastrar();
+                         JScrollPane scroll_painel_cadastrar = operacoes_painel.painel_com_scroll_sem_borda(painel_cadastrar);
+                         scroll_painel_cadastrar.setName("scroll_painel_cadastrar");
                          
-                         JScrollPane scroll_painel_cadastrar = new JScrollPane(painel_cadastrar);
-                         scroll_painel_cadastrar.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                         if( !operacoes_painel.se_componente_em_painel(painel_direito, "scroll_painel_cadastrar") ){
+                             painel_direito.add(scroll_painel_cadastrar, pos.expandir());
+                         }
                          
-                         scroll_painel_cadastrar.setViewportBorder(null);// <= remover a borda quadrada do scroll dentro do painel;
-                         painel_direito.add(scroll_painel_cadastrar, pos.expandir());
                          break;
 //                    case 1:
 //                        remover_componentes_painel(painel_direito);
@@ -236,10 +236,29 @@ public class menu extends JFrame {
                         
                         JPanel pl = inserir_dados_na_tabela();
                         remover_componentes_painel(painel_direito);
-                        painel_direito.add(pl, pos.expandir());
+                        JScrollPane scroll_pl = operacoes_painel.painel_com_scroll_sem_borda(pl);
+                        scroll_pl.setName("scroll_pl");
+                        
+                        if( !operacoes_painel.se_componente_em_painel(painel_direito, "scroll_pl") ){
+                             painel_direito.add(scroll_pl, pos.expandir());
+                        }
+                        
+//                        painel_direito.add(pl, pos.expandir());
                         break;
                     case 3:
                         remover_componentes_painel(painel_direito);
+                        
+//                        String resultados_encontrados[] = { "A", "B", "C", "D","E", "F", "G", "H","I", "J" };
+//                        JPanel pres = new painel_resultados_busca().painel_exibir_resultados(/*resultados_encontrados*/);
+//                        pres.setName("pres");
+                        
+//                        JScrollPane scroll_pres = new JScrollPane(pres);
+//                        scroll_pres.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+                        
+//                        if( !operacoes_painel.se_componente_em_painel(painel_direito, "pres") ){
+//                             painel_direito.add(pres, pos.expandir());
+//                        }
+//                      
                         painel_direito.add(x2);
                         break;
                  }
