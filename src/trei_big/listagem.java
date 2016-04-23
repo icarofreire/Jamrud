@@ -12,6 +12,7 @@ package trei_big;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Vector;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.event.TableModelEvent;
@@ -43,23 +44,26 @@ public class listagem extends JPanel {
     private estado_editar estado = new estado_editar();
     private exibir_celula popup = new exibir_celula();
     private busca_tabela busca = new busca_tabela();
-//    private painel_resultados_busca painel_res_busca = new painel_resultados_busca();
+    
+    private DefaultTableModel model;
+    private DefaultTableModel linhas_resultado_busca;
     
     //=================================================================== fields
     //... GUI components
-    JLabel findLbl = new JLabel("Pesquisar:", JLabel.LEFT);
-    JLabel resultados = new JLabel();
-    JTextField campo_pesquisar = new JTextField(20);
-    JButton buscar = new JButton("Buscar");
-    JButton editar = new JButton("Editar registros");
-    JButton deletar = new JButton("Deletar registro");
-    JButton zerar_busca = new JButton("Desfazer busca");
-    JComboBox coluna_busca = new JComboBox();
+    private JTable table;
+    private JLabel findLbl = new JLabel("Pesquisar:", JLabel.LEFT);
+    private JLabel resultados = new JLabel();
+    private JTextField campo_pesquisar = new JTextField(20);
+    private JButton buscar = new JButton("Buscar");
+    private JButton editar = new JButton("Editar registros");
+    private JButton deletar = new JButton("Deletar registro");
+    private JButton zerar_busca = new JButton("Desfazer busca");
+    private JComboBox coluna_busca = new JComboBox();
     
     
 //    JDialog   replaceDialog = new JDialog();
 //    public JFrame   replaceDialog = new JFrame();
-    public JPanel   replaceDialog = new JPanel();
+    public JPanel replaceDialog = new JPanel();
     
     private void selecionar_linha_tabela(JTable table, int linha){
         linha--;
@@ -100,7 +104,36 @@ public class listagem extends JPanel {
         return p_indice;
     }
     
-    //--
+    // \/ obter todos os dados de uma linha expefifica do model da tabela;
+    private Object obter_linha_model(DefaultTableModel model, int linha) {
+        Vector v_Object = model.getDataVector();
+        return v_Object.get(linha);
+    }
+    
+    /* \/\/ se uma linha da tabela for modificada; \/\/ */
+    private void se_tabela_for_modificada(final boolean em_busca) {
+        table.getModel().addTableModelListener(
+        new TableModelListener() 
+        {
+            @Override
+            public void tableChanged(TableModelEvent tme) {
+                  if(!em_busca){
+                        System.out.println("celula modificada: " +  tme.getLastRow() );
+                        estado.setLinha_modificada(tme.getLastRow());
+                        editar.setEnabled(true);
+                  }else{// \/\/ tabela modificada nos resultados da busca;
+                        System.out.println("[BUSCA] celula modificada: " +  tme.getLastRow() );
+                        estado.setLinha_modificada(tme.getLastRow());
+                        editar.setEnabled(true);
+                        
+                        Object linha_modificada = obter_linha_model(linhas_resultado_busca, tme.getLastRow());
+                        model.insertRow(tme.getLastRow(), (Vector) linha_modificada);
+                        
+                        
+                  }
+            }
+        });
+    }
     
     //============================================================== constructor
     public listagem(String titulo_listagem, String[] nomes_colunas, ArrayList<Object[]> dados_da_tabela) {
@@ -155,7 +188,7 @@ public class listagem extends JPanel {
     private Component TableExample()
     {
         
-        final DefaultTableModel model = new DefaultTableModel(colunas,0);   
+        model = new DefaultTableModel(colunas,0);
         
         coluna_busca.addItem("Selecione um campo para busca.");
         for(int i=0; i<colunas.length; i++){
@@ -164,7 +197,14 @@ public class listagem extends JPanel {
          
         this.n_colunas_tabela = colunas.length;
 
-        final JTable table = new JTable();
+        table = new JTable(){  /* \/ Não permitir editar a coluna ID; \/ */
+                                            public boolean isCellEditable(int row,int column) {
+                                                int coluna_ID = 0;
+                                                if( column == coluna_ID ) { return false; }
+                                                return true;
+                                            }
+                                         };
+        
         JScrollPane scroll = new JScrollPane(table);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);//AUTO_RESIZE_OFF <= para aparecer a barra de scroll horizontal;
         
@@ -219,16 +259,17 @@ public class listagem extends JPanel {
 
         });
         
-        table.getModel().addTableModelListener(
-        new TableModelListener() 
-        {
-            @Override
-            public void tableChanged(TableModelEvent tme) {
-                  System.out.println("celula modificada: " +  tme.getLastRow() );
-                  estado.setLinha_modificada(tme.getLastRow());
-                  editar.setEnabled(true);
-            }
-        });
+//        table.getModel().addTableModelListener(
+//        new TableModelListener() 
+//        {
+//            @Override
+//            public void tableChanged(TableModelEvent tme) {
+//                  System.out.println("celula modificada: " +  tme.getLastRow() );
+//                  estado.setLinha_modificada(tme.getLastRow());
+//                  editar.setEnabled(true);
+//            }
+//        });
+        se_tabela_for_modificada(false);
         
         
         deletar.addActionListener(new ActionListener(){
@@ -278,7 +319,7 @@ public class listagem extends JPanel {
                 int ind = coluna_busca.getSelectedIndex()-1;                
                 if( ind >= 0 )
                 {
-                    estado.apagar_linhas();
+//                    estado.apagar_linhas();
                     zerar_busca.setEnabled(true);
                     table.setModel(model);
                     
@@ -296,10 +337,12 @@ public class listagem extends JPanel {
                         System.out.println("->"+linhas_res.get(i));
                     }
                     
-                    DefaultTableModel linhas_resultado_busca = busca.busca(table, colunas, linhas_res);
+                    linhas_resultado_busca = busca.busca(table, colunas, linhas_res);
                     if( linhas_resultado_busca.getRowCount() > 0 ){
                         table.setModel(linhas_resultado_busca);
                         resultados.setText( "Busca: " + linhas_resultado_busca.getRowCount() + " Resultados." );
+                        
+                        se_tabela_for_modificada(true);
                     }else{
                         JOptionPane.showMessageDialog(null, "Nenhum registro encontrado.", "Não encontrado", JOptionPane.ERROR_MESSAGE);
                     }
@@ -313,7 +356,7 @@ public class listagem extends JPanel {
         });
         
         
-        zerar_busca.addActionListener(new ActionListener(){
+        zerar_busca.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 zerar_busca.setEnabled(false);
