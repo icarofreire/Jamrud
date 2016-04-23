@@ -47,11 +47,13 @@ public class listagem extends JPanel {
     
     //=================================================================== fields
     //... GUI components
-    JLabel    findLbl     = new JLabel("Pesquisar:"   , JLabel.LEFT);
-    JTextField findTF     = new JTextField(20);
-    JButton   buscar     = new JButton("Buscar");
-    JButton   editar     = new JButton("Editar registros");
-    JButton   deletar  = new JButton("Deletar registro");
+    JLabel findLbl = new JLabel("Pesquisar:", JLabel.LEFT);
+    JLabel resultados = new JLabel();
+    JTextField campo_pesquisar = new JTextField(20);
+    JButton buscar = new JButton("Buscar");
+    JButton editar = new JButton("Editar registros");
+    JButton deletar = new JButton("Deletar registro");
+    JButton zerar_busca = new JButton("Desfazer busca");
     JComboBox coluna_busca = new JComboBox();
     
     
@@ -109,6 +111,7 @@ public class listagem extends JPanel {
         
         editar.setEnabled(false);
         deletar.setEnabled(false);
+        zerar_busca.setEnabled(false);
         
         //... Create a dialog box with GridBag content pane.
 //        replaceDialog.setContentPane(createContentPane());
@@ -275,56 +278,33 @@ public class listagem extends JPanel {
                 int ind = coluna_busca.getSelectedIndex()-1;                
                 if( ind >= 0 )
                 {
+                    estado.apagar_linhas();
+                    zerar_busca.setEnabled(true);
+                    table.setModel(model);
+                    
                     // \/ ... iniciar busca ... \/;
-                    String pesquisa = findTF.getText();
+                    String pesquisa = campo_pesquisar.getText();
                     String coluna_pesquisar = colunas[ind];
                     System.out.println("buscar: " + pesquisa + " em: " + coluna_pesquisar );
                     
 //                    busca.realizar_busca_na_tabela(table, pesquisa, coluna_pesquisar, ind);
                     
-                    // \/\/ APAGAR DO MODEL DA TABELA, TODAS AS LINHAS QUE NÃO FAZEM PARTE DO RESULTADO DA BUSCA;
+
                     
                     ArrayList<Integer> linhas_res = busca.comparacao_dados_coluna_2(table, ind, pesquisa);
                     for(int i=0; i<linhas_res.size(); i++){
                         System.out.println("->"+linhas_res.get(i));
                     }
                     
-                    TableModel modelo_t = table.getModel();
-//                    DefaultTableModel model2 = new DefaultTableModel(colunas,0);
-                    
-                        for(int j=0; j<modelo_t.getRowCount(); j++) {
-                            
-                            Object id = modelo_t.getValueAt(j, 0);
-                            if( linhas_res.contains(id) == false )
-                            {
-                                int id_remover = ((int) id);
-                                    model.removeRow(id_remover);
-                                    estado.linhas_modificadas.remove(id);
-//                                System.out.println( "remover: " + ((int) id) );
-                            }
-                           
-                        }
-                    
-                    
-//                    if(!linhas_deletadas){
-//                        int id = 5;
-//                        model.removeRow(id-1);
-//                        estado.linhas_modificadas.remove(new Integer(id-1));
-//                    }
-                      
-                    // /\/\ APAGAR DO MODEL DA TABELA, TODAS AS LINHAS QUE NÃO FAZEM PARTE DO RESULTADO DA BUSCA;
-                    
-                    
-//                    content.add(new Gap(GAP) , pos.nextRow());
-//                    content.add(new Gap(GAP) , pos.nextRow());
-//                    String resultados_encontrados[] = { "A", "B", "C", "D","E", "F", "G", "H","I", "J" };
-                    
-//                    painel_resultados_busca painel_res_busca = new painel_resultados_busca();
-                    
-//                    painel_res_busca.setTable(table);
-                    
+                    DefaultTableModel linhas_resultado_busca = busca.busca(table, colunas, linhas_res);
+                    if( linhas_resultado_busca.getRowCount() > 0 ){
+                        table.setModel(linhas_resultado_busca);
+                        resultados.setText( "Busca: " + linhas_resultado_busca.getRowCount() + " Resultados." );
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Nenhum registro encontrado.", "Não encontrado", JOptionPane.ERROR_MESSAGE);
+                    }
 
-           
+                    
                 }else{
                     JOptionPane.showMessageDialog(null, "Selecione uma coluna para realizar a pesquisa.", "Atenção", JOptionPane.WARNING_MESSAGE);
                 }
@@ -333,33 +313,14 @@ public class listagem extends JPanel {
         });
         
         
-        findTF.addKeyListener(new KeyListener(){
+        zerar_busca.addActionListener(new ActionListener(){
             @Override
-            public void keyTyped(KeyEvent ke) {
-            }
-
-            @Override
-            public void keyPressed(KeyEvent ke) {
-                if( ke.getKeyCode() == KeyEvent.VK_ENTER ) 
-                {
-                        // \/ ... iniciar busca ... \/;
-                        int ind = coluna_busca.getSelectedIndex()-1;                
-                        if( ind >= 0 )
-                        {
-                            String pesquisa = findTF.getText();
-                            String coluna_pesquisar = colunas[ind];
-                            System.out.println("buscar: " + pesquisa + " em: " + coluna_pesquisar );
-
-                            busca.realizar_busca_na_tabela(table, pesquisa, coluna_pesquisar, ind);
-
-                        }else{
-                            JOptionPane.showMessageDialog(null, "Selecione uma coluna para realizar a pesquisa.", "Atenção", JOptionPane.WARNING_MESSAGE);
-                        }
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent ke) {
+            public void actionPerformed(ActionEvent ae) {
+                zerar_busca.setEnabled(false);
+                campo_pesquisar.setText(null);
+                resultados.setText(null);
+                coluna_busca.setSelectedIndex(0);
+                table.setModel(model);
             }
         });
                 
@@ -391,7 +352,7 @@ public class listagem extends JPanel {
         //... First row
         content.add(findLbl, pos);
         content.add(new Gap(GAP), pos.nextCol());
-        content.add(findTF      , pos.nextCol().expandW());
+        content.add(campo_pesquisar      , pos.nextCol().expandW());
         content.add(new Gap(GAP), pos.nextCol());
         content.add(buttonPanel , pos.nextCol()
                                              /*.align(GridBagConstraints.NORTH)*/);
@@ -408,7 +369,8 @@ public class listagem extends JPanel {
         p_botoes_finais.setLayout(new GridLayout(1, 2, GAP, GAP));
         p_botoes_finais.add(editar);
         p_botoes_finais.add(deletar);
-//        p_botoes_finais.add(fechar);
+        p_botoes_finais.add(zerar_busca);
+        p_botoes_finais.add(resultados);
         
         content.add(p_botoes_finais  , pos.width(3));
         

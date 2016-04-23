@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JViewport;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
@@ -18,19 +19,19 @@ import javax.swing.table.TableModel;
  */
 public class busca_tabela {// realizar uma busca na tabela de listagem;
     
-    public void realizar_busca_na_tabela(JTable table, String pesquisa, String coluna_pesquisar, int indice_coluna) {
-        
-        System.out.println("buscar: " + pesquisa + " em: " + coluna_pesquisar );
-                    
-        int p_indice = comparacao_dados_coluna(table, indice_coluna, pesquisa);
-        if( p_indice != -1 ){
-            int ind_linha_ir = p_indice;
-            selecionar_linha_tabela(table, ind_linha_ir);
-            modificar_direcao_scroll(table, ind_linha_ir, 0);
-        }else{
-            JOptionPane.showMessageDialog(null, "Nenhum registro encontrado.", "Não encontrado", JOptionPane.ERROR_MESSAGE);
-        }
-    }
+//    public void realizar_busca_na_tabela(JTable table, String pesquisa, String coluna_pesquisar, int indice_coluna) {
+//        
+//        System.out.println("buscar: " + pesquisa + " em: " + coluna_pesquisar );
+//                    
+//        int p_indice = comparacao_dados_coluna(table, indice_coluna, pesquisa);
+//        if( p_indice != -1 ){
+//            int ind_linha_ir = p_indice;
+//            selecionar_linha_tabela(table, ind_linha_ir);
+//            modificar_direcao_scroll(table, ind_linha_ir, 0);
+//        }else{
+//            JOptionPane.showMessageDialog(null, "Nenhum registro encontrado.", "Não encontrado", JOptionPane.ERROR_MESSAGE);
+//        }
+//    }
     
     private int comparacao_dados_coluna(JTable table, int indice_coluna, String dado_pesquisar) {
         int p_indice = -1;
@@ -52,7 +53,8 @@ public class busca_tabela {// realizar uma busca na tabela de listagem;
         for(int j=0; j<table.getRowCount(); j++)
         {
             String dados_coluna = tb.getValueAt(j, indice_coluna).toString();
-            if( dado_pesquisar.equalsIgnoreCase(dados_coluna) ){
+//            if( dado_pesquisar.equalsIgnoreCase(dados_coluna) ){
+            if( dado_pesquisar.matches("(.*)" + dados_coluna + "(.*)") ){
                 p_indice = (j+1);
                 indices.add(p_indice);
             }
@@ -84,6 +86,37 @@ public class busca_tabela {// realizar uma busca na tabela de listagem;
         }
         rect.translate(centerX, centerY);
         viewport.scrollRectToVisible(rect);
+    }
+    
+    
+    public DefaultTableModel busca(JTable table, String[] colunas, ArrayList<Integer> linhas_res) {
+        
+        TableModel modelo_t = table.getModel();
+                    DefaultTableModel model2 = new DefaultTableModel(colunas,0);
+                    
+                        for(int j=0; j<modelo_t.getRowCount(); j++) {
+                            
+                            Object id = modelo_t.getValueAt(j, 0);
+                            if( linhas_res.contains(id) )
+                            {
+//                                int id_remover = ((int) id);
+//                                    model.removeRow(id_remover);
+//                                    estado.linhas_modificadas.remove(id);
+//                                System.out.println( ">>: " + ((int) id) );
+                                
+                                Object[] valores = new Object[modelo_t.getColumnCount()];
+                                for (int count = 0; count < modelo_t.getColumnCount(); count++) {
+                                    Object valor = modelo_t.getValueAt(j, count);
+                                    valores[count] = valor;                                    
+                                }
+                                model2.addRow( valores );
+                                
+                            }
+//                           System.out.println( "remover: " + ((int) id) );
+                           
+                        }
+                        return model2;
+        
     }
     
 }
