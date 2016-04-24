@@ -28,4 +28,9 @@ public class estado_editar {
         this.linhas_modificadas.clear();
     }
     
+    /* apagar ultimo registro inserido; */
+    public void apagar_ultimo() {
+        this.linhas_modificadas.remove(this.linhas_modificadas.size()-1);
+    }
+    
 }

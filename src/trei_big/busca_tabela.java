@@ -53,7 +53,6 @@ public class busca_tabela {// realizar uma busca na tabela de listagem;
         for(int j=0; j<table.getRowCount(); j++)
         {
             String dados_coluna = tb.getValueAt(j, indice_coluna).toString();
-//            if( dado_pesquisar.equalsIgnoreCase(dados_coluna) ){
             if( dado_pesquisar.matches("(.*)" + dados_coluna + "(.*)") ){
                 p_indice = (j+1);
                 indices.add(p_indice);
@@ -62,60 +61,54 @@ public class busca_tabela {// realizar uma busca na tabela de listagem;
         return indices;
     }    
     
-    private void selecionar_linha_tabela(JTable table, int linha) {
-        linha--;
-        table.getSelectionModel().setSelectionInterval(linha, linha);
-        table.scrollRectToVisible(new Rectangle(table.getCellRect(linha, 0, true)));
-    }
+//    private void selecionar_linha_tabela(JTable table, int linha) {
+//        linha--;
+//        table.getSelectionModel().setSelectionInterval(linha, linha);
+//        table.scrollRectToVisible(new Rectangle(table.getCellRect(linha, 0, true)));
+//    }
     
     
-    private void modificar_direcao_scroll(JTable table, int rowIndex, int vColIndex) {
-
-        JViewport viewport = (JViewport) table.getParent();
-        Rectangle rect = table.getCellRect(rowIndex, vColIndex, true);
-        Rectangle viewRect = viewport.getViewRect();
-        rect.setLocation(rect.x - viewRect.x, rect.y - viewRect.y);
-
-        int centerX = (viewRect.width - rect.width) / 2;
-        int centerY = (viewRect.height - rect.height) / 2;
-        if (rect.x < centerX) {
-          centerX = -centerX;
-        }
-        if (rect.y < centerY) {
-          centerY = -centerY;
-        }
-        rect.translate(centerX, centerY);
-        viewport.scrollRectToVisible(rect);
-    }
+//    private void modificar_direcao_scroll(JTable table, int rowIndex, int vColIndex) {
+//
+//        JViewport viewport = (JViewport) table.getParent();
+//        Rectangle rect = table.getCellRect(rowIndex, vColIndex, true);
+//        Rectangle viewRect = viewport.getViewRect();
+//        rect.setLocation(rect.x - viewRect.x, rect.y - viewRect.y);
+//
+//        int centerX = (viewRect.width - rect.width) / 2;
+//        int centerY = (viewRect.height - rect.height) / 2;
+//        if (rect.x < centerX) {
+//          centerX = -centerX;
+//        }
+//        if (rect.y < centerY) {
+//          centerY = -centerY;
+//        }
+//        rect.translate(centerX, centerY);
+//        viewport.scrollRectToVisible(rect);
+//    }
     
     
     public DefaultTableModel busca(JTable table, String[] colunas, ArrayList<Integer> linhas_res) {
         
         TableModel modelo_t = table.getModel();
-                    DefaultTableModel model2 = new DefaultTableModel(colunas,0);
+        DefaultTableModel model2 = new DefaultTableModel(colunas,0);
                     
-                        for(int j=0; j<modelo_t.getRowCount(); j++) {
-                            
-                            Object id = modelo_t.getValueAt(j, 0);
-                            if( linhas_res.contains(id) )
-                            {
-//                                int id_remover = ((int) id);
-//                                    model.removeRow(id_remover);
-//                                    estado.linhas_modificadas.remove(id);
-//                                System.out.println( ">>: " + ((int) id) );
-                                
-                                Object[] valores = new Object[modelo_t.getColumnCount()];
-                                for (int count = 0; count < modelo_t.getColumnCount(); count++) {
-                                    Object valor = modelo_t.getValueAt(j, count);
-                                    valores[count] = valor;                                    
-                                }
-                                model2.addRow( valores );
-                                
-                            }
-//                           System.out.println( "remover: " + ((int) id) );
-                           
+        for(int j=0; j<modelo_t.getRowCount(); j++) {
+            
+                Object id = modelo_t.getValueAt(j, 0);
+                if( linhas_res.contains(id) )
+                {   
+                        Object[] valores = new Object[modelo_t.getColumnCount()];
+                        for (int count = 0; count < modelo_t.getColumnCount(); count++) {
+                                Object valor = modelo_t.getValueAt(j, count);
+                                valores[count] = valor;                                    
                         }
-                        return model2;
+                        model2.addRow( valores );
+                                
+                }
+                           
+        }
+        return model2;
         
     }
     

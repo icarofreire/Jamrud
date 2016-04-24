@@ -15,6 +15,8 @@ import javax.swing.UIManager;
  */
 public class Trei_big {
     
+    private static String titulo = "Sistema de Cadastro";
+    
     public static void menu(){
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -25,41 +27,36 @@ public class Trei_big {
         //... Start up GUI.
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-               menu m = new menu();
+               menu m = new menu(titulo);
                m.setVisible(true);
             }
         });
     }
     
-    public static void lista(){
-        String[] colunas = new String[] {
-            "Id", "Name", "Hourly Rate", "Part Time", "Endereço", "CPF", "Sobrenome", "Caso Pendente",
-            "campo-1", "campo-2", "campo-3", "campo-4"
-        };
-        
-        ArrayList<Object[]> dados_da_tabela = new ArrayList<Object[]>();
-        
-        for (int count = 0; count < 200; count++) {
-            Object[] data = new Object[]{ (count+1), "John", 40.0, false, "testee", "testee", "testee", "testee",
-            "--teste-1", "--teste-2", "--teste-3", "--teste-4"}; 
-            dados_da_tabela.add(data);
-        }        
-        
-        exibir_listagem l = new exibir_listagem("Lista de Clientes", colunas, dados_da_tabela);
-    }
+//    public static void lista(){
+//        String[] colunas = new String[] {
+//            "Id", "Name", "Hourly Rate", "Part Time", "Endereço", "CPF", "Sobrenome", "Caso Pendente",
+//            "campo-1", "campo-2", "campo-3", "campo-4"
+//        };
+//        
+//        ArrayList<Object[]> dados_da_tabela = new ArrayList<Object[]>();
+//        
+//        for (int count = 0; count < 200; count++) {
+//            Object[] data = new Object[]{ (count+1), "John", 40.0, false, "testee", "testee", "testee", "testee",
+//            "--teste-1", "--teste-2", "--teste-3", "--teste-4"}; 
+//            dados_da_tabela.add(data);
+//        }        
+//        
+//        exibir_listagem l = new exibir_listagem("Lista de Clientes", colunas, dados_da_tabela);
+//    }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
         
-        
-//        new teste().setVisible(true);
-        
-//          lista();
           menu();
-//        new exibir_celula();
+//        new sobre();
         
 
         

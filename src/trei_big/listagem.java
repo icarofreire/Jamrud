@@ -24,32 +24,33 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
-//////////////////////////////////////////////////////////////////// DemoGridBag
+//////////////////////////////////////////////////////////////////// Painel de listagem de dados na tabela;
 public class listagem extends JPanel {
     
-    private JPanel content = new JPanel(new GridBagLayout());
+    private JPanel painel_principal = new JPanel(new GridBagLayout());
     private GBHelper pos = new GBHelper();  // Create GridBag helper object.
     
-    //================================================================ constants
+    //... constants
     private static final int BORDER = 12;  // Window border in pixels.
-    private static final int GAP    = 5;   // Default gap btwn components.
+    private static final int GAP = 5;   // Default gap btwn components.
     private static final int BOTAO_DIREITO_MOUSE = 3;
     private int n_colunas_tabela = 0;
     private String[] colunas;
     private ArrayList<Object[]> dados_tabela;
     private String titulo_listagem;
     
-    private boolean linhas_deletadas = false;
-    
+    //... classes
     private estado_editar estado = new estado_editar();
     private exibir_celula popup = new exibir_celula();
     private busca_tabela busca = new busca_tabela();
     
+    //... models da tabela
     private DefaultTableModel model;
     private DefaultTableModel linhas_resultado_busca;
     
     //=================================================================== fields
-    //... GUI components
+    
+    //... GUI componentes
     private JTable table;
     private JLabel findLbl = new JLabel("Pesquisar:", JLabel.LEFT);
     private JLabel resultados = new JLabel();
@@ -60,49 +61,46 @@ public class listagem extends JPanel {
     private JButton zerar_busca = new JButton("Desfazer busca");
     private JComboBox coluna_busca = new JComboBox();
     
-    
-//    JDialog   replaceDialog = new JDialog();
-//    public JFrame   replaceDialog = new JFrame();
     public JPanel replaceDialog = new JPanel();
     
-    private void selecionar_linha_tabela(JTable table, int linha){
-        linha--;
-        table.getSelectionModel().setSelectionInterval(linha, linha);
-        table.scrollRectToVisible(new Rectangle(table.getCellRect(linha, 0, true)));
-    }
-    
-    private static void modificar_direcao_scroll(JTable table, int rowIndex, int vColIndex) {
-
-        JViewport viewport = (JViewport) table.getParent();
-        Rectangle rect = table.getCellRect(rowIndex, vColIndex, true);
-        Rectangle viewRect = viewport.getViewRect();
-        rect.setLocation(rect.x - viewRect.x, rect.y - viewRect.y);
-
-        int centerX = (viewRect.width - rect.width) / 2;
-        int centerY = (viewRect.height - rect.height) / 2;
-        if (rect.x < centerX) {
-          centerX = -centerX;
-        }
-        if (rect.y < centerY) {
-          centerY = -centerY;
-        }
-        rect.translate(centerX, centerY);
-        viewport.scrollRectToVisible(rect);
-    }
+//    private void selecionar_linha_tabela(JTable table, int linha){
+//        linha--;
+//        table.getSelectionModel().setSelectionInterval(linha, linha);
+//        table.scrollRectToVisible(new Rectangle(table.getCellRect(linha, 0, true)));
+//    }
+//    
+//    private static void modificar_direcao_scroll(JTable table, int rowIndex, int vColIndex) {
+//
+//        JViewport viewport = (JViewport) table.getParent();
+//        Rectangle rect = table.getCellRect(rowIndex, vColIndex, true);
+//        Rectangle viewRect = viewport.getViewRect();
+//        rect.setLocation(rect.x - viewRect.x, rect.y - viewRect.y);
+//
+//        int centerX = (viewRect.width - rect.width) / 2;
+//        int centerY = (viewRect.height - rect.height) / 2;
+//        if (rect.x < centerX) {
+//          centerX = -centerX;
+//        }
+//        if (rect.y < centerY) {
+//          centerY = -centerY;
+//        }
+//        rect.translate(centerX, centerY);
+//        viewport.scrollRectToVisible(rect);
+//    }
     
         
-    private int comparacao_dados_coluna(JTable table, int indice_coluna, String dado_pesquisar){
-        int p_indice = -1;
-        TableModel tb = table.getModel();
-        for(int j=0; j<table.getRowCount(); j++)
-        {
-            String dados_coluna = tb.getValueAt(j, indice_coluna).toString();
-            if( dado_pesquisar.equalsIgnoreCase(dados_coluna) ){
-                p_indice = (j+1); break;
-            }
-        }
-        return p_indice;
-    }
+//    private int comparacao_dados_coluna(JTable table, int indice_coluna, String dado_pesquisar){
+//        int p_indice = -1;
+//        TableModel tb = table.getModel();
+//        for(int j=0; j<table.getRowCount(); j++)
+//        {
+//            String dados_coluna = tb.getValueAt(j, indice_coluna).toString();
+//            if( dado_pesquisar.equalsIgnoreCase(dados_coluna) ){
+//                p_indice = (j+1); break;
+//            }
+//        }
+//        return p_indice;
+//    }
     
     // \/ obter todos os dados de uma linha expefifica do model da tabela;
     private Object obter_linha_model(DefaultTableModel model, int linha) {
@@ -127,15 +125,26 @@ public class listagem extends JPanel {
                         editar.setEnabled(true);
                         
                         Object linha_modificada = obter_linha_model(linhas_resultado_busca, tme.getLastRow());
-                        model.insertRow(tme.getLastRow(), (Vector) linha_modificada);
                         
+                        Vector v_linha_modificada = (Vector) linha_modificada;
+                        int ID_linha = (int) v_linha_modificada.get(0);
+                        
+                        
+                                
+                        /* \/\/ adiciona a linha modificada depois da linha antiga;
+                        e depois remove a linha antiga; */
+                        model.insertRow(ID_linha, (Vector) linha_modificada);
+                        model.removeRow(ID_linha-1);
+
+                        estado.apagar_ultimo();
+//                        estado.linhas_modificadas.remove( v_linha_modificada.indexOf(v_linha_modificada.get(0)) );
                         
                   }
             }
         });
     }
     
-    //============================================================== constructor
+    //============================================================== construtor
     public listagem(String titulo_listagem, String[] nomes_colunas, ArrayList<Object[]> dados_da_tabela) {
         
         this.colunas = nomes_colunas;
@@ -146,43 +155,8 @@ public class listagem extends JPanel {
         deletar.setEnabled(false);
         zerar_busca.setEnabled(false);
         
-        //... Create a dialog box with GridBag content pane.
-//        replaceDialog.setContentPane(createContentPane());
-//        replaceDialog.setTitle(this.titulo_listagem);
-//        replaceDialog.pack();
-//        replaceDialog.setLocationRelativeTo(this);
-//        
-//        replaceDialog.setSize(new Dimension(900, 600));
-//        replaceDialog.setVisible(true);
-        
-//            replaceDialog.add( createContentPane() );
-        createContentPane();
-        replaceDialog = content;//createContentPane();
-  
-        
-        /*
-        //... Create a button for the window to display this dialog.
-//        JButton showDialogBtn = new JButton("---> Exibir Listagem <---");
-//        showDialogBtn.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                replaceDialog.setVisible(true);
-//            }
-//        });
-//
-//        //... Create content pane with one button and set window attributes.
-//        JPanel windowContent = new JPanel();
-//        windowContent.setLayout(new BorderLayout());
-//        windowContent.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-//        windowContent.add(showDialogBtn, BorderLayout.CENTER);
-//        
-//        
-//        //... Set the window characteristics.
-//        super.setContentPane(windowContent);
-//        super.pack();                               // Layout components.
-//        super.setTitle("DemoGridBag");
-//        super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        super.setLocationRelativeTo(null);          // Center window.
-        */
+        gui();
+        replaceDialog = painel_principal;
     }
 
     private Component TableExample()
@@ -198,12 +172,12 @@ public class listagem extends JPanel {
         this.n_colunas_tabela = colunas.length;
 
         table = new JTable(){  /* \/ Não permitir editar a coluna ID; \/ */
-                                            public boolean isCellEditable(int row,int column) {
-                                                int coluna_ID = 0;
-                                                if( column == coluna_ID ) { return false; }
-                                                return true;
-                                            }
-                                         };
+                                public boolean isCellEditable(int row,int column) {
+                                    int coluna_ID = 0;
+                                    if( column == coluna_ID ) { return false; }
+                                    return true;
+                                }
+                            };
         
         JScrollPane scroll = new JScrollPane(table);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);//AUTO_RESIZE_OFF <= para aparecer a barra de scroll horizontal;
@@ -259,16 +233,7 @@ public class listagem extends JPanel {
 
         });
         
-//        table.getModel().addTableModelListener(
-//        new TableModelListener() 
-//        {
-//            @Override
-//            public void tableChanged(TableModelEvent tme) {
-//                  System.out.println("celula modificada: " +  tme.getLastRow() );
-//                  estado.setLinha_modificada(tme.getLastRow());
-//                  editar.setEnabled(true);
-//            }
-//        });
+        
         se_tabela_for_modificada(false);
         
         
@@ -362,7 +327,7 @@ public class listagem extends JPanel {
                 zerar_busca.setEnabled(false);
                 campo_pesquisar.setText(null);
                 resultados.setText(null);
-                coluna_busca.setSelectedIndex(0);
+                coluna_busca.setSelectedIndex(0);               
                 table.setModel(model);
             }
         });
@@ -372,41 +337,29 @@ public class listagem extends JPanel {
     }
     
     //======================================================== createContentPane
-    private void createContentPane() {
-//        selectionCB.setEnabled(false);
-        
-        
-        //... Create an independent GridLayout panel of buttons. 
+    private void gui() {
+
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(1, 1, GAP, GAP));
         buttonPanel.add(coluna_busca);
         buttonPanel.add(buscar);
 
+        painel_principal.setBorder(BorderFactory.createEmptyBorder(BORDER, BORDER, BORDER, BORDER));
         
-        //... Create GridBagLayout content pane; set border.
-//        JPanel content = new JPanel(new GridBagLayout());
-        content.setBorder(BorderFactory.createEmptyBorder(BORDER, BORDER, 
-                BORDER, BORDER));
-
-//\\//\\//\\//\\//\\ GridBagLayout code begins here
-//        GBHelper pos = new GBHelper();  // Create GridBag helper object.
+        //... primeira linha
+        painel_principal.add(findLbl, pos);
+        painel_principal.add(new Gap(GAP), pos.nextCol());
+        painel_principal.add(campo_pesquisar      , pos.nextCol().expandW());
+        painel_principal.add(new Gap(GAP), pos.nextCol());
+        painel_principal.add(buttonPanel , pos.nextCol());
         
+        painel_principal.add(new Gap(GAP) , pos.nextRow());
+        painel_principal.add(new Gap(GAP) , pos.nextRow());
         
-        //... First row
-        content.add(findLbl, pos);
-        content.add(new Gap(GAP), pos.nextCol());
-        content.add(campo_pesquisar      , pos.nextCol().expandW());
-        content.add(new Gap(GAP), pos.nextCol());
-        content.add(buttonPanel , pos.nextCol()
-                                             /*.align(GridBagConstraints.NORTH)*/);
+        painel_principal.add(TableExample(), pos.width(this.n_colunas_tabela+1).expandir());
         
-        content.add(new Gap(GAP) , pos.nextRow());  // Add a gap below
-        content.add(new Gap(GAP) , pos.nextRow());  // Add a gap below
-        
-        content.add(TableExample(), pos.width(this.n_colunas_tabela+1).expandir());
-        
-        content.add(new Gap(GAP) , pos.nextRow());  // Add a gap below
-        content.add(new Gap(GAP) , pos.nextRow());  // Add a gap below
+        painel_principal.add(new Gap(GAP) , pos.nextRow());
+        painel_principal.add(new Gap(GAP) , pos.nextRow());
         
         JPanel p_botoes_finais = new JPanel();
         p_botoes_finais.setLayout(new GridLayout(1, 2, GAP, GAP));
@@ -415,10 +368,7 @@ public class listagem extends JPanel {
         p_botoes_finais.add(zerar_busca);
         p_botoes_finais.add(resultados);
         
-        content.add(p_botoes_finais  , pos.width(3));
-        
- //\\//\\//\\//\\//\\ GridBagLayout code ends here
-//        return content;
+        painel_principal.add(p_botoes_finais  , pos.width(3));
     }
     
 

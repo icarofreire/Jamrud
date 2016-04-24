@@ -29,6 +29,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -45,35 +48,49 @@ public class menu extends JFrame {
     private static final int BORDER = 12;  // Window border in pixels.
     private static final int GAP = 5;   // Default gap btwn components.
     
+    private JTextField pesquisa = new JTextField(20);
+    private DefaultListModel dlm = new DefaultListModel();
+    private JList lista = new JList(dlm);
+    private JButton botao_exibir_listagem = new JButton();
+    private JButton botao_exibir_listagem2 = new JButton();
+    private JMenu menu = new JMenu("Arquivo");
+    private JMenuItem item_menu = new JMenuItem("Sobre");
+    private JMenuBar barra_de_menu = new JMenuBar();
     
-    JTextField pesquisa = new JTextField(20);
-    DefaultListModel dlm = new DefaultListModel();
-    JList lista = new JList(dlm);
-    JButton botao_exibir_listagem = new JButton();
-    JButton botao_exibir_listagem2 = new JButton();
-    
-    JLabel x = new JLabel("Formulário de cadastrar");
-    JLabel x2 = new JLabel("Fazer backup do banco");
-    JLabel l_lixeira = new JLabel("Lixeira");
-    JPanel painel_direito = new JPanel(new GridBagLayout());
+    private JLabel x = new JLabel("Formulário de cadastrar");
+    private JLabel x2 = new JLabel("Fazer backup do banco");
+    private JLabel l_lixeira = new JLabel("Lixeira");
+    private JPanel painel_direito = new JPanel(new GridBagLayout());
     
     
-    public menu() {
+    public menu(String titulo) {
      
         //... Create content pane with one button and set window attributes.
         JPanel windowContent = new JPanel();
         windowContent.setLayout(new BorderLayout());
         windowContent.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         windowContent.add( gui() , BorderLayout.CENTER);
-        
+
+        barra_de_menu.add(menu);
+        menu.add(item_menu);
+    
+        item_menu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                new sobre();
+            }
+        });
+
+        super.setJMenuBar(barra_de_menu);
         
         //... Set the window characteristics.
         super.setContentPane(windowContent);
         super.pack();                               // Layout components.
-        super.setTitle("menu");
+        super.setTitle(titulo);
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         super.setLocationRelativeTo(null);          // Center window.
         super.setSize(1100, 700);
+        super.setExtendedState(JFrame.MAXIMIZED_BOTH);// <= maximixar a janela ao iniciar;
         super.setVisible(true);
     }
     
@@ -246,19 +263,7 @@ public class menu extends JFrame {
 //                        painel_direito.add(pl, pos.expandir());
                         break;
                     case 3:
-                        remover_componentes_painel(painel_direito);
-                        
-//                        String resultados_encontrados[] = { "A", "B", "C", "D","E", "F", "G", "H","I", "J" };
-//                        JPanel pres = new painel_resultados_busca().painel_exibir_resultados(/*resultados_encontrados*/);
-//                        pres.setName("pres");
-                        
-//                        JScrollPane scroll_pres = new JScrollPane(pres);
-//                        scroll_pres.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-                        
-//                        if( !operacoes_painel.se_componente_em_painel(painel_direito, "pres") ){
-//                             painel_direito.add(pres, pos.expandir());
-//                        }
-//                      
+                        remover_componentes_painel(painel_direito);                    
                         painel_direito.add(x2);
                         break;
                  }
@@ -284,16 +289,6 @@ public class menu extends JFrame {
              }
         });
         
-//        botao_exibir_listagem.addActionListener(new ActionListener(){
-//             @Override
-//             public void actionPerformed(ActionEvent ae) {
-//                 JPanel pl = lista();
-//                 remover_componentes_painel(painel_direito);
-//                 painel_direito.add(pl, pos.expandir());
-//             }
-//        });
-        
- //\\//\\//\\//\\//\\ GridBagLayout code ends here
         return content;
     }
 
