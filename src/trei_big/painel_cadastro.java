@@ -21,7 +21,6 @@ import javax.swing.JTextField;
 public class painel_cadastro {
     
     private static final int GAP = 5;   // Default gap btwn components.
-    
     private JPanel painel = new JPanel(new GridBagLayout());
     private GBHelper pos = new GBHelper();
     

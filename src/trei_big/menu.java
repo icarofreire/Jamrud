@@ -276,8 +276,17 @@ public class menu extends JFrame {
 //                        painel_direito.add(pl, pos.expandir());
                         break;
                     case 3:
-                        remover_componentes_painel(painel_direito);                    
-                        painel_direito.add(x2);
+                        remover_componentes_painel(painel_direito);
+                        
+                        JPanel painel_backup = new painel_backup().painel_p_backup();
+                        JScrollPane scroll_painel_backup = operacoes_painel.painel_com_scroll_sem_borda(painel_backup);
+                        scroll_painel_backup.setName("scroll_painel_backup");
+                        
+                        if( !operacoes_painel.se_componente_em_painel(painel_direito, "scroll_painel_backup") ){
+                             painel_direito.add(scroll_painel_backup, pos.expandir());
+                        }
+                                
+//                        painel_direito.add(x2);
                         break;
                  }
                  
