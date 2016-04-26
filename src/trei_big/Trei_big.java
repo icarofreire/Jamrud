@@ -55,8 +55,9 @@ public class Trei_big {
      */
     public static void main(String[] args) {
         
-          menu();
+//          menu();
 //        new sobre();
+          new painel_elementos().gui_elementos();
         
 
         
