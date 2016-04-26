@@ -48,8 +48,6 @@ public class listagem extends JPanel {
     private DefaultTableModel model;
     private DefaultTableModel linhas_resultado_busca;
     
-    //=================================================================== fields
-    
     //... GUI componentes
     private JTable table;
     private JLabel findLbl = new JLabel("Pesquisar:", JLabel.LEFT);
@@ -62,45 +60,6 @@ public class listagem extends JPanel {
     private JComboBox coluna_busca = new JComboBox();
     
     public JPanel replaceDialog = new JPanel();
-    
-//    private void selecionar_linha_tabela(JTable table, int linha){
-//        linha--;
-//        table.getSelectionModel().setSelectionInterval(linha, linha);
-//        table.scrollRectToVisible(new Rectangle(table.getCellRect(linha, 0, true)));
-//    }
-//    
-//    private static void modificar_direcao_scroll(JTable table, int rowIndex, int vColIndex) {
-//
-//        JViewport viewport = (JViewport) table.getParent();
-//        Rectangle rect = table.getCellRect(rowIndex, vColIndex, true);
-//        Rectangle viewRect = viewport.getViewRect();
-//        rect.setLocation(rect.x - viewRect.x, rect.y - viewRect.y);
-//
-//        int centerX = (viewRect.width - rect.width) / 2;
-//        int centerY = (viewRect.height - rect.height) / 2;
-//        if (rect.x < centerX) {
-//          centerX = -centerX;
-//        }
-//        if (rect.y < centerY) {
-//          centerY = -centerY;
-//        }
-//        rect.translate(centerX, centerY);
-//        viewport.scrollRectToVisible(rect);
-//    }
-    
-        
-//    private int comparacao_dados_coluna(JTable table, int indice_coluna, String dado_pesquisar){
-//        int p_indice = -1;
-//        TableModel tb = table.getModel();
-//        for(int j=0; j<table.getRowCount(); j++)
-//        {
-//            String dados_coluna = tb.getValueAt(j, indice_coluna).toString();
-//            if( dado_pesquisar.equalsIgnoreCase(dados_coluna) ){
-//                p_indice = (j+1); break;
-//            }
-//        }
-//        return p_indice;
-//    }
     
     // \/ obter todos os dados de uma linha expefifica do model da tabela;
     private Object obter_linha_model(DefaultTableModel model, int linha) {
@@ -116,19 +75,18 @@ public class listagem extends JPanel {
             @Override
             public void tableChanged(TableModelEvent tme) {
                   if(!em_busca){
-                        System.out.println("celula modificada: " +  tme.getLastRow() );
+                        System.out.println("[FORA] celula modificada: " +  tme.getLastRow() );
                         estado.setLinha_modificada(tme.getLastRow());
                         editar.setEnabled(true);
                   }else{// \/\/ tabela modificada nos resultados da busca;
                         System.out.println("[BUSCA] celula modificada: " +  tme.getLastRow() );
-                        estado.setLinha_modificada(tme.getLastRow());
+                        estado.setLinhas_modificadas_busca(tme.getLastRow());
                         editar.setEnabled(true);
                         
                         Object linha_modificada = obter_linha_model(linhas_resultado_busca, tme.getLastRow());
                         
                         Vector v_linha_modificada = (Vector) linha_modificada;
                         int ID_linha = (int) v_linha_modificada.get(0);
-                        
                         
                                 
                         /* \/\/ adiciona a linha modificada depois da linha antiga;
@@ -137,7 +95,14 @@ public class listagem extends JPanel {
                         model.removeRow(ID_linha-1);
 
                         estado.apagar_ultimo();
-//                        estado.linhas_modificadas.remove( v_linha_modificada.indexOf(v_linha_modificada.get(0)) );
+                        
+                        /* \/\/ peguei a ultima linha registrada como modificada(por conta da remoção da linha logo acima. /\);
+                        apaguei esta linha e registrei como modificada a linha anterior a esta. ou seja: a linha atual menos 1
+                        (Por causa da remoção de uma linha para atualizar a tabela, com a linha que foi editada, nos resultados da busca);
+                        */
+                        int ultima = estado.linhas_modificadas.get(estado.linhas_modificadas.size()-1);
+                        estado.apagar_ultimo();
+                        estado.setLinha_modificada(ultima-1);
                         
                   }
             }
@@ -287,6 +252,7 @@ public class listagem extends JPanel {
 //                    estado.apagar_linhas();
                     zerar_busca.setEnabled(true);
                     table.setModel(model);
+                    estado.apagar_linhas_busca();
                     
                     // \/ ... iniciar busca ... \/;
                     String pesquisa = campo_pesquisar.getText();
@@ -327,7 +293,8 @@ public class listagem extends JPanel {
                 zerar_busca.setEnabled(false);
                 campo_pesquisar.setText(null);
                 resultados.setText(null);
-                coluna_busca.setSelectedIndex(0);               
+                coluna_busca.setSelectedIndex(0);
+                estado.apagar_linhas_busca();
                 table.setModel(model);
             }
         });
