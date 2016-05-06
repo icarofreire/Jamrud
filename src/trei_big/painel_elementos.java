@@ -81,7 +81,7 @@ public class painel_elementos extends JDialog {
     }
     
     public void gui_elementos() {
-      
+          aparencia_swing.mudar_aparencia(painel_elementos.class);
 //        campo_valor.setText(texto);
 //        campo_valor.setEditable(false);
 //        

@@ -58,7 +58,7 @@ public class Trei_big {
 //          menu();
 //        new sobre();
           new painel_elementos().gui_elementos();
-        
+//        SynthApplication.main(args);
 
         
         
