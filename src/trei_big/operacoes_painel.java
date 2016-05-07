@@ -6,8 +6,11 @@
 package trei_big;
 
 import java.awt.Component;
+import java.util.Vector;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -46,5 +49,22 @@ public class operacoes_painel {
             }
             return f;
     }
+    
+    public static int obj_to_int(Object inteiro) {
+        int valor = Integer.parseInt(inteiro.toString());
+        return valor;
+    }
+    
+//    public static Object[] obter_linha_tabela(JTable table, int rowIndex) {
+//        
+//        DefaultTableModel model = (DefaultTableModel) table.getModel();
+//        Object[] result = new Object[model.getColumnCount()];
+//
+//        for (int i = 0; i < model.getColumnCount(); i++) {
+//            result[i] = model.getValueAt(rowIndex-1, i);
+//        }
+//
+//        return result;
+//    }
     
 }

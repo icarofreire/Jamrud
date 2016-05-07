@@ -25,6 +25,10 @@ public class SQL {
     "DATA VARCHAR(100),\n" +
     "OBSERVACOES VARCHAR(100) )";
     
+    public static String montar_sql_deletar_linha(int ID)
+    {
+        return "DELETE FROM "+ nome_tabela +" WHERE id = "+ ID +"";
+    }
     
     public static String montar_sql_insert(String[] colunas, String[] valores)
     {        

@@ -12,6 +12,8 @@ package trei_big;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -39,6 +41,9 @@ public class listagem extends JPanel {
     private ArrayList<Object[]> dados_tabela;
     private String titulo_listagem;
     
+    private HashMap<Integer, Integer> map_linha_indice = new HashMap<Integer, Integer>();
+    private HashMap<Integer, Object[]> map_lugar_linha = new HashMap<Integer, Object[]>();
+    
     //... classes
     private estado_editar estado = new estado_editar();
     private exibir_celula popup = new exibir_celula();
@@ -54,7 +59,7 @@ public class listagem extends JPanel {
     private JLabel resultados = new JLabel();
     private JTextField campo_pesquisar = new JTextField(20);
     private JButton buscar = new JButton("Buscar");
-    private JButton editar = new JButton("Editar registros");
+    private JButton editar = new JButton("Atualizar registros");
     private JButton deletar = new JButton("Deletar registro");
     private JButton zerar_busca = new JButton("Desfazer busca");
     private JComboBox coluna_busca = new JComboBox();
@@ -62,7 +67,7 @@ public class listagem extends JPanel {
     public JPanel replaceDialog = new JPanel();
     
     // \/ obter todos os dados de uma linha expefifica do model da tabela;
-    private Object obter_linha_model(DefaultTableModel model, int linha) {
+    private Object obter_linha_model(DefaultTableModel model, int linha) {//[<= LINHA VERDE NA TABELA]
         Vector v_Object = model.getDataVector();
         return v_Object.get(linha);
     }
@@ -76,33 +81,52 @@ public class listagem extends JPanel {
             public void tableChanged(TableModelEvent tme) {
                   if(!em_busca){
                         System.out.println("[FORA] celula modificada: " +  tme.getLastRow() );
-                        estado.setLinha_modificada(tme.getLastRow());
+//                        estado.setLinha_modificada(tme.getLastRow());//[<= LINHA VERDE NA TABELA]
                         editar.setEnabled(true);
                   }else{// \/\/ tabela modificada nos resultados da busca;
                         System.out.println("[BUSCA] celula modificada: " +  tme.getLastRow() );
-                        estado.setLinhas_modificadas_busca(tme.getLastRow());
+//                        estado.setLinhas_modificadas_busca(tme.getLastRow());//[<= LINHA VERDE NA TABELA]
                         editar.setEnabled(true);
                         
-                        Object linha_modificada = obter_linha_model(linhas_resultado_busca, tme.getLastRow());
+//                        Object linha_modificada = obter_linha_model(linhas_resultado_busca, tme.getLastRow());//[<= LINHA VERDE NA TABELA]
+//                        Object[] linha_modificada = busca.obter_linha_tabela(table, tme.getLastRow());
                         
-                        Vector v_linha_modificada = (Vector) linha_modificada;
-                        int ID_linha = (int) v_linha_modificada.get(0);
+//                        Vector v_linha_modificada = (Vector) linha_modificada;//[<= LINHA VERDE NA TABELA]
+//                        int ID_linha = busca.indice_ID(table, linha_modificada[0]);//tme.getLastRow();//operacoes_painel.obj_to_int(linha_modificada[0]);//(int) v_linha_modificada.get(0);//[<= LINHA VERDE NA TABELA]
                         
                                 
                         /* \/\/ adiciona a linha modificada depois da linha antiga;
                         e depois remove a linha antiga; */
-                        model.insertRow(ID_linha, (Vector) linha_modificada);
-                        model.removeRow(ID_linha-1);
+//                        int __id = operacoes_painel.obj_to_int(linha_modificada[0]);
+//                        System.out.println("lugar: " + map_linha_indice.get(__id) );
+//                        int ID_linha = map_linha_indice.get(__id);
+//                        model.insertRow(ID_linha, linha_modificada);//[<= LINHA VERDE NA TABELA]
+//                        model.removeRow(ID_linha-1);//[<= LINHA VERDE NA TABELA]
+                        
+                        for (Map.Entry<Integer, Integer> entry : map_linha_indice.entrySet())
+                        {
+                            System.out.println(entry.getKey() + "/" + entry.getValue());
+                            int __id = entry.getKey();
+                            int lugar_linha = entry.getValue();
+                            
+                            Object[] linha_modificada = busca.obter_linha_tabela(table, tme.getLastRow());
+                            
+//                            
+                            model.insertRow(lugar_linha, linha_modificada);//[<= LINHA VERDE NA TABELA]
+                            model.removeRow(lugar_linha-1);//[<= LINHA VERDE NA TABELA]
+                        }
+                        
+//                        map_linha_indice.remove(linha_modificada[0]);
 
-                        estado.apagar_ultimo();
+//                        estado.apagar_ultimo();//[<= LINHA VERDE NA TABELA]
                         
                         /* \/\/ peguei a ultima linha registrada como modificada(por conta da remoção da linha logo acima. /\);
                         apaguei esta linha e registrei como modificada a linha anterior a esta. ou seja: a linha atual menos 1
                         (Por causa da remoção de uma linha para atualizar a tabela, com a linha que foi editada, nos resultados da busca);
                         */
-                        int ultima = estado.linhas_modificadas.get(estado.linhas_modificadas.size()-1);
-                        estado.apagar_ultimo();
-                        estado.setLinha_modificada(ultima-1);
+//                        int ultima = estado.linhas_modificadas.get(estado.linhas_modificadas.size()-1);//[<= LINHA VERDE NA TABELA]
+//                        estado.apagar_ultimo();//[<= LINHA VERDE NA TABELA]
+//                        estado.setLinha_modificada(ultima-1);//[<= LINHA VERDE NA TABELA]
                         
                   }
             }
@@ -150,6 +174,7 @@ public class listagem extends JPanel {
         
         for (int count = 0; count < this.dados_tabela.size(); count++) {
             model.addRow( this.dados_tabela.get(count) );
+//            map_lugar_linha.put( (count+1) , this.dados_tabela.get(count) );
         }
         
         table.setModel(model);      
@@ -213,10 +238,19 @@ public class listagem extends JPanel {
                         "Deletar registro: " + model.getValueAt(table.getSelectedRow(), 0), 
                         dialogButton);
                 
-                if(dialogResult == 0) {
-                  System.out.println("Deletar registro: " + model.getValueAt(table.getSelectedRow(), 0) );
-                 
-                } 
+                if(dialogResult == 0)
+                {
+                    Object ID = model.getValueAt(table.getSelectedRow(), 0);
+                    int ID__ = Integer.parseInt(ID.toString());
+                    System.out.println("Deletar registro: [" + ID__ + "]" );
+
+                    banco.conectar();
+                    if(banco.executar_query(SQL.montar_sql_deletar_linha(ID__)))
+                    {
+                        model.removeRow(table.getSelectedRow());
+                        JOptionPane.showMessageDialog(null, "Registro deletado com sucesso!", "OK!", JOptionPane.INFORMATION_MESSAGE);
+                    } 
+                }
             }
         });
         
@@ -224,7 +258,6 @@ public class listagem extends JPanel {
         editar.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent ae) {
-                    estado.apagar_linhas();
                     editar.setEnabled(false);
                     
                   System.out.println("Editar registros.");
@@ -249,26 +282,26 @@ public class listagem extends JPanel {
                 int ind = coluna_busca.getSelectedIndex()-1;                
                 if( ind >= 0 )
                 {
-//                    estado.apagar_linhas();
                     zerar_busca.setEnabled(true);
                     table.setModel(model);
-                    estado.apagar_linhas_busca();
                     
                     // \/ ... iniciar busca ... \/;
                     String pesquisa = campo_pesquisar.getText();
                     String coluna_pesquisar = colunas[ind];
                     System.out.println("buscar: " + pesquisa + " em: " + coluna_pesquisar );
-                    
-//                    busca.realizar_busca_na_tabela(table, pesquisa, coluna_pesquisar, ind);
-                    
 
                     
                     ArrayList<Integer> linhas_res = busca.comparacao_dados_coluna_2(table, ind, pesquisa);
                     for(int i=0; i<linhas_res.size(); i++){
                         System.out.println("->"+linhas_res.get(i));
+                        
+                        map_linha_indice.put(
+                                operacoes_painel.obj_to_int( busca.obter_linha_tabela(table, linhas_res.get(i))[0] ),
+                                linhas_res.get(i)
+                        );
                     }
                     
-                    linhas_resultado_busca = busca.busca(table, colunas, linhas_res);
+                    linhas_resultado_busca = busca.modificar_tabela_resultados_busca(table, colunas, linhas_res);
                     if( linhas_resultado_busca.getRowCount() > 0 ){
                         table.setModel(linhas_resultado_busca);
                         resultados.setText( "Busca: " + linhas_resultado_busca.getRowCount() + " Resultados." );
@@ -277,7 +310,6 @@ public class listagem extends JPanel {
                     }else{
                         JOptionPane.showMessageDialog(null, "Nenhum registro encontrado.", "Não encontrado", JOptionPane.ERROR_MESSAGE);
                     }
-
                     
                 }else{
                     JOptionPane.showMessageDialog(null, "Selecione uma coluna para realizar a pesquisa.", "Atenção", JOptionPane.WARNING_MESSAGE);
@@ -294,7 +326,6 @@ public class listagem extends JPanel {
                 campo_pesquisar.setText(null);
                 resultados.setText(null);
                 coluna_busca.setSelectedIndex(0);
-                estado.apagar_linhas_busca();
                 table.setModel(model);
             }
         });

@@ -31,16 +31,16 @@ public class colorir_linha_tabela extends DefaultTableCellRenderer {
             final Component c = super.getTableCellRendererComponent(
                 table, value, isSelected, hasFocus, row, column);
             
-                boolean linha_modificada_ = estado.se_linha_esta_na_lista(row);
-                if ( linha_modificada_ ) 
-                {
-                    c.setBackground(Color.GREEN);
-
-                } else {
-                    if(!isSelected){
-                        c.setBackground(backgroundColor);
-                    }
-                }
+//                boolean linha_modificada_ = estado.se_linha_esta_na_lista(row);
+//                if ( linha_modificada_ ) 
+//                {
+//                    c.setBackground(Color.GREEN);//[<= LINHA VERDE NA TABELA]
+//
+//                } else {
+//                    if(!isSelected){
+//                        c.setBackground(backgroundColor);//[<= LINHA VERDE NA TABELA]
+//                    }
+//                }
           
             return c;
         }
