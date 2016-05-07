@@ -41,8 +41,8 @@ public class listagem extends JPanel {
     private ArrayList<Object[]> dados_tabela;
     private String titulo_listagem;
     
-    private HashMap<Integer, Integer> map_linha_indice = new HashMap<Integer, Integer>();
-    private HashMap<Integer, Object[]> map_lugar_linha = new HashMap<Integer, Object[]>();
+    //... Hash do ID da linha da tabela, que carrega como valor o indice desta linha na tabela;
+    private HashMap<Integer, Integer> map_IDlinha_indice = new HashMap<Integer, Integer>();
     
     //... classes
     private estado_editar estado = new estado_editar();
@@ -67,10 +67,10 @@ public class listagem extends JPanel {
     public JPanel replaceDialog = new JPanel();
     
     // \/ obter todos os dados de uma linha expefifica do model da tabela;
-    private Object obter_linha_model(DefaultTableModel model, int linha) {//[<= LINHA VERDE NA TABELA]
-        Vector v_Object = model.getDataVector();
-        return v_Object.get(linha);
-    }
+//    private Object obter_linha_model(DefaultTableModel model, int linha) {//[<= LINHA VERDE NA TABELA]
+//        Vector v_Object = model.getDataVector();
+//        return v_Object.get(linha);
+//    }
     
     /* \/\/ se uma linha da tabela for modificada; \/\/ */
     private void se_tabela_for_modificada(final boolean em_busca) {
@@ -81,52 +81,23 @@ public class listagem extends JPanel {
             public void tableChanged(TableModelEvent tme) {
                   if(!em_busca){
                         System.out.println("[FORA] celula modificada: " +  tme.getLastRow() );
-//                        estado.setLinha_modificada(tme.getLastRow());//[<= LINHA VERDE NA TABELA]
                         editar.setEnabled(true);
                   }else{// \/\/ tabela modificada nos resultados da busca;
                         System.out.println("[BUSCA] celula modificada: " +  tme.getLastRow() );
-//                        estado.setLinhas_modificadas_busca(tme.getLastRow());//[<= LINHA VERDE NA TABELA]
                         editar.setEnabled(true);
                         
-//                        Object linha_modificada = obter_linha_model(linhas_resultado_busca, tme.getLastRow());//[<= LINHA VERDE NA TABELA]
-//                        Object[] linha_modificada = busca.obter_linha_tabela(table, tme.getLastRow());
-                        
-//                        Vector v_linha_modificada = (Vector) linha_modificada;//[<= LINHA VERDE NA TABELA]
-//                        int ID_linha = busca.indice_ID(table, linha_modificada[0]);//tme.getLastRow();//operacoes_painel.obj_to_int(linha_modificada[0]);//(int) v_linha_modificada.get(0);//[<= LINHA VERDE NA TABELA]
-                        
-                                
-                        /* \/\/ adiciona a linha modificada depois da linha antiga;
-                        e depois remove a linha antiga; */
-//                        int __id = operacoes_painel.obj_to_int(linha_modificada[0]);
-//                        System.out.println("lugar: " + map_linha_indice.get(__id) );
-//                        int ID_linha = map_linha_indice.get(__id);
-//                        model.insertRow(ID_linha, linha_modificada);//[<= LINHA VERDE NA TABELA]
-//                        model.removeRow(ID_linha-1);//[<= LINHA VERDE NA TABELA]
-                        
-                        for (Map.Entry<Integer, Integer> entry : map_linha_indice.entrySet())
-                        {
-                            System.out.println(entry.getKey() + "/" + entry.getValue());
-                            int __id = entry.getKey();
-                            int lugar_linha = entry.getValue();
                             
-                            Object[] linha_modificada = busca.obter_linha_tabela(table, tme.getLastRow());
+                        Object[] linha_modificada = busca.obter_linha_tabela2(linhas_resultado_busca, tme.getLastRow()+1);
                             
-//                            
-                            model.insertRow(lugar_linha, linha_modificada);//[<= LINHA VERDE NA TABELA]
-                            model.removeRow(lugar_linha-1);//[<= LINHA VERDE NA TABELA]
-                        }
-                        
-//                        map_linha_indice.remove(linha_modificada[0]);
+                        int lug = map_IDlinha_indice.get( operacoes_painel.obj_to_int(linha_modificada[0]) );
+                            
+                        System.out.println( "ID: " + linha_modificada[0] + " lug: " + lug );
+                            
+                        Object[] linha_modificada_p = busca.obter_linha_tabela2(model, lug+1);
 
-//                        estado.apagar_ultimo();//[<= LINHA VERDE NA TABELA]
-                        
-                        /* \/\/ peguei a ultima linha registrada como modificada(por conta da remoção da linha logo acima. /\);
-                        apaguei esta linha e registrei como modificada a linha anterior a esta. ou seja: a linha atual menos 1
-                        (Por causa da remoção de uma linha para atualizar a tabela, com a linha que foi editada, nos resultados da busca);
-                        */
-//                        int ultima = estado.linhas_modificadas.get(estado.linhas_modificadas.size()-1);//[<= LINHA VERDE NA TABELA]
-//                        estado.apagar_ultimo();//[<= LINHA VERDE NA TABELA]
-//                        estado.setLinha_modificada(ultima-1);//[<= LINHA VERDE NA TABELA]
+                        model.insertRow(lug, linha_modificada);
+                        model.removeRow(lug-1);
+
                         
                   }
             }
@@ -174,7 +145,6 @@ public class listagem extends JPanel {
         
         for (int count = 0; count < this.dados_tabela.size(); count++) {
             model.addRow( this.dados_tabela.get(count) );
-//            map_lugar_linha.put( (count+1) , this.dados_tabela.get(count) );
         }
         
         table.setModel(model);      
@@ -295,8 +265,9 @@ public class listagem extends JPanel {
                     for(int i=0; i<linhas_res.size(); i++){
                         System.out.println("->"+linhas_res.get(i));
                         
-                        map_linha_indice.put(
-                                operacoes_painel.obj_to_int( busca.obter_linha_tabela(table, linhas_res.get(i))[0] ),
+                        Object[] obj_ = busca.obter_linha_tabela(table, linhas_res.get(i));
+                        map_IDlinha_indice.put(
+                                operacoes_painel.obj_to_int( obj_[0] ),
                                 linhas_res.get(i)
                         );
                     }

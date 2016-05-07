@@ -74,6 +74,19 @@ public class busca_tabela {// realizar uma busca na tabela de listagem;
         return result;
     }
     
+    public Object[] obter_linha_tabela2(DefaultTableModel model, int rowIndex) {
+        if( rowIndex > 0 ){
+            rowIndex--;
+        }
+        Object[] result = new Object[model.getColumnCount()];
+
+        for (int i = 0; i < model.getColumnCount(); i++) {
+            result[i] = model.getValueAt(rowIndex, i);
+        }
+        
+        return result;
+    }
+    
     public int indice_ID(JTable table, Object id) {
 
         DefaultTableModel model = (DefaultTableModel) table.getModel();
