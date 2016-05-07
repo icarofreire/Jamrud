@@ -20,22 +20,13 @@ import java.util.Vector;
 public class banco {
     
     private static String dbURL = "jdbc:derby:DefaultAddressBook;create=true;user=me;password=mine";
-    private static String nome_tabela = "cadastro_1";
+    private static String nome_tabela = SQL.nome_tabela;
     
     // jdbc Connection
     private static Connection conn = null;
     private static Statement stmt = null;
     
-    private static String sql_tabela = 
-        "CREATE table "+ nome_tabela +" (\n" +
-        "ID          INTEGER NOT NULL \n" +
-        "                PRIMARY KEY GENERATED ALWAYS AS IDENTITY \n" +
-        "                (START WITH 1, INCREMENT BY 1),\n" +
-        "NOME    VARCHAR(100), \n" +
-        "ENDERECO   VARCHAR(100),\n" +
-        "TELEFONE  VARCHAR(100),\n" +
-        "DATA       VARCHAR(100),\n" +
-        "OBSERVACOES       VARCHAR(100) )";
+    private static String sql_tabela = SQL.sql_tabela;
 
     public static void iniciar()
     {
@@ -84,8 +75,8 @@ public class banco {
             statement.execute(sql_tabela);
             bCreatedTables = true;
         } catch (SQLException ex) {
-            if( ex.getSQLState().equalsIgnoreCase("X0Y32") ) {
-                System.out.println( ex.getSQLState() + ": Tabela já existe." );
+            if( ex.getSQLState().equalsIgnoreCase("X0Y32") ) {// <= se tabela existe;
+//                System.out.println( ex.getSQLState() + ": Tabela já existe." );
             }else{
                 ex.printStackTrace();
             }
@@ -94,31 +85,12 @@ public class banco {
         return bCreatedTables;
     }
     
-    public static String montar_sql_insert(String[] colunas, String[] valores)
-    {        
-        String j1 = "";
-        String j2 = "";
-        String SQL = "";
-        if( colunas.length == valores.length )
-        {
-            for(int i=0; i<colunas.length; i++){
-                j1 += colunas[i];
-                j2 += "'" + valores[i] + "'";
-                if(i < (colunas.length-1) ){ j1 += ","; j2 += ","; }
-            }
-            j1 = "(" + j1 + ")";
-            j2 = "(" + j2 + ")";
-            SQL = "insert into " + nome_tabela + " " + j1 + " values " + j2;
-        }
-        return SQL;
-    }
-    
     private static void insertRestaurants(String[] colunas, String[] valores)
     {
         try
         {
             stmt = conn.createStatement();
-            stmt.execute(montar_sql_insert(colunas, valores));
+            stmt.execute( SQL.montar_sql_insert(colunas, valores) );
             stmt.close();
         }
         catch (SQLException sqlExcept)
@@ -133,7 +105,7 @@ public class banco {
         try
         {
             stmt = conn.createStatement();
-            ResultSet results = stmt.executeQuery("select * from " + nome_tabela);
+            ResultSet results = stmt.executeQuery( SQL.listar );
             ResultSetMetaData rsmd = results.getMetaData();
             int numberCols = rsmd.getColumnCount();
             for (int i=1; i<=numberCols; i++)
