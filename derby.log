@@ -1,0 +1,16 @@
+----------------------------------------------------------------
+Sat May 07 03:53:46 BRT 2016:
+ Inicializando o Derby versão The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instância a816c00e-0154-89fe-4f32-0000031e7d38
+no diretório de banco de dados /home/icaro/NetBeansProjects/Jamrud/DefaultAddressBook 
+
+java.vendor=Oracle Corporation
+java.runtime.version=1.7.0_101-b00
+user.dir=/home/icaro/NetBeansProjects/Jamrud
+os.name=Linux
+os.arch=amd64
+os.version=3.16.0-4-amd64
+derby.system.home=null
+Carregador de classe do banco de dados iniciado - derby.database.classpath=''
+----------------------------------------------------------------
+Sat May 07 03:53:47 BRT 2016:
+Encerrando a instância a816c00e-0154-89fe-4f32-0000031e7d38

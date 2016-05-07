@@ -57,10 +57,14 @@ public class Trei_big {
         
 //          menu();
 //        new sobre();
-          new painel_elementos().gui_elementos();
-//        SynthApplication.main(args);
+//          new painel_elementos().gui_elementos();
 
+        banco.iniciar();
         
+//        String nome_tabela = "X";
+//        String[] colunas = new String[]{"NOME", "ENDERECO", "TELEFONE", "DATA", "OBSERVACOES"};
+//        String[] valores = new String[]{"NOME-1", "ENDERECO-1", "TELEFONE-1", "DATA-1", "OBSERVACOES-1"};
+//        System.out.println( banco.montar_sql_insert(nome_tabela, colunas, valores) );
         
     }
     

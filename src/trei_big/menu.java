@@ -38,6 +38,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 
 /**
  *
@@ -64,7 +65,15 @@ public class menu extends JFrame {
     
     
     public menu(String titulo) {
-     
+//        try
+//    {
+//        UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
+//        
+//    }
+//    catch(Exception e)
+//    {
+//        //TODO exception
+//    }
         //... Create content pane with one button and set window attributes.
         JPanel windowContent = new JPanel();
         windowContent.setLayout(new BorderLayout());
@@ -287,6 +296,19 @@ public class menu extends JFrame {
                         }
                                 
 //                        painel_direito.add(x2);
+                        break;
+                        
+                    case 4:
+                        remover_componentes_painel(painel_direito);
+                        
+                        JPanel painel_temas = new painel_temas().painel_p_temas();
+                        JScrollPane scroll_painel_temas = operacoes_painel.painel_com_scroll_sem_borda(painel_temas);
+                        scroll_painel_temas.setName("scroll_painel_temas");
+                        
+                        if( !operacoes_painel.se_componente_em_painel(painel_direito, "scroll_painel_temas") ){
+                             painel_direito.add(scroll_painel_temas, pos.expandir());
+                        }
+                        
                         break;
                  }
                  
