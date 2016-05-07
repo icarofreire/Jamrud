@@ -55,16 +55,4 @@ public class operacoes_painel {
         return valor;
     }
     
-//    public static Object[] obter_linha_tabela(JTable table, int rowIndex) {
-//        
-//        DefaultTableModel model = (DefaultTableModel) table.getModel();
-//        Object[] result = new Object[model.getColumnCount()];
-//
-//        for (int i = 0; i < model.getColumnCount(); i++) {
-//            result[i] = model.getValueAt(rowIndex-1, i);
-//        }
-//
-//        return result;
-//    }
-    
 }

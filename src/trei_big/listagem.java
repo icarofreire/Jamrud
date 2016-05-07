@@ -55,22 +55,17 @@ public class listagem extends JPanel {
     
     //... GUI componentes
     private JTable table;
-    private JLabel findLbl = new JLabel("Pesquisar:", JLabel.LEFT);
+    private JLabel lbl_pesquisar = new JLabel("Pesquisar: ", JLabel.LEFT);
     private JLabel resultados = new JLabel();
     private JTextField campo_pesquisar = new JTextField(20);
-    private JButton buscar = new JButton("Buscar");
-    private JButton editar = new JButton("Atualizar registros");
-    private JButton deletar = new JButton("Deletar registro");
-    private JButton zerar_busca = new JButton("Desfazer busca");
+    private JButton buscar = new JButton("Buscar", new ImageIcon("icones/pesquisar-32.png"));
+    private JButton editar = new JButton("Atualizar registros", new ImageIcon("icones/atualizar-32.png"));
+    private JButton deletar = new JButton("Deletar registro", new ImageIcon("icones/deletar-32.png"));
+    private JButton zerar_busca = new JButton("Desfazer busca", new ImageIcon("icones/voltar-32.png"));
     private JComboBox coluna_busca = new JComboBox();
     
     public JPanel replaceDialog = new JPanel();
     
-    // \/ obter todos os dados de uma linha expefifica do model da tabela;
-//    private Object obter_linha_model(DefaultTableModel model, int linha) {//[<= LINHA VERDE NA TABELA]
-//        Vector v_Object = model.getDataVector();
-//        return v_Object.get(linha);
-//    }
     
     /* \/\/ se uma linha da tabela for modificada; \/\/ */
     private void se_tabela_for_modificada(final boolean em_busca) {
@@ -118,6 +113,10 @@ public class listagem extends JPanel {
         gui();
         replaceDialog = painel_principal;
     }
+    
+    public void exibir_numero_registros() {
+        resultados.setText( model.getRowCount() + ": Registro(s)." );
+    }
 
     private Component TableExample()
     {
@@ -147,7 +146,8 @@ public class listagem extends JPanel {
             model.addRow( this.dados_tabela.get(count) );
         }
         
-        table.setModel(model);      
+        table.setModel(model);
+        exibir_numero_registros();
         
         
         table.setDefaultRenderer(Object.class, new colorir_linha_tabela(estado));
@@ -201,25 +201,31 @@ public class listagem extends JPanel {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 
-                int dialogButton = JOptionPane.YES_NO_OPTION;
-                int dialogResult = JOptionPane.showConfirmDialog(
-                        null, 
-                        "Deseja realmente apagar este registro ?",
-                        "Deletar registro: " + model.getValueAt(table.getSelectedRow(), 0), 
-                        dialogButton);
-                
-                if(dialogResult == 0)
+                if( table.getSelectedRow() >= 0 )
                 {
-                    Object ID = model.getValueAt(table.getSelectedRow(), 0);
-                    int ID__ = Integer.parseInt(ID.toString());
-                    System.out.println("Deletar registro: [" + ID__ + "]" );
+                    int dialogButton = JOptionPane.YES_NO_OPTION;
+                    int dialogResult = JOptionPane.showConfirmDialog(
+                            null, 
+                            "Deseja realmente apagar este registro ?",
+                            "Deletar registro: " + model.getValueAt(table.getSelectedRow(), 0), 
+                            dialogButton);
 
-                    banco.conectar();
-                    if(banco.executar_query(SQL.montar_sql_deletar_linha(ID__)))
+                    if(dialogResult == 0)
                     {
-                        model.removeRow(table.getSelectedRow());
-                        JOptionPane.showMessageDialog(null, "Registro deletado com sucesso!", "OK!", JOptionPane.INFORMATION_MESSAGE);
-                    } 
+                        Object ID = model.getValueAt(table.getSelectedRow(), 0);
+                        int ID__ = Integer.parseInt(ID.toString());
+                        System.out.println("Deletar registro: [" + ID__ + "]" );
+
+                        banco.conectar();
+                        if(banco.executar_query(SQL.montar_sql_deletar_linha(ID__)))
+                        {
+                            model.removeRow(table.getSelectedRow());
+                            aviso.mensagem_ok("Registro deletado com sucesso!");
+                        } 
+                    }
+                }else{
+                    deletar.setEnabled(false);
+                    aviso.mensagem_atencao("Selecione um registro na tabela para poder deletar.");
                 }
             }
         });
@@ -240,7 +246,7 @@ public class listagem extends JPanel {
 //                    }
 //                  }
                   
-                  JOptionPane.showMessageDialog(null, "Registros atualizados com sucesso!", "OK!", JOptionPane.INFORMATION_MESSAGE);
+                  aviso.mensagem_sucesso("Registros atualizados com sucesso!");
             }
         });
         
@@ -253,6 +259,7 @@ public class listagem extends JPanel {
                 if( ind >= 0 )
                 {
                     zerar_busca.setEnabled(true);
+                    deletar.setEnabled(false);
                     table.setModel(model);
                     
                     // \/ ... iniciar busca ... \/;
@@ -279,11 +286,11 @@ public class listagem extends JPanel {
                         
                         se_tabela_for_modificada(true);
                     }else{
-                        JOptionPane.showMessageDialog(null, "Nenhum registro encontrado.", "Não encontrado", JOptionPane.ERROR_MESSAGE);
+                        aviso.mensagem_falha("Nenhum registro encontrado.", "Não encontrado");
                     }
                     
                 }else{
-                    JOptionPane.showMessageDialog(null, "Selecione uma coluna para realizar a pesquisa.", "Atenção", JOptionPane.WARNING_MESSAGE);
+                    aviso.mensagem_atencao("Selecione uma coluna para realizar a pesquisa.");
                 }
                 
             }//fim void actionPerformed;
@@ -294,8 +301,9 @@ public class listagem extends JPanel {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 zerar_busca.setEnabled(false);
+                deletar.setEnabled(false);
                 campo_pesquisar.setText(null);
-                resultados.setText(null);
+                exibir_numero_registros();
                 coluna_busca.setSelectedIndex(0);
                 table.setModel(model);
             }
@@ -315,8 +323,10 @@ public class listagem extends JPanel {
 
         painel_principal.setBorder(BorderFactory.createEmptyBorder(BORDER, BORDER, BORDER, BORDER));
         
+//        lbl_pesquisar.setIcon(new ImageIcon("icones/pesquisar-32.png"));
+        
         //... primeira linha
-        painel_principal.add(findLbl, pos);
+        painel_principal.add(lbl_pesquisar, pos);
         painel_principal.add(new Gap(GAP), pos.nextCol());
         painel_principal.add(campo_pesquisar      , pos.nextCol().expandW());
         painel_principal.add(new Gap(GAP), pos.nextCol());

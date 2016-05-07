@@ -38,10 +38,7 @@ public class editar_celula_tabela  extends DefaultCellEditor {
                     textField.selectAll();
                     textField.requestFocusInWindow();
 
-                    JOptionPane.showMessageDialog(
-                        null,
-                        "Insira alguma informação.",
-                        "Erro!",JOptionPane.ERROR_MESSAGE);
+                    aviso.mensagem_erro("Insira alguma informação.");
                     
                     return false;
                 }

@@ -87,19 +87,5 @@ public class busca_tabela {// realizar uma busca na tabela de listagem;
         return result;
     }
     
-    public int indice_ID(JTable table, Object id) {
-
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        Object[] result_ids = new Object[model.getColumnCount()];
-        int IND = -1;
-        for (int i = 0; i < model.getRowCount(); i++) {
-            result_ids[i] = model.getValueAt(i, 0);
-            if( result_ids[i].equals(id) ){
-                IND = i; break;
-            }
-        }
-        
-        return IND;
-    }
     
 }
