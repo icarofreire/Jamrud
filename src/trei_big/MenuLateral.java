@@ -9,6 +9,7 @@ import java.awt.Component;
 import java.awt.Font;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Vector;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -21,30 +22,32 @@ import javax.swing.JList;
 public class MenuLateral {
     
     private Map<String, ImageIcon> map = new HashMap<>();
-
+    private Map<String, Integer> modulo = new HashMap<>();
+    
+    private Vector<String> nomes = new Vector<String>();
+    private Vector<String> icones = new Vector<String>();
+    
     public JList lista() {
         
-        String[] nomes_do_menu = {
-            "Cadastrar",
-            "Pesquisar/Editar",
-            "Lixeira",
-            "Backup",
-            "Temas"
-//            "Importar/Exportar Banco de Dados"
-        };
+        /* \/ A ordem em que forem adicionados será a ordem em que aparecerá no menu. \/ */
+        nomes.add("Cadastrar"); /* => */ icones.add("icones/cadastrar.png");
+        nomes.add("Pesquisar/Editar"); /* => */ icones.add("icones/pesquisar_e_editar.png");
+        nomes.add("Lixeira"); /* => */ icones.add("icones/lixo2.png");
+        nomes.add("Backup"); /* => */ icones.add("icones/1460597575_document-save.png");
+        nomes.add("Temas"); /* => */ icones.add("icones/aparencia1.png");
+
         
+        //...
         try {
-            map.put(nomes_do_menu[0], new ImageIcon("icones/cadastrar.png"));
-            map.put(nomes_do_menu[1], new ImageIcon("icones/pesquisar_e_editar.png"));
-            map.put(nomes_do_menu[2], new ImageIcon("icones/lixo2.png"));
-            map.put(nomes_do_menu[3], new ImageIcon("icones/1460597575_document-save.png"));
-            map.put(nomes_do_menu[4], new ImageIcon("icones/aparencia1.png"));
-//            map.put(nomes_do_menu[5], new ImageIcon("icones/banco.png"));
+            for(int i = 0; i < nomes.size(); i++) {
+                map.put( nomes.elementAt(i), new ImageIcon(icones.elementAt(i)));
+                modulo.put( nomes.elementAt(i), i );
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
                 
-        JList list = new JList(nomes_do_menu);
+        JList list = new JList(nomes);
         list.setCellRenderer(new MenuLateralRenderer());
         return list;
     }
@@ -64,6 +67,14 @@ public class MenuLateral {
             label.setHorizontalTextPosition(JLabel.RIGHT);
             label.setFont(font);
             return label;
+        }
+    }
+    
+    public boolean se_chave(String chave, int indice) {
+        if( modulo.containsKey(chave) && modulo.get(chave) == indice ) {
+            return true;
+        }else{
+            return false;
         }
     }
 

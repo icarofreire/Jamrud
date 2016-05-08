@@ -31,6 +31,14 @@ public class operacoes_painel {
         return scroll;
     }
     
+    public static JPanel remover_componentes_painel(JPanel painel){
+        if(painel.getComponents().length >= 1){
+            painel.removeAll();
+            operacoes_painel.atualizar_painel(painel);
+        }
+        return painel;
+    }
+    
     /* \/ Verifica se existe um componente X no painel; 
        ATENÇÃO: A verificação é realizada atraves do nome do componente, que é definido pelo metodo 'setName'.
     Exemplo:
@@ -53,6 +61,17 @@ public class operacoes_painel {
     public static int obj_to_int(Object inteiro) {
         int valor = Integer.parseInt(inteiro.toString());
         return valor;
+    }
+    
+    public static JPanel add_painel_filho_ao_PAI(JPanel painel_principal, JPanel painel_filho, String ID_painel_filho, GBHelper pos){
+        operacoes_painel.remover_componentes_painel(painel_principal);
+        JScrollPane scroll_painel_backup = operacoes_painel.painel_com_scroll_sem_borda(painel_filho);
+        scroll_painel_backup.setName(ID_painel_filho);
+                        
+        if( !operacoes_painel.se_componente_em_painel(painel_principal, ID_painel_filho) ){
+            painel_principal.add(scroll_painel_backup, pos.expandir());
+        }
+        return painel_principal;
     }
     
 }

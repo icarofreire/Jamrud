@@ -48,6 +48,8 @@ import static trei_big.banco.selectRestaurants;
  */
 public class menu extends JFrame {
     
+    private MenuLateral menu_lateral;
+    private GBHelper pos = new GBHelper();
     private static final int BORDER = 12;  // Window border in pixels.
     private static final int GAP = 5;   // Default gap btwn components.
     
@@ -67,15 +69,7 @@ public class menu extends JFrame {
     
     
     public menu(String titulo) {
-//        try
-//    {
-//        UIManager.setLookAndFeel("com.jtattoo.plaf.mcwin.McWinLookAndFeel");
-//        
-//    }
-//    catch(Exception e)
-//    {
-//        //TODO exception
-//    }
+
         //... Create content pane with one button and set window attributes.
         JPanel windowContent = new JPanel();
         windowContent.setLayout(new BorderLayout());
@@ -105,67 +99,8 @@ public class menu extends JFrame {
         super.setVisible(true);
     }
     
-    private JPanel remover_componentes_painel(JPanel painel){
-        if(painel.getComponents().length >= 1){
-            painel.removeAll();
-            operacoes_painel.atualizar_painel(painel);
-        }
-        return painel;
-    }
-      
-    
-    /* \/ adiciona os componentes no painel, onde este conjunto 
-    de comnponente representa um cadastro (Uma tabela de registros para exibir); \/ */
-//    private JPanel cadastro_exibir(JPanel painel, GBHelper pos, JButton botao, String titulo, String subtitulo_){
-//        
-//        JLabel l1 = new JLabel(titulo);
-//        JLabel subtitulo = new JLabel(subtitulo_);
-////        JButton botao = new JButton(nome_botao);
-//        botao.setText("Abrir");
-//        
-//        Font f = l1.getFont();
-//        l1.setFont(f.deriveFont(f.getStyle() | Font.BOLD));// negrito
-//        
-//        painel.add(l1, pos.nextRow().expandW());
-//        painel.add(subtitulo, pos.nextRow().expandW());
-//        painel.add(botao, pos.nextCol().expandW());
-//        painel.add(new Gap(GAP) , pos.nextRow());  // Add a gap below
-//        painel.add(new JSeparator(SwingConstants.HORIZONTAL), pos.nextRow().width(2).expandW());
-//        
-//        painel.add(new Gap(GAP) , pos.nextRow());  // Add a gap below
-//        
-//        return painel;
-//    }
-    
-    /* \/ monta um painel para exibir uma lista dos cadastros existentes; 
-    seguindo de um botão para exibir para cadastro; \/*/
-//    private JPanel painel_listas_cadastros(){
-//        JPanel painel = new JPanel(new GridBagLayout());
-//        GBHelper pos = new GBHelper();
-//        
-//        
-//        painel = cadastro_exibir(painel, pos, 
-//                this.botao_exibir_listagem, 
-//                "Cadastro de Clientes", 
-//                "Subtitulo para Cadastro de Clientes");
-//        
-////        painel = cadastro_exibir(painel, pos, 
-////                this.botao_exibir_listagem2, 
-////                "Cadastro de Modelos", 
-////                "Subtitulo para Cadastro de Modelos de todos os Carros");
-//        
-//        
-//        
-//        return painel;
-//    }
-    
     /* \/ inseriri dados na tabela de listagem e exibir a mesma; */
     private JPanel inserir_dados_na_tabela(){
-        
-//        String[] colunas = new String[] {
-//            "Id", "Name", "Hourly Rate", "Part Time", "Endereço", "CPF", "Sobrenome", "Caso Pendente",
-//            "campo-1", "campo-2", "campo-3", "campo-4"
-//        };
         
         String[] colunas = new String[] {
             "ID", "NOME", "ENDERECO", "TELEFONE", "DATA", "OBSERVACOES"
@@ -178,18 +113,14 @@ public class menu extends JFrame {
         for (Vector<String> linha : linhas) {
             dados_da_tabela.add( linha.toArray(new Object[]{}) );
         }       
-        
-//        exibir_listagem l = new exibir_listagem("Lista de Clientes", colunas, dados_da_tabela);
-        
+                
        return new exibir_listagem().obj("Lista de Clientes", colunas, dados_da_tabela);
     }
     
-     private JPanel gui() {
-//        selectionCB.setEnabled(false);
-        
+     private JPanel gui() {        
       
-        MenuLateral m = new MenuLateral();
-        lista = m.lista();
+        this.menu_lateral = new MenuLateral();
+        lista = this.menu_lateral.lista();
         JScrollPane scroll = new JScrollPane(lista);
         scroll.setPreferredSize(new Dimension(300, 0));
         scroll.setMinimumSize(new Dimension(300, 0));
@@ -207,9 +138,6 @@ public class menu extends JFrame {
         //... Create GridBagLayout content pane; set border.
         JPanel content = new JPanel(new GridBagLayout());
         content.setBorder(BorderFactory.createEmptyBorder(BORDER, BORDER, BORDER, BORDER));
-
-//\\//\\//\\//\\//\\ GridBagLayout code begins here
-        final GBHelper pos = new GBHelper();  // Create GridBag helper object.
         
         
         //... First row
@@ -234,81 +162,35 @@ public class menu extends JFrame {
                  String titulo = o.toString();
                  painel_direito.setBorder(BorderFactory.createTitledBorder(titulo));
                  
-                 switch(index)
+                 
+                 if( menu_lateral.se_chave("Cadastrar", index) )
                  {
-                    case 0:
-                         remover_componentes_painel(painel_direito);
-                         
                          JPanel painel_cadastrar = new painel_cadastro().painel_p_cadastrar();
-                         JScrollPane scroll_painel_cadastrar = operacoes_painel.painel_com_scroll_sem_borda(painel_cadastrar);
-                         scroll_painel_cadastrar.setName("scroll_painel_cadastrar");
-                         
-                         if( !operacoes_painel.se_componente_em_painel(painel_direito, "scroll_painel_cadastrar") ){
-                             painel_direito.add(scroll_painel_cadastrar, pos.expandir());
-                         }
-                         
-                         break;
-//                    case 1:
-//                        remover_componentes_painel(painel_direito);
-//                        JLabel pl = new JLabel("Exibir painel de listagem: ");
-//                        painel_direito.add(pl);
-//                        painel_direito.add(botao_exibir_listagem);
-//                        break;
-                    case 2:
-                        remover_componentes_painel(painel_direito);
-                        painel_direito.add(l_lixeira);
-                        break;
-                    case 1:
-                        remover_componentes_painel(painel_direito);
-                        
-//                        JPanel painel_lis_cad = painel_listas_cadastros();
-//                        JScrollPane scroll_painel_lis_cad = new JScrollPane(painel_lis_cad);
-//                        scroll_painel_lis_cad.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-//                        
-//                        painel_direito.add(scroll_painel_lis_cad ,pos.expandir());
-                        
+                         painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_cadastrar, "scroll_painel_cadastrar", pos);
+                 }
+                 else if( menu_lateral.se_chave("Pesquisar/Editar", index) )
+                 {                        
                         JPanel pl = inserir_dados_na_tabela();
-                        remover_componentes_painel(painel_direito);
-                        JScrollPane scroll_pl = operacoes_painel.painel_com_scroll_sem_borda(pl);
-                        scroll_pl.setName("scroll_pl");
-                        
-                        if( !operacoes_painel.se_componente_em_painel(painel_direito, "scroll_pl") ){
-                             painel_direito.add(scroll_pl, pos.expandir());
-                        }
-                        
-//                        painel_direito.add(pl, pos.expandir());
-                        break;
-                    case 3:
-                        remover_componentes_painel(painel_direito);
-                        
+                        painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, pl, "scroll_pl", pos);
+                 }
+                 else if( menu_lateral.se_chave("Lixeira", index) )
+                 {
+                        operacoes_painel.remover_componentes_painel(painel_direito);
+                        painel_direito.add(l_lixeira);
+                 }
+                 else if( menu_lateral.se_chave("Backup", index) )
+                 {
                         JPanel painel_backup = new painel_backup().painel_p_backup();
-                        JScrollPane scroll_painel_backup = operacoes_painel.painel_com_scroll_sem_borda(painel_backup);
-                        scroll_painel_backup.setName("scroll_painel_backup");
-                        
-                        if( !operacoes_painel.se_componente_em_painel(painel_direito, "scroll_painel_backup") ){
-                             painel_direito.add(scroll_painel_backup, pos.expandir());
-                        }
-                                
-//                        painel_direito.add(x2);
-                        break;
-                        
-                    case 4:
-                        remover_componentes_painel(painel_direito);
-                        
+                        painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_backup, "scroll_painel_backup", pos);
+                 }
+                 else if( menu_lateral.se_chave("Temas", index) )
+                 {
                         JPanel painel_temas = new painel_temas().painel_p_temas();
-                        JScrollPane scroll_painel_temas = operacoes_painel.painel_com_scroll_sem_borda(painel_temas);
-                        scroll_painel_temas.setName("scroll_painel_temas");
-                        
-                        if( !operacoes_painel.se_componente_em_painel(painel_direito, "scroll_painel_temas") ){
-                             painel_direito.add(scroll_painel_temas, pos.expandir());
-                        }
-                        
-                        break;
+                        painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_temas, "scroll_painel_temas", pos);
                  }
                  
                  
-                 
-             }
+             }// fim mouseClicked(MouseEvent me);
 
              @Override
              public void mousePressed(MouseEvent me) {

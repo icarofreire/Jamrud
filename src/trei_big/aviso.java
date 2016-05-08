@@ -35,6 +35,13 @@ public class aviso {
                 JOptionPane.WARNING_MESSAGE, new ImageIcon("icones/atencao.png"));
     }
     
+    public static void mensagem_atencao(String mensagem, String titulo) {
+        JOptionPane.showMessageDialog(null, 
+                mensagem,
+                titulo,
+                JOptionPane.WARNING_MESSAGE, new ImageIcon("icones/atencao.png"));
+    }
+    
     public static void mensagem_ok(String mensagem) {
         JOptionPane.showMessageDialog(null, 
                 mensagem,

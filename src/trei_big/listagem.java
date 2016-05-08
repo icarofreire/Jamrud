@@ -258,37 +258,43 @@ public class listagem extends JPanel {
                 int ind = coluna_busca.getSelectedIndex()-1;                
                 if( ind >= 0 )
                 {
-                    zerar_busca.setEnabled(true);
-                    deletar.setEnabled(false);
-                    table.setModel(model);
-                    
-                    // \/ ... iniciar busca ... \/;
                     String pesquisa = campo_pesquisar.getText();
                     String coluna_pesquisar = colunas[ind];
-                    System.out.println("buscar: " + pesquisa + " em: " + coluna_pesquisar );
+                    if( !pesquisa.isEmpty() )
+                    {
+                        zerar_busca.setEnabled(true);
+                        deletar.setEnabled(false);
+                        table.setModel(model);
 
-                    
-                    ArrayList<Integer> linhas_res = busca.comparacao_dados_coluna_2(table, ind, pesquisa);
-                    for(int i=0; i<linhas_res.size(); i++){
-                        System.out.println("->"+linhas_res.get(i));
-                        
-                        Object[] obj_ = busca.obter_linha_tabela(table, linhas_res.get(i));
-                        map_IDlinha_indice.put(
-                                operacoes_painel.obj_to_int( obj_[0] ),
-                                linhas_res.get(i)
-                        );
-                    }
-                    
-                    linhas_resultado_busca = busca.modificar_tabela_resultados_busca(table, colunas, linhas_res);
-                    if( linhas_resultado_busca.getRowCount() > 0 ){
-                        table.setModel(linhas_resultado_busca);
-                        resultados.setText( "Busca: " + linhas_resultado_busca.getRowCount() + " Resultados." );
-                        
-                        se_tabela_for_modificada(true);
+                        // \/ ... iniciar busca ... \/;
+    //                    String pesquisa = campo_pesquisar.getText();
+    //                    String coluna_pesquisar = colunas[ind];
+                        System.out.println("buscar: " + pesquisa + " em: " + coluna_pesquisar );
+
+
+                        ArrayList<Integer> linhas_res = busca.comparacao_dados_coluna_2(table, ind, pesquisa);
+                        for(int i=0; i<linhas_res.size(); i++){
+                            System.out.println("->"+linhas_res.get(i));
+
+                            Object[] obj_ = busca.obter_linha_tabela(table, linhas_res.get(i));
+                            map_IDlinha_indice.put(
+                                    operacoes_painel.obj_to_int( obj_[0] ),
+                                    linhas_res.get(i)
+                            );
+                        }
+
+                        linhas_resultado_busca = busca.modificar_tabela_resultados_busca(table, colunas, linhas_res);
+                        if( linhas_resultado_busca.getRowCount() > 0 ){
+                            table.setModel(linhas_resultado_busca);
+                            resultados.setText( "Busca: " + linhas_resultado_busca.getRowCount() + " Resultados." );
+
+                            se_tabela_for_modificada(true);
+                        }else{
+                            aviso.mensagem_falha("Nenhum registro encontrado.", "Não encontrado");
+                        }
                     }else{
-                        aviso.mensagem_falha("Nenhum registro encontrado.", "Não encontrado");
+                        aviso.mensagem_atencao("Digite alguma informação que deseja buscar.", "Campo vazio");
                     }
-                    
                 }else{
                     aviso.mensagem_atencao("Selecione uma coluna para realizar a pesquisa.");
                 }
