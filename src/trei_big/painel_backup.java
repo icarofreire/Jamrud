@@ -8,6 +8,7 @@ package trei_big;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -26,8 +27,8 @@ public class painel_backup {
     private JFileChooser arquivo = new JFileChooser();
     private JLabel txt = new JLabel("Informe o local para salvar o arquivo:");
     private JTextField caminho = new JTextField(20);
-    private JButton btn_arquivo = new JButton("Selecionar pasta");
-    private JButton btn_salvar = new JButton("Salvar dados");
+    private JButton btn_arquivo = new JButton("Selecionar pasta", new ImageIcon("icones/pasta-32.png"));
+    private JButton btn_salvar = new JButton("Salvar dados", new ImageIcon("icones/salvar-32.png"));
     private String pasta_selecionada;
     
     public JPanel painel_p_backup(){

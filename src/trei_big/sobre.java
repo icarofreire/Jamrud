@@ -10,6 +10,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -25,7 +26,7 @@ public class sobre extends JDialog {
     private JPanel painel = new JPanel(new GridBagLayout());
     private GBHelper pos = new GBHelper();
     private JTextArea campo_valor = new JTextArea();
-    private JButton botao_fechar = new JButton("Fechar");
+    private JButton botao_fechar = new JButton("Fechar", new ImageIcon("icones/erro-24.png"));
     private int largura = 500;
     private int altura = 200;
     

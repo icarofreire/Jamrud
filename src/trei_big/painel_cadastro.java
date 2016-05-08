@@ -7,6 +7,7 @@ package trei_big;
 
 import java.awt.Font;
 import java.awt.GridBagLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -42,8 +43,8 @@ public class painel_cadastro {
         Font f = l1.getFont();
         l1.setFont(f.deriveFont(f.getStyle() | Font.BOLD));// negrito
         
-        JButton btn_cadastrar = new JButton("Cadastrar");
-        JButton btn_cancelar = new JButton("Cancelar");
+        JButton btn_cadastrar = new JButton("Cadastrar", new ImageIcon("icones/adicionar-32.png"));
+        JButton btn_cancelar = new JButton("Cancelar", new ImageIcon("icones/deletar-32.png"));
         
         JLabel lobs = new JLabel("Observações:");
         JTextArea observacoes = new JTextArea();

@@ -8,6 +8,7 @@ package trei_big;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -26,7 +27,7 @@ public class painel_temas {
     private GBHelper pos = new GBHelper();
     private JLabel lcmp1 = new JLabel("Opções para modificar a aparência do sistema:");
     private JComboBox temas = new JComboBox();
-    private JButton aplicar = new JButton("Aplicar");
+    private JButton aplicar = new JButton("Aplicar", new ImageIcon("icones/aplicar-32.png"));
     
     public JPanel painel_p_temas(){
         
@@ -59,7 +60,7 @@ public class painel_temas {
             public void actionPerformed(ActionEvent ae) {
                 
                 int ind = temas.getSelectedIndex();                
-                if( ind >= 0 )
+                if( ind > 0 )
                 {
                     System.out.println("selecionado: " + ind );
                     try{
@@ -122,14 +123,16 @@ public class painel_temas {
                                 break;
                         }
                         
-                        JOptionPane.showMessageDialog(null, "Aparência alterada com sucesso.", "OK", JOptionPane.INFORMATION_MESSAGE);
+                        aviso.mensagem_ok("Aparência alterada com sucesso.");
                         operacoes_painel.atualizar_painel(painel);
                     }catch(Exception e)
                     {
                         //TODO exception
                     }
                     
-                }//fim if;
+                }else{
+                    aviso.mensagem_atencao("Selecione um tema.");
+                }
             }
         });
         
