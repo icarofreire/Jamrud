@@ -174,36 +174,10 @@ public class menu extends JFrame {
         ArrayList<Object[]> dados_da_tabela = new ArrayList<Object[]>();
         banco.conectar();
         Vector<Vector<String>> linhas = banco.selectRestaurants();
-//        Object[] data = new Object[linhas.size()];
         
-        for (Vector<String> linha : linhas){
-           
-//            for (String dado : linha){
-//                System.out.print( dado + "\t\t");
-//            }
-//            System.out.println();
-            
+        for (Vector<String> linha : linhas) {
             dados_da_tabela.add( linha.toArray(new Object[]{}) );
-        }
-        
-//        for (int count = 0; count < 200; count++) {
-//            Object[] data = new Object[]
-//            { 
-//                (count+1), 
-//                "John->"+(count+1), 
-//                40.0, 
-//                false, 
-//                "testee->"+(count+1), 
-//                "testee->"+(count+1), 
-//                "testee->"+(count+1), 
-//                "testee->"+(count+1),
-//                "--teste-1->"+(count+1), 
-//                "--teste-2->"+(count+1), 
-//                "--teste-3->"+(count+1), 
-//                "--teste-4->"+(count+1)
-//            }; 
-//            dados_da_tabela.add(data);
-//        }        
+        }       
         
 //        exibir_listagem l = new exibir_listagem("Lista de Clientes", colunas, dados_da_tabela);
         

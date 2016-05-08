@@ -30,6 +30,7 @@ public class MenuLateral {
             "Lixeira",
             "Backup",
             "Temas"
+//            "Importar/Exportar Banco de Dados"
         };
         
         try {
@@ -38,6 +39,7 @@ public class MenuLateral {
             map.put(nomes_do_menu[2], new ImageIcon("icones/lixo2.png"));
             map.put(nomes_do_menu[3], new ImageIcon("icones/1460597575_document-save.png"));
             map.put(nomes_do_menu[4], new ImageIcon("icones/aparencia1.png"));
+//            map.put(nomes_do_menu[5], new ImageIcon("icones/banco.png"));
         } catch (Exception ex) {
             ex.printStackTrace();
         }

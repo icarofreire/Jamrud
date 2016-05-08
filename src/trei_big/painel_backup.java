@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
 /**
@@ -25,11 +26,17 @@ public class painel_backup {
     private JPanel painel = new JPanel(new GridBagLayout());
     private GBHelper pos = new GBHelper();
     private JFileChooser arquivo = new JFileChooser();
-    private JLabel txt = new JLabel("Informe o local para salvar o arquivo:");
+    private JLabel txt = new JLabel("Importar Banco de Dados:");
     private JTextField caminho = new JTextField(20);
-    private JButton btn_arquivo = new JButton("Selecionar pasta", new ImageIcon("icones/pasta-32.png"));
-    private JButton btn_salvar = new JButton("Salvar dados", new ImageIcon("icones/salvar-32.png"));
+    private JButton btn_arquivo = new JButton("Selecionar arquivo", new ImageIcon("icones/documento-32.png"));
+    private JButton btn_salvar = new JButton("Importar", new ImageIcon("icones/salvar-32.png"));
     private String pasta_selecionada;
+    private JSeparator separador = new JSeparator(JSeparator.HORIZONTAL);
+    
+    private JLabel txt2 = new JLabel("Exportar Banco de Dados:");
+    private JTextField caminho2 = new JTextField(20);
+    private JButton btn_arquivo2 = new JButton("Selecionar local", new ImageIcon("icones/pasta-32.png"));
+    private JButton btn_salvar2 = new JButton("Exportar", new ImageIcon("icones/exportar-32.png"));
     
     public JPanel painel_p_backup(){
         
@@ -45,6 +52,20 @@ public class painel_backup {
         painel.add(caminho, pos.nextCol().expandW());
         painel.add(new Gap(GAP) , pos.nextRow());
         painel.add(btn_salvar, pos.nextRow().expandW());
+        
+        
+        painel.add(new Gap(GAP) , pos.nextRow());
+        painel.add(new Gap(GAP) , pos.nextRow());
+        painel.add(separador , pos.nextRow().expandW());
+        painel.add(new Gap(GAP) , pos.nextRow());
+        painel.add(new Gap(GAP) , pos.nextRow());
+        
+        
+        painel.add(txt2, pos.expandW());
+        painel.add(btn_arquivo2, pos.nextRow().expandW());
+        painel.add(caminho2, pos.nextCol().expandW());
+        painel.add(new Gap(GAP) , pos.nextRow());
+        painel.add(btn_salvar2, pos.nextRow().expandW());
         
         
         btn_arquivo.addActionListener(new ActionListener(){

@@ -56,9 +56,6 @@ public class Trei_big {
     public static void main(String[] args) {
         
 //          menu();
-//        new sobre();
-//          new painel_elementos().gui_elementos();
-        
 //        for (int count = 0; count < 20; count++) {banco.iniciar();}
 carregando.main(args);
         
