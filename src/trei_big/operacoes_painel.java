@@ -5,6 +5,7 @@
  */
 package trei_big;
 
+import ferramenta_gui.GBHelper;
 import java.awt.Component;
 import java.util.Vector;
 import javax.swing.JPanel;
