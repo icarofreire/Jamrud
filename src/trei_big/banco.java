@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSetMetaData;
 import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -178,5 +179,7 @@ public class banco {
         }
 
     }
+       
+    
     
 }

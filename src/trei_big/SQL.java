@@ -49,4 +49,10 @@ public class SQL {
         return SQL;
     }
     
+    public static String montar_sql_modificar(String campo, String valor_campo, int id)
+    {
+        String SQL = "update "+ nome_tabela +" set "+ campo +" = '"+ valor_campo +"' where id = " + id;
+        return SQL;
+    }
+    
 }

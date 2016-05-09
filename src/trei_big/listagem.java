@@ -75,20 +75,20 @@ public class listagem extends JPanel {
             @Override
             public void tableChanged(TableModelEvent tme) {
                   if(!em_busca){
-                        System.out.println("[FORA] celula modificada: " +  tme.getLastRow() );
+//                        System.out.println("[FORA] celula modificada: " +  tme.getLastRow() );
                         editar.setEnabled(true);
                   }else{// \/\/ tabela modificada nos resultados da busca;
-                        System.out.println("[BUSCA] celula modificada: " +  tme.getLastRow() );
+//                        System.out.println("[BUSCA] celula modificada: " +  tme.getLastRow() );
                         editar.setEnabled(true);
                         
                             
-                        Object[] linha_modificada = busca.obter_linha_tabela2(linhas_resultado_busca, tme.getLastRow()+1);
+                        Object[] linha_modificada = busca.obter_linha_tabela_model(linhas_resultado_busca, tme.getLastRow()+1);
                             
                         int lug = map_IDlinha_indice.get( operacoes_painel.obj_to_int(linha_modificada[0]) );
                             
-                        System.out.println( "ID: " + linha_modificada[0] + " lug: " + lug );
+//                        System.out.println( "ID: " + linha_modificada[0] + " lug: " + lug );
                             
-                        Object[] linha_modificada_p = busca.obter_linha_tabela2(model, lug+1);
+                        Object[] linha_modificada_p = busca.obter_linha_tabela_model(model, lug+1);
 
                         model.insertRow(lug, linha_modificada);
                         model.removeRow(lug-1);
@@ -160,7 +160,7 @@ public class listagem extends JPanel {
 
             @Override
             public void mouseClicked(MouseEvent me) {
-                System.out.println("deletar linha: " + table.getSelectedRow() + " => " + me.getButton() );
+//                System.out.println("deletar linha: " + table.getSelectedRow() + " => " + me.getButton() );
                 deletar.setEnabled(true);
                 
                 if( me.getButton() == BOTAO_DIREITO_MOUSE ){// <= se clicado com o botão direito do mouse;
@@ -214,7 +214,7 @@ public class listagem extends JPanel {
                     {
                         Object ID = model.getValueAt(table.getSelectedRow(), 0);
                         int ID__ = Integer.parseInt(ID.toString());
-                        System.out.println("Deletar registro: [" + ID__ + "]" );
+//                        System.out.println("Deletar registro: [" + ID__ + "]" );
 
                         banco.conectar();
                         if(banco.executar_query(SQL.montar_sql_deletar_linha(ID__)))
@@ -236,17 +236,12 @@ public class listagem extends JPanel {
             public void actionPerformed(ActionEvent ae) {
                     editar.setEnabled(false);
                     
-                  System.out.println("Editar registros.");
+//                  System.out.println("Editar registros.");
                   
-                  // \/ Todos os conteúdos da tabela atual a serem salvos \/;
-//                  TableModel tb = table.getModel();
-//                  for(int i=0; i<table.getColumnCount(); i++){
-//                    for(int j=0; j<table.getRowCount(); j++){
-//                        System.out.println( tb.getValueAt(j, i) );
-//                    }
-//                  }
+                  if( busca.atualizar_registros(model) && busca.atualizar_registros(linhas_resultado_busca) ){
+                        aviso.mensagem_sucesso("Registros atualizados com sucesso!");
+                  }
                   
-                  aviso.mensagem_sucesso("Registros atualizados com sucesso!");
             }
         });
         
@@ -269,12 +264,12 @@ public class listagem extends JPanel {
                         // \/ ... iniciar busca ... \/;
     //                    String pesquisa = campo_pesquisar.getText();
     //                    String coluna_pesquisar = colunas[ind];
-                        System.out.println("buscar: " + pesquisa + " em: " + coluna_pesquisar );
+//                        System.out.println("buscar: " + pesquisa + " em: " + coluna_pesquisar );
 
 
                         ArrayList<Integer> linhas_res = busca.comparacao_dados_coluna_2(table, ind, pesquisa);
                         for(int i=0; i<linhas_res.size(); i++){
-                            System.out.println("->"+linhas_res.get(i));
+//                            System.out.println("->"+linhas_res.get(i));
 
                             Object[] obj_ = busca.obter_linha_tabela(table, linhas_res.get(i));
                             map_IDlinha_indice.put(

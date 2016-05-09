@@ -39,7 +39,7 @@ public class busca_tabela {// realizar uma busca na tabela de listagem;
         for(int j=0; j<table.getRowCount(); j++)
         {
             String dados_coluna = tb.getValueAt(j, indice_coluna).toString();
-            System.out.println("-- comparar: " + dados_coluna + " = " + dado_pesquisar);
+//            System.out.println("-- comparar: " + dados_coluna + " = " + dado_pesquisar);
             if( dados_coluna.matches("(.*)" + dado_pesquisar + "(.*)") ){
                 p_indice = (j+1);
                 indices.add(p_indice);
@@ -74,7 +74,7 @@ public class busca_tabela {// realizar uma busca na tabela de listagem;
         return result;
     }
     
-    public Object[] obter_linha_tabela2(DefaultTableModel model, int rowIndex) {
+    public Object[] obter_linha_tabela_model(DefaultTableModel model, int rowIndex) {
         if( rowIndex > 0 ){
             rowIndex--;
         }
@@ -85,6 +85,35 @@ public class busca_tabela {// realizar uma busca na tabela de listagem;
         }
         
         return result;
+    }
+    
+    /* o segundo parametro rowIndex, deve ser o indice levando em consideração que o model é um array:
+    ou seja, o primeiro indice começa em 0(Zero). */
+    public Object[] obter_linha_tabela_normal(DefaultTableModel model, int rowIndex) {
+
+        Object[] result = new Object[model.getColumnCount()];
+
+        for (int i = 0; i < model.getColumnCount(); i++) {
+            result[i] = model.getValueAt(rowIndex, i);
+        }
+        
+        return result;
+    }
+    
+    public boolean atualizar_registros(DefaultTableModel model)
+    {
+        boolean flag = false;
+        for(int i=0; i<model.getRowCount(); i++)
+        {
+                Object[] linha = obter_linha_tabela_normal(model, i);
+                int ID = operacoes_painel.obj_to_int(linha[0]);
+                      
+                for(int j=1; j<model.getColumnCount(); j++){
+                        String sql = SQL.montar_sql_modificar(model.getColumnName(j), linha[j].toString(), ID);
+                        flag = banco.executar_query(sql);
+                }
+        }
+        return flag;
     }
     
     
