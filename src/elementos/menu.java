@@ -56,6 +56,7 @@ public class menu extends JFrame {
     
     private MenuLateral menu_lateral;
     private GBHelper pos = new GBHelper();
+    private GBHelper pos_paineis_internos = new GBHelper();
     private static final int BORDER = 12;  // Window border in pixels.
     private static final int GAP = 5;   // Default gap btwn components.
     
@@ -64,6 +65,8 @@ public class menu extends JFrame {
     private JList lista = new JList(dlm);
     private JButton botao_exibir_listagem = new JButton();
     private JButton botao_exibir_listagem2 = new JButton();
+    private JButton botao_criar_formulario = new JButton("Criar Formulário");
+    
     private JMenu menu = new JMenu("Arquivo");
     private JMenuItem item_menu_sobre = new JMenuItem("Sobre");
     private JMenuItem item_menu_ajuda = new JMenuItem("Ajuda");
@@ -73,6 +76,9 @@ public class menu extends JFrame {
     private JLabel x2 = new JLabel("Fazer backup do banco");
     private JLabel l_lixeira = new JLabel("Lixeira");
     private JPanel painel_direito = new JPanel(new GridBagLayout());
+    
+    private JPanel painel_cima = new JPanel(new GridBagLayout());
+    private JPanel painel_baixo = new JPanel(new GridBagLayout());
     
     
     public menu(String titulo) {
@@ -145,24 +151,25 @@ public class menu extends JFrame {
         imageLbl.setIcon(new ImageIcon("icones/pesquisar.png"));
         
         pesquisa.setBounds(50, 0, 286, 40);
-        
         pesquisa.add(imageLbl);
-
         
         //... Create GridBagLayout content pane; set border.
         JPanel content = new JPanel(new GridBagLayout());
         content.setBorder(BorderFactory.createEmptyBorder(BORDER, BORDER, BORDER, BORDER));
         
-        
         //... First row
         content.add(scroll, pos.nextCol());
         content.add(new Gap(GAP), pos.nextCol());
         
-//        final JPanel pane = new JPanel();
-        painel_direito.setBorder(BorderFactory.createTitledBorder(""));
-//        pane.add(pesquisa);
+        painel_cima.setBorder(BorderFactory.createTitledBorder("Painel cima"));
+        painel_baixo.setBorder(BorderFactory.createTitledBorder("Painel baixo"));
         
         content.add(painel_direito, pos.nextCol().expandir());
+        
+        painel_direito.add( operacoes_painel.painel_com_scroll_sem_borda(painel_cima) , pos_paineis_internos.expandir());
+        painel_direito.add( operacoes_painel.painel_com_scroll_sem_borda(painel_baixo) , pos_paineis_internos.nextRow().expandir());
+        pos.nextRow();
+        painel_direito.add(botao_criar_formulario, pos.nextRow().expandW());
         
         
         lista.addMouseListener(new MouseListener(){
@@ -174,7 +181,7 @@ public class menu extends JFrame {
                  int index = theList.locationToIndex(me.getPoint());
                  Object o = theList.getModel().getElementAt(index);
                  String titulo = o.toString();
-                 painel_direito.setBorder(BorderFactory.createTitledBorder(titulo));
+                 painel_cima.setBorder(BorderFactory.createTitledBorder(titulo));
                  
                  
 //                 if( menu_lateral.se_chave("Cadastrar", index) )
