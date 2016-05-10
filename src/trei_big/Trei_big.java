@@ -20,6 +20,7 @@ public class Trei_big {
     private static String titulo = "Sistema de Cadastro";
     
     public static void menu(){
+        banco.conectar();
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception unused) {
@@ -34,15 +35,32 @@ public class Trei_big {
             }
         });
     }
+    
+    public static void menu_elementos(){
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception unused) {
+            // Nothing can be done, so just ignore it.
+        }
+        
+        //... Start up GUI.
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+               elementos.menu m = new elementos.menu("Criar um formulário");
+               m.setVisible(true);
+            }
+        });
+    }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-          banco.conectar();
-          menu();
+          
+//          menu();
 //        for (int count = 0; count < 20; count++) {banco.iniciar();}
 //carregando.main(args);
+        menu_elementos();
         
     }
     
