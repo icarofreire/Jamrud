@@ -65,7 +65,8 @@ public class menu extends JFrame {
     private JButton botao_exibir_listagem = new JButton();
     private JButton botao_exibir_listagem2 = new JButton();
     private JMenu menu = new JMenu("Arquivo");
-    private JMenuItem item_menu = new JMenuItem("Sobre");
+    private JMenuItem item_menu_sobre = new JMenuItem("Sobre");
+    private JMenuItem item_menu_ajuda = new JMenuItem("Ajuda");
     private JMenuBar barra_de_menu = new JMenuBar();
     
     private JLabel x = new JLabel("Formulário de cadastrar");
@@ -83,12 +84,20 @@ public class menu extends JFrame {
         windowContent.add( gui() , BorderLayout.CENTER);
 
         barra_de_menu.add(menu);
-        menu.add(item_menu);
+        menu.add(item_menu_ajuda);
+        menu.add(item_menu_sobre);
     
-        item_menu.addActionListener(new ActionListener() {
+        item_menu_sobre.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
                 new sobre();
+            }
+        });
+        
+        item_menu_ajuda.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                new ajuda();
             }
         });
 
@@ -108,13 +117,12 @@ public class menu extends JFrame {
     /* \/ inseriri dados na tabela de listagem e exibir a mesma; */
     private JPanel inserir_dados_na_tabela(){
         
-        String[] colunas = new String[] {
-            "ID", "NOME", "ENDERECO", "TELEFONE", "DATA", "OBSERVACOES"
-        };
-        
         ArrayList<Object[]> dados_da_tabela = new ArrayList<Object[]>();
-        banco.conectar();
+//        banco.conectar();
         Vector<Vector<String>> linhas = banco.selectRestaurants();
+        
+        String[] colunas = banco.nome_colunas_consulta.toArray(new String[]{});
+        banco.nome_colunas_consulta.clear();
         
         for (Vector<String> linha : linhas) {
             dados_da_tabela.add( linha.toArray(new Object[]{}) );

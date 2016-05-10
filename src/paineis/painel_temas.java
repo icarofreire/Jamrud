@@ -48,7 +48,8 @@ public class painel_temas {
             "Tema: 11",
             "Tema: 12",
             "Tema: 13",
-            "Tema: 14"            
+            "Tema: 14",
+            "Tema Padrão"
         }));
         
         painel.add(lcmp1, pos.expandW());
@@ -122,6 +123,10 @@ public class painel_temas {
                                                                                                                                                                                      
                             case 14:
                                 UIManager.setLookAndFeel("com.jtattoo.plaf.texture.TextureLookAndFeel");
+                                break;
+                                
+                            case 15://Tema Padrão;
+                                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                                 break;
                         }
                         

@@ -5,6 +5,7 @@
  */
 package trei_big;
 
+import banco.banco;
 import java.util.ArrayList;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -38,7 +39,7 @@ public class Trei_big {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
+          banco.conectar();
           menu();
 //        for (int count = 0; count < 20; count++) {banco.iniciar();}
 //carregando.main(args);

@@ -32,7 +32,7 @@ public class MenuLateral {
         /* \/ A ordem em que forem adicionados será a ordem em que aparecerá no menu. \/ */
         nomes.add("Cadastrar"); /* => */ icones.add("icones/cadastrar.png");
         nomes.add("Pesquisar/Editar"); /* => */ icones.add("icones/pesquisar_e_editar.png");
-        nomes.add("Lixeira"); /* => */ icones.add("icones/lixo2.png");
+//        nomes.add("Lixeira"); /* => */ icones.add("icones/lixo2.png");
         nomes.add("Backup"); /* => */ icones.add("icones/1460597575_document-save.png");
         nomes.add("Temas"); /* => */ icones.add("icones/aparencia1.png");
 

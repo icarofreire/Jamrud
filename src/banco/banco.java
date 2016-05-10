@@ -28,6 +28,8 @@ public class banco {
     private static Statement stmt = null;
     
     private static String sql_tabela = SQL.sql_tabela;
+    
+    public static Vector<String> nome_colunas_consulta;
 
     public static void iniciar()
     {
@@ -119,6 +121,7 @@ public class banco {
     
     public static Vector<Vector<String>> selectRestaurants()
     {
+        nome_colunas_consulta = new Vector<String>();
         Vector<Vector<String>> dados = new Vector<Vector<String>>();
         try
         {
@@ -129,7 +132,7 @@ public class banco {
             for (int i=1; i<=numberCols; i++)
             {
                 //print Column Names
-//                System.out.print(rsmd.getColumnLabel(i)+"\t\t");  
+                nome_colunas_consulta.add( rsmd.getColumnLabel(i) );
             }
 
 //            System.out.println("\n-------------------------------------------------");
