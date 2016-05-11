@@ -177,12 +177,12 @@ public class menu extends JFrame {
                  painel_direito.setBorder(BorderFactory.createTitledBorder(titulo));
                  
                  
-                 if( menu_lateral.se_chave("Cadastrar", index) )
+                 if( menu_lateral.se_chave(MenuLateral.form_cadastrar, index) )
                  {
                          JPanel painel_cadastrar = new painel_cadastro().painel_p_cadastrar();
                          painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_cadastrar, "scroll_painel_cadastrar", pos);
                  }
-                 else if( menu_lateral.se_chave("Pesquisar/Editar", index) )
+                 else if( menu_lateral.se_chave(MenuLateral.pesquisar_editar, index) )
                  {                        
                         JPanel pl = inserir_dados_na_tabela();
                         painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, pl, "scroll_pl", pos);
@@ -192,12 +192,12 @@ public class menu extends JFrame {
                         operacoes_painel.remover_componentes_painel(painel_direito);
                         painel_direito.add(l_lixeira);
                  }
-                 else if( menu_lateral.se_chave("Backup", index) )
+                 else if( menu_lateral.se_chave(MenuLateral.backup_banco, index) )
                  {
                         JPanel painel_backup = new painel_backup().painel_p_backup();
                         painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_backup, "scroll_painel_backup", pos);
                  }
-                 else if( menu_lateral.se_chave("Temas", index) )
+                 else if( menu_lateral.se_chave(MenuLateral.temas, index) )
                  {
                         JPanel painel_temas = new painel_temas().painel_p_temas();
                         painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_temas, "scroll_painel_temas", pos);

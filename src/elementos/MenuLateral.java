@@ -21,30 +21,33 @@ import javax.swing.JList;
  */
 public class MenuLateral {
     
+    /* \/ Titulo para os componentes; \/ */
+    public static String input_text = "Campo de texto";
+    public static String input_text_password = "Campo de senha";
+    
     private Map<String, ImageIcon> map = new HashMap<>();
     private Map<String, Integer> modulo = new HashMap<>();
-    
     private Vector<String> nomes = new Vector<String>();
     private Vector<String> icones = new Vector<String>();
     
     public JList lista() {
         
         /* \/ A ordem em que forem adicionados será a ordem em que aparecerá no menu. \/ */
-        nomes.add("Label"); /* => */ icones.add("icones/elementos/Label/Label_32x32.png");
-        nomes.add("Componente2"); /* => */ icones.add("icones/elementos/Form Input (Checkbox)/Form Input (Checkbox)_32x32.png");
-        nomes.add("Componente3"); /* => */ icones.add("icones/elementos/Form Input (Password)/Form Input (Password)_32x32.png");
-        nomes.add("Componente4"); /* => */ icones.add("icones/elementos/Form Input (Radio)/Form Input (Radio)_32x32.png");
-//        nomes.add("Componente5"); /* => */ icones.add("icones/elementos/Form Input (Select Multiple)/Form Input (Select Multiple)_32x32.png");
-        nomes.add("Componente6"); /* => */ icones.add("icones/elementos/Form Input (Select Single)/Form Input (Select Single)_32x32.png");
-        nomes.add("Componente7"); /* => */ icones.add("icones/elementos/Form Input (Text)/Form Input (Text)_32x32.png");
-        nomes.add("Componente8"); /* => */ icones.add("icones/elementos/Form Input (Textarea)/Form Input (Textarea)_32x32.png");
-        nomes.add("H1"); /* => */ icones.add("icones/elementos/H1/H1_32x32.png");
-        nomes.add("Componente9"); /* => */ icones.add("icones/elementos/Link (Make)/Link (Make)_32x32.png");
-        nomes.add("Componente10"); /* => */ icones.add("icones/elementos/Form Input (Button OK)/Form Input (Button OK)_32x32.png");
-        nomes.add("Componente11"); /* => */ icones.add("icones/elementos/Form Input (Button Cancel)/Form Input (Button Cancel)_32x32.png");
-        nomes.add("Componente12"); /* => */ icones.add("icones/elementos/List (Ordered Decimal)/List (Ordered Decimal)_32x32.png");
-        nomes.add("Componente13"); /* => */ icones.add("icones/elementos/List (Unordered)/List (Unordered)_32x32.png");
-        nomes.add("Componente14"); /* => */ icones.add("icones/elementos/Quote/Quote_32x32.png");
+        nomes.add("Nome simples"); /* => */ icones.add("icones/elementos/Label/Label_32x32.png");
+        nomes.add(input_text); /* => */ icones.add("icones/elementos/Form Input (Text)/Form Input (Text)_32x32.png");
+        nomes.add(input_text_password); /* => */ icones.add("icones/elementos/Form Input (Password)/Form Input (Password)_32x32.png");
+        nomes.add("Selecionar uma opção"); /* => */ icones.add("icones/elementos/Form Input (Radio)/Form Input (Radio)_32x32.png");
+        nomes.add("Selecionar opção"); /* => */ icones.add("icones/elementos/Form Input (Select Single)/Form Input (Select Single)_32x32.png");
+        nomes.add("Selecionar opções"); /* => */ icones.add("icones/elementos/Form Input (Checkbox)/Form Input (Checkbox)_32x32.png");
+        nomes.add("Área para texto"); /* => */ icones.add("icones/elementos/Form Input (Textarea)/Form Input (Textarea)_32x32.png");
+        nomes.add("Um titulo"); /* => */ icones.add("icones/elementos/H1/H1_32x32.png");
+        nomes.add("Texto"); /* => */ icones.add("icones/elementos/Quote/Quote_32x32.png");
+        nomes.add("Link"); /* => */ icones.add("icones/elementos/Link (Make)/Link (Make)_32x32.png");
+        nomes.add("Botão para OK"); /* => */ icones.add("icones/elementos/Form Input (Button OK)/Form Input (Button OK)_32x32.png");
+        nomes.add("Botão para Cancelar"); /* => */ icones.add("icones/elementos/Form Input (Button Cancel)/Form Input (Button Cancel)_32x32.png");
+        //        nomes.add("Componente5"); /* => */ icones.add("icones/elementos/Form Input (Select Multiple)/Form Input (Select Multiple)_32x32.png");
+        //        nomes.add("Componente12"); /* => */ icones.add("icones/elementos/List (Ordered Decimal)/List (Ordered Decimal)_32x32.png");
+        //        nomes.add("Componente13"); /* => */ icones.add("icones/elementos/List (Unordered)/List (Unordered)_32x32.png");
 
         
         //...

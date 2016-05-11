@@ -161,8 +161,8 @@ public class menu extends JFrame {
         content.add(scroll, pos.nextCol());
         content.add(new Gap(GAP), pos.nextCol());
         
-        painel_cima.setBorder(BorderFactory.createTitledBorder("Painel cima"));
-        painel_baixo.setBorder(BorderFactory.createTitledBorder("Painel baixo"));
+        painel_cima.setBorder(BorderFactory.createTitledBorder("Componente"));
+        painel_baixo.setBorder(BorderFactory.createTitledBorder("Formulário gerado"));
         
         content.add(painel_direito, pos.nextCol().expandir());
         
@@ -181,19 +181,22 @@ public class menu extends JFrame {
                  int index = theList.locationToIndex(me.getPoint());
                  Object o = theList.getModel().getElementAt(index);
                  String titulo = o.toString();
-                 painel_cima.setBorder(BorderFactory.createTitledBorder(titulo));
+                 painel_cima.setBorder(BorderFactory.createTitledBorder("Componente: " + titulo));
                  
+                 paineis_componentes pc = new paineis_componentes();
                  
-//                 if( menu_lateral.se_chave("Cadastrar", index) )
-//                 {
-//                         JPanel painel_cadastrar = new painel_cadastro().painel_p_cadastrar();
-//                         painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_cadastrar, "scroll_painel_cadastrar", pos);
-//                 }
-//                 else if( menu_lateral.se_chave("Pesquisar/Editar", index) )
-//                 {                        
-//                        JPanel pl = inserir_dados_na_tabela();
-//                        painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, pl, "scroll_pl", pos);
-//                 }
+                 if( menu_lateral.se_chave(MenuLateral.input_text, index) )
+                 {
+                         JPanel painel_cadastrar = pc.input_text();
+                         painel_cima = operacoes_painel.add_painel_filho_ao_PAI(painel_cima, painel_cadastrar, "scroll_painel_cadastrar", pos_paineis_internos);
+                         operacoes_painel.atualizar_painel(painel_cima);
+                 }
+                 else if( menu_lateral.se_chave(MenuLateral.input_text_password, index) )
+                 {                        
+                        JPanel pl = pc.input_text_password();
+                        painel_cima = operacoes_painel.add_painel_filho_ao_PAI(painel_cima, pl, "scroll_pl", pos);
+                        operacoes_painel.atualizar_painel(painel_cima);
+                 }
 //                 else if( menu_lateral.se_chave("Lixeira", index) )
 //                 {
 //                        operacoes_painel.remover_componentes_painel(painel_direito);

@@ -57,10 +57,10 @@ public class Trei_big {
      */
     public static void main(String[] args) {
           
-//          menu();
+          menu();
 //        for (int count = 0; count < 20; count++) {banco.iniciar();}
 //carregando.main(args);
-        menu_elementos();
+//        menu_elementos();
         
     }
     

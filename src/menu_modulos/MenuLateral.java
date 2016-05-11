@@ -21,20 +21,27 @@ import javax.swing.JList;
  */
 public class MenuLateral {
     
+    /* \/\/ Titulo para os modulos no menu; \/\/ */
+    public static String form_cadastrar = "Cadastrar";
+    public static String pesquisar_editar = "Pesquisar/Editar";
+    public static String backup_banco = "Backup";
+    public static String temas = "Temas";
+    
+    
+    
     private Map<String, ImageIcon> map = new HashMap<>();
     private Map<String, Integer> modulo = new HashMap<>();
-    
     private Vector<String> nomes = new Vector<String>();
     private Vector<String> icones = new Vector<String>();
     
     public JList lista() {
         
         /* \/ A ordem em que forem adicionados será a ordem em que aparecerá no menu. \/ */
-        nomes.add("Cadastrar"); /* => */ icones.add("icones/cadastrar.png");
-        nomes.add("Pesquisar/Editar"); /* => */ icones.add("icones/pesquisar_e_editar.png");
+        nomes.add(form_cadastrar); /* => */ icones.add("icones/cadastrar.png");
+        nomes.add(pesquisar_editar); /* => */ icones.add("icones/pesquisar_e_editar.png");
 //        nomes.add("Lixeira"); /* => */ icones.add("icones/lixo2.png");
-        nomes.add("Backup"); /* => */ icones.add("icones/1460597575_document-save.png");
-        nomes.add("Temas"); /* => */ icones.add("icones/aparencia1.png");
+        nomes.add(backup_banco); /* => */ icones.add("icones/1460597575_document-save.png");
+        nomes.add(temas); /* => */ icones.add("icones/aparencia1.png");
 
         
         //...
