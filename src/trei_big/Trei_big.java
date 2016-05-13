@@ -62,6 +62,12 @@ public class Trei_big {
 //carregando.main(args);
 //        menu_elementos();
         
+//        banco.conectar();
+//        String nome_tabela = "cadastro_1";
+//        String arq = "/home/icaro/Imagens/CADASTRO_1-hnq9f.del";
+//        banco.executar_query("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE(null,'"+ nome_tabela.toUpperCase() +"','"+ arq +"',';','%',null,0)");
+//        banco.executar_query( "SHOW COLUMNS FROM "+ nome_tabela.toUpperCase() +"" );
+        
     }
     
 }

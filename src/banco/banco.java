@@ -5,12 +5,15 @@
  */
 package banco;
 
+import banco.*;
+import static banco.SQL.nome_tabela;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSetMetaData;
+import java.util.Random;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 
@@ -81,23 +84,26 @@ public class banco {
 //                System.out.println( ex.getSQLState() + ": Tabela já existe." );
             }else{
                 ex.printStackTrace();
+                
             }
         }
 
         return bCreatedTables;
     }
     
-    public static boolean executar_query(String SQL)
+    public static boolean executar_query(String sql)
     {
         boolean flag = false;
         Statement statement = null;
         try {
             statement = conn.createStatement();
-            statement.execute(SQL);
+            statement.execute(sql);
             flag = true;
         } catch (SQLException ex) {
             if( ex.getSQLState().equalsIgnoreCase("X0Y32") ) {// <= se tabela existe;
+            }else if( ex.getSQLState().equalsIgnoreCase("XIE0S") ){// <= se o arquivo de backup já existe;
             }else{
+                System.out.println("Estado do ERRO: " + ex.getSQLState() );
                 ex.printStackTrace();
             }
         }
@@ -183,6 +189,15 @@ public class banco {
 
     }
        
-    
+    public static String gerar_nome(int tamanho)
+    {
+        String AB = "0123456789abcdefghijklmnopqrstuvwxyz";
+        Random rnd = new Random();
+        String sb = "";
+        for( int i = 0; i < tamanho; i++ ){
+           sb += AB.charAt( rnd.nextInt(AB.length()) );
+        }
+        return sb;
+    }
     
 }

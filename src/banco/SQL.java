@@ -5,6 +5,8 @@
  */
 package banco;
 
+import java.io.File;
+
 /**
  * Classe de todos os SQL's do projeto;
  * @author icaro
