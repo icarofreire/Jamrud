@@ -197,6 +197,18 @@ public class menu extends JFrame {
                         painel_cima = operacoes_painel.add_painel_filho_ao_PAI(painel_cima, pl, "scroll_pl", pos);
                         operacoes_painel.atualizar_painel(painel_cima);
                  }
+                 else if( menu_lateral.se_chave(MenuLateral.label, index) )
+                 {                        
+                        JPanel pl = pc.label();
+                        painel_cima = operacoes_painel.add_painel_filho_ao_PAI(painel_cima, pl, "scroll_pl", pos);
+                        operacoes_painel.atualizar_painel(painel_cima);
+                 }
+                 else if( menu_lateral.se_chave(MenuLateral.opcoes, index) )
+                 {                        
+                        JPanel pl = pc.grupo_botoes();
+                        painel_cima = operacoes_painel.add_painel_filho_ao_PAI(painel_cima, pl, "scroll_pl", pos);
+                        operacoes_painel.atualizar_painel(painel_cima);
+                 }
 //                 else if( menu_lateral.se_chave("Lixeira", index) )
 //                 {
 //                        operacoes_painel.remover_componentes_painel(painel_direito);
