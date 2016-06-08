@@ -16,11 +16,12 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Vector;
-import javax.swing.ButtonGroup;
+//import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
+//import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import trei_big.operacoes_painel;
 
@@ -28,7 +29,7 @@ import trei_big.operacoes_painel;
  *
  * @author icaro
  */
-public class criar_grupos_opcoes {
+public class criar_opcoes_checkbox {
     
     private static final int GAP = 5;   // Default gap btwn components.
     private String nome_botao_aplicar = "Adicionar";
@@ -37,14 +38,14 @@ public class criar_grupos_opcoes {
     
     private JPanel criar_radios_por_nome(Vector<String> nomes_radios) {
         
-        ButtonGroup group = new ButtonGroup();
+//        ButtonGroup group = new ButtonGroup();
         JPanel p_group = new JPanel(new GridBagLayout());
         GBHelper pos_p_group = new GBHelper();
-        p_group.setName("painel_radios");
+        p_group.setName("painel_checkbox");
         
         for(int i=0; i<nomes_radios.size(); i++){
-                JRadioButton catButton = new JRadioButton(nomes_radios.get(i));
-                group.add(catButton);
+                JCheckBox catButton = new JCheckBox(nomes_radios.get(i));
+//                group.add(catButton);
                 p_group.add(catButton, pos_p_group.nextRow().expandW());
         }
         nomes_radios.clear();
@@ -63,7 +64,7 @@ public class criar_grupos_opcoes {
         JButton btn_aplicar = new JButton(nome_botao_aplicar);
         cmp1.setText("Nome");
         
-        final JRadioButton birdButton = new JRadioButton("Nome");
+        final JCheckBox birdButton = new JCheckBox("Nome");
         birdButton.setName("radio_0");
         
         cmp1.addFocusListener(new FocusListener(){
@@ -81,7 +82,7 @@ public class criar_grupos_opcoes {
         evento_escrever_nome_p_opcao(birdButton, cmp1);
         
            //Group the radio buttons.
-        final ButtonGroup group = new ButtonGroup();
+        final JCheckBox group = new JCheckBox();
         
         group.add(birdButton);
         
@@ -99,7 +100,7 @@ public class criar_grupos_opcoes {
             int id_radio = 1;
             @Override
             public void actionPerformed(ActionEvent ae) {
-                final JRadioButton catButton = new JRadioButton("Nome");
+                final JCheckBox catButton = new JCheckBox("Nome");
                 catButton.setName("radio_"+id_radio);
                 id_radio++;
                 group.add(catButton);
@@ -138,7 +139,7 @@ public class criar_grupos_opcoes {
                 for (int i=0; i < components.length; i++) {
                     String name_componente = components[i].getName();
                    if( (name_componente != null) && (name_componente.indexOf("radio_") != -1) ){
-                       JRadioButton radio = (JRadioButton) components[i];
+                       JCheckBox radio = (JCheckBox) components[i];
                        nomes_radios.add( radio.getText() );
                    }
                 }//fim for;
@@ -153,7 +154,7 @@ public class criar_grupos_opcoes {
     }
     
     
-    private void evento_escrever_nome_p_opcao(final JRadioButton birdButton, final JTextField cmp1) 
+    private void evento_escrever_nome_p_opcao(final JCheckBox birdButton, final JTextField cmp1) 
     {
         cmp1.addKeyListener(new KeyListener(){
             @Override

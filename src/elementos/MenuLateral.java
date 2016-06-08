@@ -26,6 +26,7 @@ public class MenuLateral {
     public static String input_text_password = "Campo de senha";
     public static String label = "Nome simples";
     public static String opcoes = "Selecionar uma opção";
+    public static String checkbox = "Selecionar opções";
     
     private Map<String, ImageIcon> map = new HashMap<>();
     private Map<String, Integer> modulo = new HashMap<>();
@@ -40,7 +41,7 @@ public class MenuLateral {
         nomes.add(input_text_password); /* => */ icones.add("icones/elementos/Form Input (Password)/Form Input (Password)_32x32.png");
         nomes.add(opcoes); /* => */ icones.add("icones/elementos/Form Input (Radio)/Form Input (Radio)_32x32.png");
         nomes.add("Selecionar opção"); /* => */ icones.add("icones/elementos/Form Input (Select Single)/Form Input (Select Single)_32x32.png");
-        nomes.add("Selecionar opções"); /* => */ icones.add("icones/elementos/Form Input (Checkbox)/Form Input (Checkbox)_32x32.png");
+        nomes.add(checkbox); /* => */ icones.add("icones/elementos/Form Input (Checkbox)/Form Input (Checkbox)_32x32.png");
         nomes.add("Área para texto"); /* => */ icones.add("icones/elementos/Form Input (Textarea)/Form Input (Textarea)_32x32.png");
         nomes.add("Um titulo"); /* => */ icones.add("icones/elementos/H1/H1_32x32.png");
         nomes.add("Texto"); /* => */ icones.add("icones/elementos/Quote/Quote_32x32.png");
