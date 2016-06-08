@@ -5,10 +5,16 @@
  */
 package trei_big;
 
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import ferramenta_gui.GBHelper;
 import java.awt.Component;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Vector;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -59,6 +65,18 @@ public class operacoes_painel {
             return f;
     }
     
+    public static Component pegar_componente_em_painel(JPanel painel, String name_componente_no_painel) {
+        Component x = null;
+        Component[] components = painel.getComponents();
+            for (int i=0; i < components.length; i++) {
+                String name_componente = components[i].getName();
+                if( (name_componente != null) && (name_componente.indexOf(name_componente_no_painel) != -1)  ){
+                    x = components[i];
+                }
+            }//fim for;
+        return x;
+    }
+    
     public static int obj_to_int(Object inteiro) {
         int valor = Integer.parseInt(inteiro.toString());
         return valor;
@@ -73,6 +91,36 @@ public class operacoes_painel {
             painel_principal.add(scroll_painel_backup, pos.expandir());
         }
         return painel_principal;
+    }
+    
+    
+    public static String serializar_obj(Object myObject) {
+        String serializedObject = "";
+         // serialize the object
+        try {
+            ByteArrayOutputStream bo = new ByteArrayOutputStream();
+            ObjectOutputStream so = new ObjectOutputStream(bo);
+            so.writeObject(myObject);
+            so.flush();
+            serializedObject = new String(Base64.encode(bo.toByteArray()));//bo.toString();
+        } catch (Exception e) {
+            System.out.println("->" + e);
+        }
+        return serializedObject;
+    }
+    
+    public static Object deserializar_obj(String serializedObject) {
+        Object myObject = null;
+        // deserialize the object
+         try {
+             byte b[] = Base64.decode(serializedObject);
+             ByteArrayInputStream bi = new ByteArrayInputStream(b);
+             ObjectInputStream si = new ObjectInputStream(bi);
+             myObject = si.readObject();
+         } catch (Exception e) {
+             System.out.println("x->" + e);
+         }
+         return myObject;
     }
     
 }

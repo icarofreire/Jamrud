@@ -205,7 +205,7 @@ public class menu extends JFrame {
                  }
                  else if( menu_lateral.se_chave(MenuLateral.opcoes, index) )
                  {                        
-                        JPanel pl = pc.grupo_botoes();
+                        JPanel pl = pc.grupo_opcoes_radio(painel_baixo);
                         painel_cima = operacoes_painel.add_painel_filho_ao_PAI(painel_cima, pl, "scroll_pl", pos);
                         operacoes_painel.atualizar_painel(painel_cima);
                  }

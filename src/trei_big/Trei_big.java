@@ -6,7 +6,6 @@
 package trei_big;
 
 import banco.banco;
-import java.util.ArrayList;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import menu_modulos.*;
@@ -51,7 +50,9 @@ public class Trei_big {
             }
         });
     }
-
+    
+        
+    
     /**
      * @param args the command line arguments
      */
@@ -67,6 +68,7 @@ public class Trei_big {
 //        String arq = "/home/icaro/Imagens/CADASTRO_1-hnq9f.del";
 //        banco.executar_query("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE(null,'"+ nome_tabela.toUpperCase() +"','"+ arq +"',';','%',null,0)");
 //        banco.executar_query( "SHOW COLUMNS FROM "+ nome_tabela.toUpperCase() +"" );
+       
         
     }
     
