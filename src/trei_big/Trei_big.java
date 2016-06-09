@@ -70,6 +70,14 @@ public class Trei_big {
 //        banco.executar_query( "SHOW COLUMNS FROM "+ nome_tabela.toUpperCase() +"" );
        
         
+//        String pre = "icaro_";
+//        String name = operacoes.gerar_name_para_componente(pre);
+//        System.out.println("name:"+name);
+//        
+//        String chave = operacoes.pegar_chave_em_string(name);
+//        System.out.println("chave:"+chave);
+        
+        
     }
     
 }

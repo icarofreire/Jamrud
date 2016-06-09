@@ -7,6 +7,7 @@ package elementos;
 
 import ferramenta_gui.GBHelper;
 import ferramenta_gui.Gap;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -16,6 +17,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Vector;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 //import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -25,6 +27,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 //import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import trei_big.operacoes;
 import trei_big.operacoes_painel;
 
 /**
@@ -40,7 +43,10 @@ public class criar_opcoes_checkbox {
     private String nome_botao_aplicar = "Adicionar ao formulário";
     private String token = "-";
     private String prefix_id = "checkbox_";
-    private int FLG_TIPO_OPCAO;
+    private String prefixo_campo_add = "comp_campo_add";
+    private String prefixo_btn_excluir_add = "comp_btn_excluir_add_";
+    private String prefixo_painel_checkbox = "painel_checkbox_";
+    private String prefixo_btn_excluir_painel = "btn_excluir_painel_";
     
     
     private JPanel criar_checkbox_por_nome(Vector<String> nomes_radios) {
@@ -78,7 +84,7 @@ public class criar_opcoes_checkbox {
         cmp1.setText("Nome");
         
         final JCheckBox birdButton = new JCheckBox("Nome");
-        birdButton.setName(prefix_id+"0");
+        birdButton.setName( operacoes.gerar_name_para_componente(prefix_id) );
         
         cmp1.addFocusListener(new FocusListener(){
             @Override
@@ -108,16 +114,17 @@ public class criar_opcoes_checkbox {
         
         btn_mais.addActionListener(new ActionListener(){
 
-            int ID_ = 1;
             @Override
             public void actionPerformed(ActionEvent ae) {
                 final JCheckBox catButton = new JCheckBox("Nome");
                 final JButton btn_excluir = new JButton("", new ImageIcon("icones/erro-24.png"));
                 final JTextField campos = new JTextField(10);
-                campos.setName("campo"+token+ID_);
-                catButton.setName(prefix_id+token+ID_);
-                btn_excluir.setName("btn_excluir"+token+ID_);
-                ID_++;
+                
+                String chave = operacoes.gerar_chave();
+                campos.setName( prefixo_campo_add + chave );
+                catButton.setName( prefix_id + chave );
+                btn_excluir.setName( prefixo_btn_excluir_add + chave );
+                
                 group.add(catButton);
                 
                 painel.add(catButton, pos.nextRow().expandW());
@@ -144,28 +151,7 @@ public class criar_opcoes_checkbox {
             }
         });
         
-        
-        
-        btn_aplicar.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                
-                Component[] components = painel.getComponents();
-                Vector<String> nomes_radios = new Vector<String>();
-                for (int i=0; i < components.length; i++) {
-                    String name_componente = components[i].getName();
-                   if( (name_componente != null) && (name_componente.indexOf(prefix_id) != -1) ){
-                       JCheckBox radio = (JCheckBox) components[i];
-                       nomes_radios.add( radio.getText() );
-                   }
-                }//fim for;
-                
-                painel_baixo.add( criar_checkbox_por_nome(nomes_radios), pos_painel_baixo.nextRow().expandW() );
-                painel_baixo.add(new Gap(GAP) , pos_painel_baixo.nextRow());
-                operacoes_painel.atualizar_painel(painel_baixo);
-                nomes_radios.clear();
-            }
-        });
+        evento_botao_aplicar(btn_aplicar, painel_baixo, pos_painel_baixo);
         
         return painel;
     }
@@ -204,14 +190,71 @@ public class criar_opcoes_checkbox {
         public void actionPerformed(ActionEvent ae) {
                         
                 String name = btn_excluir.getName();
-                String numero_name = name.substring(name.indexOf(token)+1, name.length()).trim();
+                String chave = operacoes.pegar_chave_em_string(name);
                                   
-                painel.remove( operacoes_painel.pegar_componente_em_painel(painel, name_componente_excluir+token+numero_name) );
-                painel.remove( operacoes_painel.pegar_componente_em_painel(painel, prefix_id+token+numero_name) );
-                painel.remove( operacoes_painel.pegar_componente_em_painel(painel, name) );
+                painel.remove( operacoes_painel.pegar_componente_em_painel(painel, operacoes.pegar_name(prefix_id, chave)) );
+                painel.remove( operacoes_painel.pegar_componente_em_painel(painel, operacoes.pegar_name(prefixo_campo_add, chave)) );
+                painel.remove( operacoes_painel.pegar_componente_em_painel(painel, operacoes.pegar_name(prefixo_btn_excluir_add, chave)) );
 
                 operacoes_painel.atualizar_painel(painel);
                 pos.gridy--;
+            }
+        });
+    }
+    
+    private void add_botao_excluir_painel(final JPanel painel_baixo, final GBHelper pos_painel_baixo, final JPanel painel_criado, final JButton btn_excluir_painel)
+    {
+        final String name_painel_radios = operacoes.gerar_name_para_componente(prefixo_painel_checkbox);
+        final String name_btn_excluir_painel = operacoes.gerar_name_para_componente(prefixo_btn_excluir_painel);
+                
+        painel_criado.setName(name_painel_radios);
+        btn_excluir_painel.setName(name_btn_excluir_painel);
+                
+        btn_excluir_painel.addActionListener(new ActionListener(){
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+                            
+                String chave_painel = operacoes.pegar_chave_em_string(name_painel_radios);      
+                String chave_btn = operacoes.pegar_chave_em_string(name_btn_excluir_painel);
+                        
+                painel_baixo.remove( operacoes_painel.pegar_componente_em_painel(painel_baixo, operacoes.pegar_name(prefixo_painel_checkbox, chave_painel)) );
+                painel_baixo.remove( operacoes_painel.pegar_componente_em_painel(painel_baixo, operacoes.pegar_name(prefixo_btn_excluir_painel, chave_btn)) );
+
+                operacoes_painel.atualizar_painel(painel_baixo);
+                pos_painel_baixo.gridy--;
+            }
+        });
+    }
+    
+    private void evento_botao_aplicar(final JButton btn_aplicar, final JPanel painel_baixo, final GBHelper pos_painel_baixo)
+    {
+            btn_aplicar.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                
+                Component[] components = painel.getComponents();
+                Vector<String> nomes_radios = new Vector<String>();
+                for (int i=0; i < components.length; i++) {
+                    String name_componente = components[i].getName();
+                   if( (name_componente != null) && (name_componente.indexOf(prefix_id) != -1) ){
+
+                            JCheckBox radio = (JCheckBox) components[i];
+                            nomes_radios.add( radio.getText() );                       
+                   }
+                }//fim for;
+                
+                JPanel painel_a_inserir = criar_checkbox_por_nome(nomes_radios);
+                painel_a_inserir.setBorder(BorderFactory.createLineBorder(Color.RED));
+                JButton btn_excluir_painel = new JButton("", new ImageIcon("icones/erro-24.png"));
+                
+                add_botao_excluir_painel(painel_baixo, pos_painel_baixo, painel_a_inserir, btn_excluir_painel);
+                
+                painel_baixo.add( painel_a_inserir, pos_painel_baixo.nextRow().expandW() );
+                painel_baixo.add( btn_excluir_painel, pos_painel_baixo.nextCol().expandW() );
+                
+                painel_baixo.add(new Gap(GAP) , pos_painel_baixo.nextRow());
+                operacoes_painel.atualizar_painel(painel_baixo);
+                nomes_radios.clear();
             }
         });
     }
