@@ -6,6 +6,7 @@
 package elementos;
 
 import ferramenta_gui.*;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridBagLayout;
@@ -20,6 +21,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Vector;
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -133,37 +135,7 @@ public class paineis_componentes {
     
     public JPanel texto(final JPanel painel_baixo, final GBHelper pos_painel_baixo){
         
-        JPanel painel = new JPanel(new GridBagLayout());
-        GBHelper pos = new GBHelper();
-        final JTextArea campo_valor = new JTextArea();
-        JButton btn_aplicar = new JButton(nome_botao_aplicar);
-        
-        campo_valor.setColumns(20);
-        campo_valor.setRows(5);
-        JScrollPane scroll_observacoes = new JScrollPane();
-        scroll_observacoes.setViewportView(campo_valor);
-        
-        final JLabel texto = new JLabel();
-        
-        painel.add(scroll_observacoes, pos.expandW());
-        painel.add(btn_aplicar, pos.nextRow().expandW());
-        
-        btn_aplicar.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                
-                String html1 = "<html><body style='width: ";
-                String html2 = "px'>";
-                
-                texto.setText( (html1+"500"+html2) + campo_valor.getText() );
-                painel_baixo.add( texto, pos_painel_baixo.nextRow().expandW() );
-                painel_baixo.add(new Gap(GAP) , pos_painel_baixo.nextRow());
-                operacoes_painel.atualizar_painel(painel_baixo);
-                
-            }
-        });
-        
-        
+        JPanel painel = new criar_texto().texto(painel_baixo, pos_painel_baixo);
         return painel;
     }
     

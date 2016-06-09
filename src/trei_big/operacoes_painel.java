@@ -8,11 +8,17 @@ package trei_big;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import ferramenta_gui.GBHelper;
 import java.awt.Component;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Vector;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -133,6 +139,40 @@ public class operacoes_painel {
              System.out.println("x->" + e);
          }
          return myObject;
+    }
+    
+    public static JPanel add_componente_em_painel(JComponent comp) {
+        
+        JPanel p_group = new JPanel(new GridBagLayout());
+        GBHelper pos_p_group = new GBHelper();
+        
+        p_group.add(comp, pos_p_group.expandir());
+        
+        return p_group;
+    }
+    
+    public static void add_botao_excluir_painel(final JPanel painel_baixo, final GBHelper pos_painel_baixo, final JPanel painel_criado, final JButton btn_excluir_painel, final String prefixo_painel, final String prefixo_btn_excluir_painel)
+    {
+        final String name_painel = operacoes.gerar_name_para_componente(prefixo_painel);
+        final String name_btn_excluir_painel = operacoes.gerar_name_para_componente(prefixo_btn_excluir_painel);
+                
+        painel_criado.setName(name_painel);
+        btn_excluir_painel.setName(name_btn_excluir_painel);
+                
+        btn_excluir_painel.addActionListener(new ActionListener(){
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+                            
+                String chave_painel = operacoes.pegar_chave_em_string(name_painel);      
+                String chave_btn = operacoes.pegar_chave_em_string(name_btn_excluir_painel);
+                        
+                painel_baixo.remove( operacoes_painel.pegar_componente_em_painel(painel_baixo, operacoes.pegar_name(prefixo_painel, chave_painel)) );
+                painel_baixo.remove( operacoes_painel.pegar_componente_em_painel(painel_baixo, operacoes.pegar_name(prefixo_btn_excluir_painel, chave_btn)) );
+
+                operacoes_painel.atualizar_painel(painel_baixo);
+                pos_painel_baixo.gridy--;
+            }
+        });
     }
     
 }

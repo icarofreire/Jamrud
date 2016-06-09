@@ -202,30 +202,6 @@ public class criar_grupos_opcoes {
         });
     }
     
-    private void add_botao_excluir_painel(final JPanel painel_baixo, final GBHelper pos_painel_baixo, final JPanel painel_criado, final JButton btn_excluir_painel)
-    {
-        final String name_painel_radios = operacoes.gerar_name_para_componente(prefixo_painel_radios);
-        final String name_btn_excluir_painel = operacoes.gerar_name_para_componente(prefixo_btn_excluir_painel);
-                
-        painel_criado.setName(name_painel_radios);
-        btn_excluir_painel.setName(name_btn_excluir_painel);
-                
-        btn_excluir_painel.addActionListener(new ActionListener(){
-        @Override
-        public void actionPerformed(ActionEvent ae) {
-                            
-                String chave_painel = operacoes.pegar_chave_em_string(name_painel_radios);      
-                String chave_btn = operacoes.pegar_chave_em_string(name_btn_excluir_painel);
-                        
-                painel_baixo.remove( operacoes_painel.pegar_componente_em_painel(painel_baixo, operacoes.pegar_name(prefixo_painel_radios, chave_painel)) );
-                painel_baixo.remove( operacoes_painel.pegar_componente_em_painel(painel_baixo, operacoes.pegar_name(prefixo_btn_excluir_painel, chave_btn)) );
-
-                operacoes_painel.atualizar_painel(painel_baixo);
-                pos_painel_baixo.gridy--;
-            }
-        });
-    }
-    
     private void evento_botao_aplicar(final JButton btn_aplicar, final JPanel painel_baixo, final GBHelper pos_painel_baixo)
     {
             btn_aplicar.addActionListener(new ActionListener(){
@@ -247,7 +223,7 @@ public class criar_grupos_opcoes {
                 painel_a_inserir.setBorder(BorderFactory.createLineBorder(Color.RED));
                 JButton btn_excluir_painel = new JButton("", new ImageIcon("icones/erro-24.png"));
                 
-                add_botao_excluir_painel(painel_baixo, pos_painel_baixo, painel_a_inserir, btn_excluir_painel);
+                operacoes_painel.add_botao_excluir_painel(painel_baixo, pos_painel_baixo, painel_a_inserir, btn_excluir_painel, prefixo_painel_radios, prefixo_btn_excluir_painel);
                 
                 painel_baixo.add( painel_a_inserir, pos_painel_baixo.nextRow().expandW() );
                 painel_baixo.add( btn_excluir_painel, pos_painel_baixo.nextCol().expandW() );
