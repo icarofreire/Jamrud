@@ -33,8 +33,13 @@ import trei_big.operacoes_painel;
  */
 public class criar_opcoes_checkbox {
     
+    private JPanel painel = new JPanel(new GridBagLayout());
+    private GBHelper pos = new GBHelper();
+    
     private static final int GAP = 5;   // Default gap btwn components.
     private String nome_botao_aplicar = "Adicionar ao formulário";
+    private String token = "-";
+    private String prefix_id = "checkbox_";
     private int FLG_TIPO_OPCAO;
     
     
@@ -67,17 +72,13 @@ public class criar_opcoes_checkbox {
     
     public JPanel grupo_botoes(final JPanel painel_baixo, final GBHelper pos_painel_baixo) {
         
-        final JPanel painel = new JPanel(new GridBagLayout());
-        final GBHelper pos = new GBHelper();
-        final String token = "-";
-        
         final JTextField cmp1 = new JTextField(10);
         JButton btn_mais = new JButton("Mais uma opcao", new ImageIcon("icones/add-24.png"));
         JButton btn_aplicar = new JButton(nome_botao_aplicar);
         cmp1.setText("Nome");
         
         final JCheckBox birdButton = new JCheckBox("Nome");
-        birdButton.setName("radio_0");
+        birdButton.setName(prefix_id+"0");
         
         cmp1.addFocusListener(new FocusListener(){
             @Override
@@ -107,16 +108,16 @@ public class criar_opcoes_checkbox {
         
         btn_mais.addActionListener(new ActionListener(){
 
-            int id_radio = 1;
+            int ID_ = 1;
             @Override
             public void actionPerformed(ActionEvent ae) {
                 final JCheckBox catButton = new JCheckBox("Nome");
                 final JButton btn_excluir = new JButton("", new ImageIcon("icones/erro-24.png"));
                 final JTextField campos = new JTextField(10);
-                campos.setName("campo"+token+id_radio);
-                catButton.setName("radio_"+token+id_radio);
-                btn_excluir.setName("btn_excluir"+token+id_radio);
-                id_radio++;
+                campos.setName("campo"+token+ID_);
+                catButton.setName(prefix_id+token+ID_);
+                btn_excluir.setName("btn_excluir"+token+ID_);
+                ID_++;
                 group.add(catButton);
                 
                 painel.add(catButton, pos.nextRow().expandW());
@@ -137,20 +138,7 @@ public class criar_opcoes_checkbox {
                     }
                 });
                 
-                btn_excluir.addActionListener(new ActionListener(){
-                @Override
-                    public void actionPerformed(ActionEvent ae) {
-                        
-                        String name = btn_excluir.getName();
-                        String numero_name = name.substring(name.indexOf(token)+1, name.length()).trim();
-                                  
-                        painel.remove( operacoes_painel.pegar_componente_em_painel(painel, "campo"+token+numero_name) );
-                        painel.remove( operacoes_painel.pegar_componente_em_painel(painel, "radio_"+token+numero_name) );
-                        painel.remove( operacoes_painel.pegar_componente_em_painel(painel, name) );
-
-                        operacoes_painel.atualizar_painel(painel);
-                    }
-                });
+                add_botao_excluir(btn_excluir, "campo");
                 
                 evento_escrever_nome_p_opcao(catButton, campos);
             }
@@ -166,7 +154,7 @@ public class criar_opcoes_checkbox {
                 Vector<String> nomes_radios = new Vector<String>();
                 for (int i=0; i < components.length; i++) {
                     String name_componente = components[i].getName();
-                   if( (name_componente != null) && (name_componente.indexOf("radio_") != -1) ){
+                   if( (name_componente != null) && (name_componente.indexOf(prefix_id) != -1) ){
                        JCheckBox radio = (JCheckBox) components[i];
                        nomes_radios.add( radio.getText() );
                    }
@@ -205,6 +193,25 @@ public class criar_opcoes_checkbox {
                         birdButton.setText(nova.trim());
                     }
                 }
+            }
+        });
+    }
+    
+    private void add_botao_excluir(final JButton btn_excluir, final String name_componente_excluir)
+    {
+        btn_excluir.addActionListener(new ActionListener(){
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+                        
+                String name = btn_excluir.getName();
+                String numero_name = name.substring(name.indexOf(token)+1, name.length()).trim();
+                                  
+                painel.remove( operacoes_painel.pegar_componente_em_painel(painel, name_componente_excluir+token+numero_name) );
+                painel.remove( operacoes_painel.pegar_componente_em_painel(painel, prefix_id+token+numero_name) );
+                painel.remove( operacoes_painel.pegar_componente_em_painel(painel, name) );
+
+                operacoes_painel.atualizar_painel(painel);
+                pos.gridy--;
             }
         });
     }
