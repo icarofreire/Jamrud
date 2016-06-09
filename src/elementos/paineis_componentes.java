@@ -98,21 +98,8 @@ public class paineis_componentes {
     }
     
     public JPanel grupo_opcoes_checkbox(JPanel painel_baixo){
-//        JPanel painel = new JPanel(new GridBagLayout());
-//        GBHelper pos = new GBHelper();
-//        painel.setName("painel_opcoes_checkbox");
-//        
-//        JCheckBox java = new JCheckBox("Java");
-//        JCheckBox cpp = new JCheckBox("C++");
-//        JCheckBox vb = new JCheckBox("VB");
-//        
-//        painel.add(java, pos.expandW());
-//        painel.add(cpp, pos.nextRow().expandW());
-//        painel.add(vb, pos.nextRow().expandW());
         
         JPanel painel = new criar_opcoes_checkbox().grupo_botoes(painel_baixo);
-        
-//        JPanel painel = new criar_grupos_opcoes().grupo_botoes(painel_baixo);
         return painel;
     }
     

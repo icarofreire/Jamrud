@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 //import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import trei_big.operacoes_painel;
@@ -36,17 +37,28 @@ public class criar_opcoes_checkbox {
     private int FLG_TIPO_OPCAO;
     
     
-    private JPanel criar_radios_por_nome(Vector<String> nomes_radios) {
+    private JPanel criar_checkbox_por_nome(Vector<String> nomes_radios) {
         
-//        ButtonGroup group = new ButtonGroup();
         JPanel p_group = new JPanel(new GridBagLayout());
         GBHelper pos_p_group = new GBHelper();
         p_group.setName("painel_checkbox");
         
+        int numero_colunas = 6;
+        int con = 0;
+        int primeiro = 0;
         for(int i=0; i<nomes_radios.size(); i++){
                 JCheckBox catButton = new JCheckBox(nomes_radios.get(i));
-//                group.add(catButton);
-                p_group.add(catButton, pos_p_group.nextRow().expandW());
+                if( con < (numero_colunas-1) ){
+                    if(primeiro==0){
+                        p_group.add(catButton, pos_p_group.expandW()); primeiro = 1;
+                    }else{
+                        p_group.add(catButton, pos_p_group.nextCol().expandW());
+                        con++;
+                    }
+                }else{
+                    p_group.add(catButton, pos_p_group.nextRow().expandW());
+                    con=0;
+                }
         }
         nomes_radios.clear();
         return p_group;
@@ -57,8 +69,8 @@ public class criar_opcoes_checkbox {
         final JPanel painel = new JPanel(new GridBagLayout());
         final GBHelper pos = new GBHelper();
         
-        JTextField campo_titulo = new JTextField(20);
-        JLabel lcmp1 = new JLabel("Titulo:");
+//        JTextField campo_titulo = new JTextField(20);
+//        JLabel lcmp1 = new JLabel("Titulo:");
         final JTextField cmp1 = new JTextField(10);
         JButton btn_mais = new JButton("Mais uma opcao");
         JButton btn_aplicar = new JButton(nome_botao_aplicar);
@@ -86,9 +98,9 @@ public class criar_opcoes_checkbox {
         
         group.add(birdButton);
         
-        painel.add(lcmp1, pos.expandW());
-        painel.add(campo_titulo, pos.nextCol().expandW());
-        painel.add(btn_aplicar, pos.nextCol().expandW());
+//        painel.add(lcmp1, pos.expandW());
+//        painel.add(campo_titulo, pos.nextCol().expandW());
+        painel.add(btn_aplicar, pos.expandW());
         painel.add(new Gap(GAP) , pos.nextRow());
         
         painel.add(birdButton, pos.nextRow().expandW());
@@ -144,7 +156,7 @@ public class criar_opcoes_checkbox {
                    }
                 }//fim for;
                 
-                painel_baixo.add( criar_radios_por_nome(nomes_radios), pos_painel_baixo.nextRow().expandW() );
+                painel_baixo.add( criar_checkbox_por_nome(nomes_radios), pos_painel_baixo.nextRow().expandW() );
                 operacoes_painel.atualizar_painel(painel_baixo);
                 
             }

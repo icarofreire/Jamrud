@@ -42,10 +42,23 @@ public class criar_grupos_opcoes {
         GBHelper pos_p_group = new GBHelper();
         p_group.setName("painel_radios");
         
+        int numero_colunas = 6;
+        int con = 0;
+        int primeiro = 0;
         for(int i=0; i<nomes_radios.size(); i++){
                 JRadioButton catButton = new JRadioButton(nomes_radios.get(i));
                 group.add(catButton);
-                p_group.add(catButton, pos_p_group.nextRow().expandW());
+                if( con < (numero_colunas-1) ){
+                    if(primeiro==0){
+                        p_group.add(catButton, pos_p_group.expandW()); primeiro = 1;
+                    }else{
+                        p_group.add(catButton, pos_p_group.nextCol().expandW());
+                        con++;
+                    }
+                }else{
+                    p_group.add(catButton, pos_p_group.nextRow().expandW());
+                    con=0;
+                }
         }
         nomes_radios.clear();
         return p_group;
@@ -56,8 +69,8 @@ public class criar_grupos_opcoes {
         final JPanel painel = new JPanel(new GridBagLayout());
         final GBHelper pos = new GBHelper();
         
-        JTextField campo_titulo = new JTextField(20);
-        JLabel lcmp1 = new JLabel("Titulo:");
+//        JTextField campo_titulo = new JTextField(20);
+//        JLabel lcmp1 = new JLabel("Titulo:");
         final JTextField cmp1 = new JTextField(10);
         JButton btn_mais = new JButton("Mais uma opcao");
         JButton btn_aplicar = new JButton(nome_botao_aplicar);
@@ -85,9 +98,9 @@ public class criar_grupos_opcoes {
         
         group.add(birdButton);
         
-        painel.add(lcmp1, pos.expandW());
-        painel.add(campo_titulo, pos.nextCol().expandW());
-        painel.add(btn_aplicar, pos.nextCol().expandW());
+//        painel.add(lcmp1, pos.expandW());
+//        painel.add(campo_titulo, pos.nextCol().expandW());
+        painel.add(btn_aplicar, pos.expandW());
         painel.add(new Gap(GAP) , pos.nextRow());
         
         painel.add(birdButton, pos.nextRow().expandW());
