@@ -65,6 +65,18 @@ public class operacoes_painel {
             return f;
     }
     
+    public static JPanel remover_componente_em_painel(JPanel painel, String name_componente_no_painel) {
+            Component[] components = painel.getComponents();
+            for (int i=0; i < components.length; i++) {
+                   String name_componente = components[i].getName();
+                   if( (name_componente != null) && name_componente.equalsIgnoreCase(name_componente_no_painel) ){
+                       painel.remove( components[i] );
+                       break;
+                   }
+            }
+            return painel;
+    }
+    
     public static Component pegar_componente_em_painel(JPanel painel, String name_componente_no_painel) {
         Component x = null;
         Component[] components = painel.getComponents();

@@ -17,6 +17,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Vector;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -31,7 +32,7 @@ import trei_big.operacoes_painel;
 public class criar_grupos_opcoes {
     
     private static final int GAP = 5;   // Default gap btwn components.
-    private String nome_botao_aplicar = "Adicionar";
+    private String nome_botao_aplicar = "Adicionar ao formulário";
     private int FLG_TIPO_OPCAO;
     
     
@@ -64,15 +65,14 @@ public class criar_grupos_opcoes {
         return p_group;
     }
     
-    public JPanel grupo_botoes(final JPanel painel_baixo) {
+    public JPanel grupo_botoes(final JPanel painel_baixo, final GBHelper pos_painel_baixo) {
         
         final JPanel painel = new JPanel(new GridBagLayout());
         final GBHelper pos = new GBHelper();
+        final String token = "-";
         
-//        JTextField campo_titulo = new JTextField(20);
-//        JLabel lcmp1 = new JLabel("Titulo:");
         final JTextField cmp1 = new JTextField(10);
-        JButton btn_mais = new JButton("Mais uma opcao");
+        JButton btn_mais = new JButton("Mais uma opcao", new ImageIcon("icones/add-24.png"));
         JButton btn_aplicar = new JButton(nome_botao_aplicar);
         cmp1.setText("Nome");
         
@@ -98,8 +98,6 @@ public class criar_grupos_opcoes {
         
         group.add(birdButton);
         
-//        painel.add(lcmp1, pos.expandW());
-//        painel.add(campo_titulo, pos.nextCol().expandW());
         painel.add(btn_aplicar, pos.expandW());
         painel.add(new Gap(GAP) , pos.nextRow());
         
@@ -113,20 +111,23 @@ public class criar_grupos_opcoes {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 final JRadioButton catButton = new JRadioButton("Nome");
-                catButton.setName("radio_"+id_radio);
+                final JButton btn_excluir = new JButton("", new ImageIcon("icones/erro-24.png"));
+                final JTextField campos = new JTextField(10);
+                campos.setName("campo"+token+id_radio);
+                catButton.setName("radio_"+token+id_radio);
+                btn_excluir.setName("btn_excluir"+token+id_radio);
                 id_radio++;
                 group.add(catButton);
                 
                 painel.add(catButton, pos.nextRow().expandW());
-                final JTextField campos = new JTextField(10);
-                campos.setText("Nome");
                 painel.add(campos, pos.nextCol().expandW());
+                painel.add(btn_excluir, pos.nextCol().expandW());
                 operacoes_painel.atualizar_painel(painel);
                 
                 campos.addFocusListener(new FocusListener(){
                     @Override
                     public void focusGained(FocusEvent fe) {
-                        campos.setText("");
+//                        campos.setText("");
                         catButton.setText("");
                     }
 
@@ -135,12 +136,26 @@ public class criar_grupos_opcoes {
                     }
                 });
                 
+                btn_excluir.addActionListener(new ActionListener(){
+                @Override
+                    public void actionPerformed(ActionEvent ae) {
+                        
+                        String name = btn_excluir.getName();
+                        String numero_name = name.substring(name.indexOf(token)+1, name.length()).trim();
+                                  
+                        painel.remove( operacoes_painel.pegar_componente_em_painel(painel, "campo"+token+numero_name) );
+                        painel.remove( operacoes_painel.pegar_componente_em_painel(painel, "radio_"+token+numero_name) );
+                        painel.remove( operacoes_painel.pegar_componente_em_painel(painel, name) );
+
+                        operacoes_painel.atualizar_painel(painel);
+                    }
+                });
+                
                 evento_escrever_nome_p_opcao(catButton, campos);
             }
         });
         
         
-        final GBHelper pos_painel_baixo = new GBHelper();
         
         btn_aplicar.addActionListener(new ActionListener(){
             @Override
@@ -157,8 +172,9 @@ public class criar_grupos_opcoes {
                 }//fim for;
                 
                 painel_baixo.add( criar_radios_por_nome(nomes_radios), pos_painel_baixo.nextRow().expandW() );
+                painel_baixo.add(new Gap(GAP) , pos_painel_baixo.nextRow());
                 operacoes_painel.atualizar_painel(painel_baixo);
-                
+                nomes_radios.clear();
             }
         });
         

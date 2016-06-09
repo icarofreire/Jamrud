@@ -65,7 +65,7 @@ public class menu extends JFrame {
     private JList lista = new JList(dlm);
     private JButton botao_exibir_listagem = new JButton();
     private JButton botao_exibir_listagem2 = new JButton();
-    private JButton botao_criar_formulario = new JButton("Criar Formulário");
+    private JButton botao_criar_formulario = new JButton("Gerar Formulário");
     
     private JMenu menu = new JMenu("Arquivo");
     private JMenuItem item_menu_sobre = new JMenuItem("Sobre");
@@ -187,7 +187,7 @@ public class menu extends JFrame {
                  
                  if( menu_lateral.se_chave(MenuLateral.input_text, index) )
                  {
-                         JPanel painel_cadastrar = pc.input_text();
+                         JPanel painel_cadastrar = pc.input_text(painel_baixo, pos);
                          painel_cima = operacoes_painel.add_painel_filho_ao_PAI(painel_cima, painel_cadastrar, "scroll_painel_cadastrar", pos_paineis_internos);
                          operacoes_painel.atualizar_painel(painel_cima);
                  }
@@ -205,31 +205,40 @@ public class menu extends JFrame {
                  }
                  else if( menu_lateral.se_chave(MenuLateral.opcoes, index) )
                  {                        
-                        JPanel pl = pc.grupo_opcoes_radio(painel_baixo);
+                        JPanel pl = pc.grupo_opcoes_radio(painel_baixo, pos);
                         painel_cima = operacoes_painel.add_painel_filho_ao_PAI(painel_cima, pl, "scroll_pl", pos);
                         operacoes_painel.atualizar_painel(painel_cima);
                  }
                  else if( menu_lateral.se_chave(MenuLateral.checkbox, index) )
                  {                        
-                        JPanel pl = pc.grupo_opcoes_checkbox(painel_baixo);
+                        JPanel pl = pc.grupo_opcoes_checkbox(painel_baixo, pos);
                         painel_cima = operacoes_painel.add_painel_filho_ao_PAI(painel_cima, pl, "scroll_pl", pos);
                         operacoes_painel.atualizar_painel(painel_cima);
                  }
-//                 else if( menu_lateral.se_chave("Lixeira", index) )
-//                 {
-//                        operacoes_painel.remover_componentes_painel(painel_direito);
-//                        painel_direito.add(l_lixeira);
-//                 }
-//                 else if( menu_lateral.se_chave("Backup", index) )
-//                 {
-//                        JPanel painel_backup = new painel_backup().painel_p_backup();
-//                        painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_backup, "scroll_painel_backup", pos);
-//                 }
-//                 else if( menu_lateral.se_chave("Temas", index) )
-//                 {
-//                        JPanel painel_temas = new painel_temas().painel_p_temas();
-//                        painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_temas, "scroll_painel_temas", pos);
-//                 }
+                 else if( menu_lateral.se_chave(MenuLateral.textarea, index) )
+                 {
+                        JPanel pl = pc.area_para_texto(painel_baixo, pos);
+                        painel_cima = operacoes_painel.add_painel_filho_ao_PAI(painel_cima, pl, "scroll_pl", pos);
+                        operacoes_painel.atualizar_painel(painel_cima);
+                 }
+                 else if( menu_lateral.se_chave(MenuLateral.texto, index) )
+                 {
+                        JPanel pl = pc.texto(painel_baixo, pos);
+                        painel_cima = operacoes_painel.add_painel_filho_ao_PAI(painel_cima, pl, "scroll_pl", pos);
+                        operacoes_painel.atualizar_painel(painel_cima);
+                 }
+                 else if( menu_lateral.se_chave(MenuLateral.titulo, index) )
+                 {
+                        JPanel pl = pc.um_titulo(painel_baixo, pos);
+                        painel_cima = operacoes_painel.add_painel_filho_ao_PAI(painel_cima, pl, "scroll_pl", pos);
+                        operacoes_painel.atualizar_painel(painel_cima);
+                 }
+                 else if( menu_lateral.se_chave(MenuLateral.select, index) )
+                 {
+                        JPanel pl = pc.lista_select(painel_baixo, pos);
+                        painel_cima = operacoes_painel.add_painel_filho_ao_PAI(painel_cima, pl, "scroll_pl", pos);
+                        operacoes_painel.atualizar_painel(painel_cima);
+                 }
                  
                  
              }// fim mouseClicked(MouseEvent me);

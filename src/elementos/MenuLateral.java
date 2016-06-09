@@ -27,6 +27,10 @@ public class MenuLateral {
     public static String label = "Nome simples";
     public static String opcoes = "Selecionar uma opção";
     public static String checkbox = "Selecionar opções";
+    public static String textarea = "Área para texto";
+    public static String texto = "Texto";
+    public static String titulo = "Um titulo";
+    public static String select = "Selecionar opção";
     
     private Map<String, ImageIcon> map = new HashMap<>();
     private Map<String, Integer> modulo = new HashMap<>();
@@ -40,14 +44,14 @@ public class MenuLateral {
         nomes.add(input_text); /* => */ icones.add("icones/elementos/Form Input (Text)/Form Input (Text)_32x32.png");
 //        nomes.add(input_text_password); /* => */ icones.add("icones/elementos/Form Input (Password)/Form Input (Password)_32x32.png");
         nomes.add(opcoes); /* => */ icones.add("icones/elementos/Form Input (Radio)/Form Input (Radio)_32x32.png");
-        nomes.add("Selecionar opção"); /* => */ icones.add("icones/elementos/Form Input (Select Single)/Form Input (Select Single)_32x32.png");
+        nomes.add(select); /* => */ icones.add("icones/elementos/Form Input (Select Single)/Form Input (Select Single)_32x32.png");
         nomes.add(checkbox); /* => */ icones.add("icones/elementos/Form Input (Checkbox)/Form Input (Checkbox)_32x32.png");
-        nomes.add("Área para texto"); /* => */ icones.add("icones/elementos/Form Input (Textarea)/Form Input (Textarea)_32x32.png");
-        nomes.add("Um titulo"); /* => */ icones.add("icones/elementos/H1/H1_32x32.png");
-        nomes.add("Texto"); /* => */ icones.add("icones/elementos/Quote/Quote_32x32.png");
+        nomes.add(textarea); /* => */ icones.add("icones/elementos/Form Input (Textarea)/Form Input (Textarea)_32x32.png");
+        nomes.add(titulo); /* => */ icones.add("icones/elementos/H1/H1_32x32.png");
+        nomes.add(texto); /* => */ icones.add("icones/elementos/Quote/Quote_32x32.png");
 //        nomes.add("Link"); /* => */ icones.add("icones/elementos/Link (Make)/Link (Make)_32x32.png");
-        nomes.add("Botão OK"); /* => */ icones.add("icones/elementos/Form Input (Button OK)/Form Input (Button OK)_32x32.png");
-        nomes.add("Botão Cancelar"); /* => */ icones.add("icones/elementos/Form Input (Button Cancel)/Form Input (Button Cancel)_32x32.png");
+//        nomes.add("Botão OK"); /* => */ icones.add("icones/elementos/Form Input (Button OK)/Form Input (Button OK)_32x32.png");
+//        nomes.add("Botão Cancelar"); /* => */ icones.add("icones/elementos/Form Input (Button Cancel)/Form Input (Button Cancel)_32x32.png");
         //        nomes.add("Componente5"); /* => */ icones.add("icones/elementos/Form Input (Select Multiple)/Form Input (Select Multiple)_32x32.png");
         //        nomes.add("Componente12"); /* => */ icones.add("icones/elementos/List (Ordered Decimal)/List (Ordered Decimal)_32x32.png");
         //        nomes.add("Componente13"); /* => */ icones.add("icones/elementos/List (Unordered)/List (Unordered)_32x32.png");
