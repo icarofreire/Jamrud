@@ -7,6 +7,8 @@ package trei_big;
 
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import ferramenta_gui.GBHelper;
+import ferramenta_gui.Gap;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -16,6 +18,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Vector;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -151,6 +155,25 @@ public class operacoes_painel {
         return p_group;
     }
     
+    /*  \/\/
+        vertical_ou_horizontal = 1 --> vertical;
+        vertical_ou_horizontal = 2 --> horizontal; \/\/
+    */
+    public static JPanel add_componente_em_painel(JComponent comp1, JComponent comp2, int vertical_ou_horizontal) {
+        
+        JPanel p_group = new JPanel(new GridBagLayout());
+        GBHelper pos_p_group = new GBHelper();
+        
+        p_group.add(comp1, pos_p_group.expandir());
+        if( vertical_ou_horizontal == 1 ){
+            p_group.add(comp2, pos_p_group.nextRow().expandir());
+        }else if( vertical_ou_horizontal == 2 ){
+            p_group.add(comp2, pos_p_group.nextCol().expandir());
+        }
+        
+        return p_group;
+    }
+    
     public static void add_botao_excluir_painel(final JPanel painel_baixo, final GBHelper pos_painel_baixo, final JPanel painel_criado, final JButton btn_excluir_painel, final String prefixo_painel, final String prefixo_btn_excluir_painel)
     {
         final String name_painel = operacoes.gerar_name_para_componente(prefixo_painel);
@@ -175,4 +198,22 @@ public class operacoes_painel {
         });
     }
     
+    /* Adiciona o componente em um painel com borda vermelha, e um botão de excluir com prefixo já definido.
+    */
+    public static void add_componente_painel_baixo_e_add_botao_exluir(final JComponent componente, final JPanel painel_baixo, final GBHelper pos_painel_baixo, final String prefixo_painel)
+    {
+        final int GAP = 5;
+        final String prefixo_btn_excluir_painel = "btn_excluir_painel_";
+        JButton btn_excluir_painel = new JButton("Excluir", new ImageIcon("icones/erro-24.png"));
+                    
+        JPanel painel_criar_titulo = operacoes_painel.add_componente_em_painel( componente );
+        painel_criar_titulo.setBorder(BorderFactory.createLineBorder(Color.RED));
+        operacoes_painel.add_botao_excluir_painel(painel_baixo, pos_painel_baixo, painel_criar_titulo, btn_excluir_painel, prefixo_painel, prefixo_btn_excluir_painel);
+                    
+        painel_baixo.add( painel_criar_titulo, pos_painel_baixo.nextRow().expandW() );
+        painel_baixo.add( btn_excluir_painel, pos_painel_baixo.nextCol().expandW() );
+        painel_baixo.add(new Gap(GAP) , pos_painel_baixo.nextRow());
+        operacoes_painel.atualizar_painel(painel_baixo);
+    }
+        
 }

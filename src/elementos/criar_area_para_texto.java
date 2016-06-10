@@ -20,49 +20,53 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import trei_big.aviso;
-import trei_big.operacoes;
 import trei_big.operacoes_painel;
 
 /**
  *
  * @author icaro
  */
-public class criar_texto {
+public class criar_area_para_texto {
     
     private static final int GAP = 5;   // Default gap btwn components.
     private String nome_botao_aplicar = "Adicionar ao formulário";
-    private String prefixo_painel_texto = "painel_texto_";
+    private String prefixo_painel_area_para_texto = "painel_area_para_texto_";
     
-    public JPanel texto(final JPanel painel_baixo, final GBHelper pos_painel_baixo){
+    public JPanel area_para_texto(final JPanel painel_baixo, final GBHelper pos_painel_baixo){
         
         JPanel painel = new JPanel(new GridBagLayout());
         GBHelper pos = new GBHelper();
-        final JTextArea campo_valor = new JTextArea();
+        
+        JLabel lcmp1 = new JLabel("Titulo:");
+        final JTextField cmp1 = new JTextField(20);
         JButton btn_aplicar = new JButton(nome_botao_aplicar);
         
-        campo_valor.setColumns(20);
-        campo_valor.setRows(5);
-        final JScrollPane scroll_observacoes = new JScrollPane();
-        scroll_observacoes.setViewportView(campo_valor);
         
-        painel.add(scroll_observacoes, pos.expandW());
+        painel.add(lcmp1, pos.expandW());
+        painel.add(cmp1, pos.nextCol().expandW());
+        painel.add(new Gap(GAP) , pos.nextRow());
         painel.add(btn_aplicar, pos.nextRow().expandW());
         
         btn_aplicar.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent ae) {
                 
-                String html1 = "<html><body style='width: ";
-                String html2 = "px'>";
-                JLabel texto = new JLabel();
-                String conteudo = campo_valor.getText().trim();
-                if( !conteudo.isEmpty() )
+                String nome_titulo = cmp1.getText().trim();
+                if( !nome_titulo.isEmpty() )
                 {
-                    texto.setText( (html1+"500"+html2) + campo_valor.getText() );
+                    JLabel titulo = new JLabel();
+                    titulo.setText(nome_titulo);
+                    JTextArea campo_valor_add = new JTextArea();
+                    campo_valor_add.setColumns(20);
+                    campo_valor_add.setRows(5);
+                    final JScrollPane scroll_campo_valor_add = new JScrollPane();
+                    scroll_campo_valor_add.setViewportView(campo_valor_add);
 
-                    operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(texto, painel_baixo, pos_painel_baixo, prefixo_painel_texto);
+                    JPanel p_int = operacoes_painel.add_componente_em_painel(titulo, scroll_campo_valor_add, 1);
+
+                    operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(p_int, painel_baixo, pos_painel_baixo, prefixo_painel_area_para_texto);
                 }else{
-                    aviso.mensagem_atencao("Escreva um texto para adicionar em seu formulário.", "Conteúdo vazio");
+                    aviso.mensagem_atencao("Informe um titulo para o campo.", "Titulo vazio");
                 }
             }
         });

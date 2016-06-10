@@ -46,34 +46,7 @@ public class paineis_componentes {
     
     public JPanel input_text(final JPanel painel_baixo, final GBHelper pos_painel_baixo){
         
-        JPanel painel = new JPanel(new GridBagLayout());
-        GBHelper pos = new GBHelper();
-        painel.setName("painel_input_text");
-        
-        JLabel lcmp1 = new JLabel("Nome:");
-        final JTextField cmp1 = new JTextField(20);
-        final JLabel titulo = new JLabel();
-        
-        JButton btn_aplicar = new JButton(nome_botao_aplicar);
-        
-        painel.add(lcmp1, pos.expandW());
-        painel.add(cmp1, pos.nextCol().expandW());
-        painel.add(new Gap(GAP) , pos.nextRow());
-        painel.add(btn_aplicar, pos.nextRow().expandW());
-        
-        btn_aplicar.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                
-                titulo.setText(cmp1.getText());
-                painel_baixo.add( titulo, pos_painel_baixo.nextRow().expandW() );
-                painel_baixo.add( new JTextField(20), pos_painel_baixo.nextCol().expandW() );
-                painel_baixo.add(new Gap(GAP) , pos_painel_baixo.nextRow());
-                operacoes_painel.atualizar_painel(painel_baixo);
-                
-            }
-        });
-        
+        JPanel painel = new criar_campo_input().input_text(painel_baixo, pos_painel_baixo);
         return painel;
     }
     
@@ -141,74 +114,13 @@ public class paineis_componentes {
     
     public JPanel area_para_texto(final JPanel painel_baixo, final GBHelper pos_painel_baixo){
         
-        JPanel painel = new JPanel(new GridBagLayout());
-        GBHelper pos = new GBHelper();
-        painel.setName("painel_input_text");
-        
-        JLabel lcmp1 = new JLabel("Titulo:");
-        final JTextField cmp1 = new JTextField(20);
-        final JLabel titulo = new JLabel();
-        final JTextArea campo_valor = new JTextArea();
-        
-        JButton btn_aplicar = new JButton(nome_botao_aplicar);
-        
-        campo_valor.setColumns(20);
-        campo_valor.setRows(5);
-        final JScrollPane scroll_observacoes = new JScrollPane();
-        scroll_observacoes.setViewportView(campo_valor);
-        
-        painel.add(lcmp1, pos.expandW());
-        painel.add(cmp1, pos.nextCol().expandW());
-        painel.add(new Gap(GAP) , pos.nextRow());
-        painel.add(btn_aplicar, pos.nextRow().expandW());
-        
-        btn_aplicar.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                
-                titulo.setText(cmp1.getText());
-                painel_baixo.add( titulo, pos_painel_baixo.nextRow().expandW() );
-                painel_baixo.add( scroll_observacoes, pos_painel_baixo.nextRow().expandW() );
-                painel_baixo.add(new Gap(GAP) , pos_painel_baixo.nextRow());
-                operacoes_painel.atualizar_painel(painel_baixo);
-                
-            }
-        });
-        
+        JPanel painel = new criar_area_para_texto().area_para_texto(painel_baixo, pos_painel_baixo);
         return painel;
     }
     
     public JPanel um_titulo(final JPanel painel_baixo, final GBHelper pos_painel_baixo){
         
-        JPanel painel = new JPanel(new GridBagLayout());
-        GBHelper pos = new GBHelper();
-        painel.setName("painel_input_text");
-        
-        JLabel lcmp1 = new JLabel("Titulo:");
-        final JTextField cmp1 = new JTextField(20);
-        
-        JButton btn_aplicar = new JButton(nome_botao_aplicar);
-        Font font = new Font("helvitica", Font.BOLD, 24);
-        final JLabel titulo = new JLabel();
-        titulo.setFont(font);
-        
-        painel.add(lcmp1, pos.expandW());
-        painel.add(cmp1, pos.nextCol().expandW());
-        painel.add(new Gap(GAP) , pos.nextRow());
-        painel.add(btn_aplicar, pos.nextRow().expandW());
-        
-        btn_aplicar.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                
-                titulo.setText(cmp1.getText());
-                painel_baixo.add( titulo, pos_painel_baixo.nextRow().expandW() );
-                painel_baixo.add(new Gap(GAP) , pos_painel_baixo.nextRow());
-                operacoes_painel.atualizar_painel(painel_baixo);
-                
-            }
-        });
-        
+        JPanel painel = new criar_titulo().um_titulo(painel_baixo, pos_painel_baixo);
         return painel;
     }    
     
