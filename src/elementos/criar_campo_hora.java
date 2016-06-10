@@ -10,10 +10,19 @@ import ferramenta_gui.Gap;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.text.MaskFormatter;
 import trei_big.aviso;
 import trei_big.operacoes_painel;
 
@@ -21,15 +30,16 @@ import trei_big.operacoes_painel;
  *
  * @author icaro
  */
-public class criar_campo_input {
+public class criar_campo_hora {
     
     private static final int GAP = 5;   // Default gap btwn components.
     private String nome_botao_aplicar = "Adicionar ao formulário";
     
-    public JPanel input_text(final JPanel painel_baixo, final GBHelper pos_painel_baixo){
+    public JPanel input_hora(final JPanel painel_baixo, final GBHelper pos_painel_baixo){
         
         JPanel painel = new JPanel(new GridBagLayout());
         GBHelper pos = new GBHelper();
+        painel.setName("painel_input_text");
         
         JLabel lcmp1 = new JLabel("Nome:");
         final JTextField cmp1 = new JTextField(20);
@@ -50,11 +60,30 @@ public class criar_campo_input {
                 if( !nome_titulo.isEmpty() )
                 {
                     JLabel titulo = new JLabel();
-                    JTextField campo = new JTextField(20);
+                    final JFormattedTextField campo_data = new JFormattedTextField();
+ 
+                    try {
+                        MaskFormatter dateMask = new MaskFormatter("##:##");
+                        dateMask.install(campo_data);
+                    } catch (ParseException ex) {
+                        Logger.getLogger(criar_campo_data.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    campo_data.addFocusListener(new FocusListener(){
+                        @Override
+                        public void focusGained(FocusEvent fe) {
+                            campo_data.setCaretPosition(0);
+                        }
+
+                        @Override
+                        public void focusLost(FocusEvent fe) {
+                        }
+                    });
+                    
                     titulo.setText(nome_titulo);
                     
-                    JPanel p_int = operacoes_painel.add_componente_em_painel(titulo, campo, 2);
-                    operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(p_int, painel_baixo, pos_painel_baixo, prefixos.prefixo_painel_criar_campo_input);
+                    JPanel p_int = operacoes_painel.add_componente_em_painel(titulo, campo_data, 2);
+                    operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(p_int, painel_baixo, pos_painel_baixo, prefixos.prefixo_painel_criar_campo_hora);
 
                 }else{
                     aviso.mensagem_atencao("Informe um titulo para o campo.", "Titulo vazio");

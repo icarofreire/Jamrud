@@ -6,6 +6,7 @@
 package trei_big;
 
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import elementos.prefixos;
 import ferramenta_gui.GBHelper;
 import ferramenta_gui.Gap;
 import java.awt.Color;
@@ -97,6 +98,18 @@ public class operacoes_painel {
                 }
             }//fim for;
         return x;
+    }
+    
+    public static Vector<Component> pegar_todos_componentes_em_painel_com_prefixo(JPanel painel, String prefixo_componente_no_painel) {
+        Vector<Component> vc = new Vector<Component>();
+        Component[] components = painel.getComponents();
+            for (int i=0; i < components.length; i++) {
+                String name_componente = components[i].getName();
+                if( (name_componente != null) && (name_componente.indexOf(prefixo_componente_no_painel) != -1)  ){
+                    vc.add(components[i]);
+                }
+            }//fim for;
+        return vc;
     }
     
     public static int obj_to_int(Object inteiro) {
@@ -193,7 +206,7 @@ public class operacoes_painel {
                 painel_baixo.remove( operacoes_painel.pegar_componente_em_painel(painel_baixo, operacoes.pegar_name(prefixo_btn_excluir_painel, chave_btn)) );
 
                 operacoes_painel.atualizar_painel(painel_baixo);
-                pos_painel_baixo.gridy--;
+//                pos_painel_baixo.gridy--;
             }
         });
     }
@@ -203,12 +216,11 @@ public class operacoes_painel {
     public static void add_componente_painel_baixo_e_add_botao_exluir(final JComponent componente, final JPanel painel_baixo, final GBHelper pos_painel_baixo, final String prefixo_painel)
     {
         final int GAP = 5;
-        final String prefixo_btn_excluir_painel = "btn_excluir_painel_";
         JButton btn_excluir_painel = new JButton("Excluir", new ImageIcon("icones/erro-24.png"));
                     
         JPanel painel_criar_titulo = operacoes_painel.add_componente_em_painel( componente );
         painel_criar_titulo.setBorder(BorderFactory.createLineBorder(Color.RED));
-        operacoes_painel.add_botao_excluir_painel(painel_baixo, pos_painel_baixo, painel_criar_titulo, btn_excluir_painel, prefixo_painel, prefixo_btn_excluir_painel);
+        operacoes_painel.add_botao_excluir_painel(painel_baixo, pos_painel_baixo, painel_criar_titulo, btn_excluir_painel, prefixo_painel, prefixos.prefixo_btn_excluir_painel);
                     
         painel_baixo.add( painel_criar_titulo, pos_painel_baixo.nextRow().expandW() );
         painel_baixo.add( btn_excluir_painel, pos_painel_baixo.nextCol().expandW() );

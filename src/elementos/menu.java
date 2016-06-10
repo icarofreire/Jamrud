@@ -137,7 +137,7 @@ public class menu extends JFrame {
        return new exibir_listagem().obj("Lista de Clientes", colunas, dados_da_tabela);
     }
     
-     private JPanel gui() {        
+     private JPanel gui() {
       
         this.menu_lateral = new MenuLateral();
         lista = this.menu_lateral.lista();
@@ -173,7 +173,6 @@ public class menu extends JFrame {
         
         
         lista.addMouseListener(new MouseListener(){
-
              @Override
              public void mouseClicked(MouseEvent me) {
                  
@@ -188,6 +187,18 @@ public class menu extends JFrame {
                  if( menu_lateral.se_chave(MenuLateral.input_text, index) )
                  {
                          JPanel painel_cadastrar = pc.input_text(painel_baixo, pos);
+                         painel_cima = operacoes_painel.add_painel_filho_ao_PAI(painel_cima, painel_cadastrar, "scroll_painel_cadastrar", pos_paineis_internos);
+                         operacoes_painel.atualizar_painel(painel_cima);
+                         
+                 }else if( menu_lateral.se_chave(MenuLateral.input_data, index) )
+                 {
+                         JPanel painel_cadastrar = pc.input_data(painel_baixo, pos);
+                         painel_cima = operacoes_painel.add_painel_filho_ao_PAI(painel_cima, painel_cadastrar, "scroll_painel_cadastrar", pos_paineis_internos);
+                         operacoes_painel.atualizar_painel(painel_cima);
+                 }
+                 else if( menu_lateral.se_chave(MenuLateral.input_hora, index) )
+                 {
+                         JPanel painel_cadastrar = pc.input_hora(painel_baixo, pos_paineis_internos);
                          painel_cima = operacoes_painel.add_painel_filho_ao_PAI(painel_cima, painel_cadastrar, "scroll_painel_cadastrar", pos_paineis_internos);
                          operacoes_painel.atualizar_painel(painel_cima);
                  }
@@ -260,9 +271,43 @@ public class menu extends JFrame {
              }
         });
         
+        botao_criar_formulario.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                
+                String painel_baixo_serializado = operacoes_painel.serializar_obj( remover_bordas_vermelhas_e_botes_excluir() );
+                System.out.println( "Tamanho serializado: " + painel_baixo_serializado.length() );
+                new popup(painel_baixo_serializado);
+                
+            }
+        });
+        
         return content;
     }
 
     
+    public JPanel remover_bordas_vermelhas_e_botes_excluir()
+    {
+        JPanel copia_painel_baixo = painel_baixo;
+        Component[] components = copia_painel_baixo.getComponents();
+        for (int i=0; i < components.length; i++)
+        {
+            String name_componente = components[i].getName();                    
+            for (int j=0; j < prefixos.prefixos_paineis.length; j++){
+                // \/ remove as bordas vermelhas;
+                if( (name_componente != null) && (name_componente.indexOf(prefixos.prefixos_paineis[j]) != -1)  ){
+                    JPanel p = (JPanel) components[i];
+                    p.setBorder(null);
+                }
+            }
+            // \/ remove os botões de excluir;
+            if( (name_componente != null) && (name_componente.indexOf(prefixos.prefixo_btn_excluir_painel) != -1)  ){
+                copia_painel_baixo.remove(components[i]);
+            }
+                    
+        }//fim for;
+        return copia_painel_baixo;
+    }
+     
 }
 

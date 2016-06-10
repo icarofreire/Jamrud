@@ -23,6 +23,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import trei_big.aviso;
 import trei_big.operacoes;
 import trei_big.operacoes_painel;
 
@@ -39,8 +40,6 @@ public class criar_opcoes_select {
     private String prefix_id = "campo";
     private String prefixo_campo_add = "comp_campo_add";
     private String prefixo_btn_excluir_add = "comp_btn_excluir_add_";
-    private String prefixo_painel_select = "painel_select_";
-    private String prefixo_btn_excluir_painel = "btn_excluir_painel_";
     private static final int GAP = 5;   // Default gap btwn components.
     private String nome_botao_aplicar = "Adicionar ao formulário";
     
@@ -164,18 +163,15 @@ public class criar_opcoes_select {
                    }
                 }//fim for;
                 
-                JPanel painel_a_inserir = criar_select_por_nome(nomes_radios);
-                painel_a_inserir.setBorder(BorderFactory.createLineBorder(Color.RED));
-                JButton btn_excluir_painel = new JButton("", new ImageIcon("icones/erro-24.png"));
-                
-                operacoes_painel.add_botao_excluir_painel(painel_baixo, pos_painel_baixo, painel_a_inserir, btn_excluir_painel, prefixo_painel_select, prefixo_btn_excluir_painel);
-                
-                painel_baixo.add( painel_a_inserir, pos_painel_baixo.nextRow().expandW() );
-                painel_baixo.add( btn_excluir_painel, pos_painel_baixo.nextCol().expandW() );
-                
-                painel_baixo.add(new Gap(GAP) , pos_painel_baixo.nextRow());
-                operacoes_painel.atualizar_painel(painel_baixo);
-                nomes_radios.clear();
+                if( nomes_radios.size() > 1 )
+                {
+                    JPanel painel_a_inserir = criar_select_por_nome(nomes_radios);
+                    operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(painel_a_inserir, painel_baixo, pos_painel_baixo, prefixos.prefixo_painel_select);
+
+                    nomes_radios.clear();
+                }else{
+                    aviso.mensagem_atencao("Insira no mínimo 2 elementos em seu formulário.", "Número insuficiente");
+                }
             }
         });
     }

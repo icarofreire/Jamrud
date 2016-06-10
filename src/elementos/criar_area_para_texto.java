@@ -30,7 +30,6 @@ public class criar_area_para_texto {
     
     private static final int GAP = 5;   // Default gap btwn components.
     private String nome_botao_aplicar = "Adicionar ao formulário";
-    private String prefixo_painel_area_para_texto = "painel_area_para_texto_";
     
     public JPanel area_para_texto(final JPanel painel_baixo, final GBHelper pos_painel_baixo){
         
@@ -64,7 +63,7 @@ public class criar_area_para_texto {
 
                     JPanel p_int = operacoes_painel.add_componente_em_painel(titulo, scroll_campo_valor_add, 1);
 
-                    operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(p_int, painel_baixo, pos_painel_baixo, prefixo_painel_area_para_texto);
+                    operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(p_int, painel_baixo, pos_painel_baixo, prefixos.prefixo_painel_area_para_texto);
                 }else{
                     aviso.mensagem_atencao("Informe um titulo para o campo.", "Titulo vazio");
                 }

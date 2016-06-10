@@ -23,6 +23,8 @@ public class MenuLateral {
     
     /* \/ Titulo para os componentes; \/ */
     public static String input_text = "Campo de texto";
+    public static String input_data = "Campo de Data";
+    public static String input_hora = "Campo de Hora";
     public static String input_text_password = "Campo de senha";
     public static String label = "Nome simples";
     public static String opcoes = "Selecionar uma opção";
@@ -42,6 +44,8 @@ public class MenuLateral {
         /* \/ A ordem em que forem adicionados será a ordem em que aparecerá no menu. \/ */
 //        nomes.add(label); /* => */ icones.add("icones/elementos/Label/Label_32x32.png");
         nomes.add(input_text); /* => */ icones.add("icones/elementos/Form Input (Text)/Form Input (Text)_32x32.png");
+        nomes.add(input_data); /* => */ icones.add("icones/elementos/Form Input (Text)/Form Input (Text)_32x32.png");
+        nomes.add(input_hora); /* => */ icones.add("icones/elementos/Form Input (Text)/Form Input (Text)_32x32.png");
 //        nomes.add(input_text_password); /* => */ icones.add("icones/elementos/Form Input (Password)/Form Input (Password)_32x32.png");
         nomes.add(opcoes); /* => */ icones.add("icones/elementos/Form Input (Radio)/Form Input (Radio)_32x32.png");
         nomes.add(select); /* => */ icones.add("icones/elementos/Form Input (Select Single)/Form Input (Select Single)_32x32.png");

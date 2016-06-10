@@ -31,7 +31,6 @@ public class criar_texto {
     
     private static final int GAP = 5;   // Default gap btwn components.
     private String nome_botao_aplicar = "Adicionar ao formulário";
-    private String prefixo_painel_texto = "painel_texto_";
     
     public JPanel texto(final JPanel painel_baixo, final GBHelper pos_painel_baixo){
         
@@ -60,7 +59,7 @@ public class criar_texto {
                 {
                     texto.setText( (html1+"500"+html2) + campo_valor.getText() );
 
-                    operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(texto, painel_baixo, pos_painel_baixo, prefixo_painel_texto);
+                    operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(texto, painel_baixo, pos_painel_baixo, prefixos.prefixo_painel_texto);
                 }else{
                     aviso.mensagem_atencao("Escreva um texto para adicionar em seu formulário.", "Conteúdo vazio");
                 }

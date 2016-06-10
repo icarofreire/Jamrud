@@ -50,6 +50,18 @@ public class paineis_componentes {
         return painel;
     }
     
+    public JPanel input_data(final JPanel painel_baixo, final GBHelper pos_painel_baixo){
+        
+        JPanel painel = new criar_campo_data().input_data(painel_baixo, pos_painel_baixo);
+        return painel;
+    }
+    
+    public JPanel input_hora(final JPanel painel_baixo, final GBHelper pos_painel_baixo){
+        
+        JPanel painel = new criar_campo_hora().input_hora(painel_baixo, pos_painel_baixo);
+        return painel;
+    }
+    
     public JPanel input_text_password(){
         
         JPanel painel = new JPanel(new GridBagLayout());
