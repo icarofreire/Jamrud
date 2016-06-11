@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 import trei_big.aviso;
+import trei_big.operacoes;
 import trei_big.operacoes_painel;
 
 /**
@@ -39,7 +40,6 @@ public class criar_campo_hora {
         
         JPanel painel = new JPanel(new GridBagLayout());
         GBHelper pos = new GBHelper();
-        painel.setName("painel_input_text");
         
         JLabel lcmp1 = new JLabel("Nome:");
         final JTextField cmp1 = new JTextField(20);
@@ -61,6 +61,7 @@ public class criar_campo_hora {
                 {
                     JLabel titulo = new JLabel();
                     final JFormattedTextField campo_data = new JFormattedTextField();
+                    campo_data.setName( operacoes.gerar_name_para_componente(prefixos.prefixo_campo_hora) );
  
                     try {
                         MaskFormatter dateMask = new MaskFormatter("##:##");

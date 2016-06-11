@@ -11,6 +11,7 @@ package elementos;
  */
 public class prefixos {
     
+    /* \/ prefixos dos paineis; */
     public static String prefixo_painel_criar_campo_input = "painel_criar_campo_input_";
     public static String prefixo_painel_criar_campo_data = "painel_criar_campo_data_";
     public static String prefixo_painel_criar_campo_hora = "painel_criar_campo_hora_";
@@ -34,5 +35,9 @@ public class prefixos {
         prefixo_painel_criar_titulo,
         prefixo_painel_area_para_texto
     };
+    
+    
+    public static String prefixo_campo_data = "pfx_campo_data";
+    public static String prefixo_campo_hora = "pfx_campo_hora";
     
 }

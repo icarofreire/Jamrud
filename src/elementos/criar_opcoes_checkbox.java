@@ -80,9 +80,8 @@ public class criar_opcoes_checkbox {
         final JTextField cmp1 = new JTextField(10);
         JButton btn_mais = new JButton("Mais uma opcao", new ImageIcon("icones/add-24.png"));
         JButton btn_aplicar = new JButton(nome_botao_aplicar);
-        cmp1.setText("Nome");
         
-        final JCheckBox birdButton = new JCheckBox("Nome");
+        final JCheckBox birdButton = new JCheckBox();
         birdButton.setName( operacoes.gerar_name_para_componente(prefix_id) );
         
         cmp1.addFocusListener(new FocusListener(){
@@ -115,7 +114,7 @@ public class criar_opcoes_checkbox {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                final JCheckBox catButton = new JCheckBox("Nome");
+                final JCheckBox catButton = new JCheckBox();
                 final JButton btn_excluir = new JButton("", new ImageIcon("icones/erro-24.png"));
                 final JTextField campos = new JTextField(10);
                 
@@ -214,16 +213,20 @@ public class criar_opcoes_checkbox {
                    if( (name_componente != null) && (name_componente.indexOf(prefix_id) != -1) ){
 
                             JCheckBox radio = (JCheckBox) components[i];
-                            nomes_radios.add( radio.getText() );                       
+                            String nomes = radio.getText().trim();
+                            nomes_radios.add( nomes );
                    }
                 }//fim for;
                 
                 if( nomes_radios.size() > 1 )
                 {
-                    JPanel painel_a_inserir = criar_checkbox_por_nome(nomes_radios);
-                    operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(painel_a_inserir, painel_baixo, pos_painel_baixo, prefixos.prefixo_painel_checkbox);
-
-                    nomes_radios.clear();
+                    if( nomes_radios.contains("") ){
+                        aviso.mensagem_atencao("Insira o titulo para as opções que irá adicionar em seu formulário.", "Titulo vazio");
+                    }else{
+                        JPanel painel_a_inserir = criar_checkbox_por_nome(nomes_radios);
+                        operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(painel_a_inserir, painel_baixo, pos_painel_baixo, prefixos.prefixo_painel_checkbox);
+                        nomes_radios.clear();
+                    }
                 }else{
                     aviso.mensagem_atencao("Insira no mínimo 2 elementos em seu formulário.", "Número insuficiente");
                 }

@@ -159,16 +159,20 @@ public class criar_opcoes_select {
                    if( (name_componente != null) && (name_componente.indexOf(prefixo_campo_add) != -1) ){
 
                             JTextField radio = (JTextField) components[i];
-                            nomes_radios.add( radio.getText() );                       
+                            String nomes = radio.getText().trim();
+                            nomes_radios.add( nomes );
                    }
                 }//fim for;
                 
                 if( nomes_radios.size() > 1 )
                 {
-                    JPanel painel_a_inserir = criar_select_por_nome(nomes_radios);
-                    operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(painel_a_inserir, painel_baixo, pos_painel_baixo, prefixos.prefixo_painel_select);
-
-                    nomes_radios.clear();
+                    if( nomes_radios.contains("") ){
+                        aviso.mensagem_atencao("Insira o titulo para as opções que irá adicionar em sua lista.", "Titulo vazio");
+                    }else{
+                        JPanel painel_a_inserir = criar_select_por_nome(nomes_radios);
+                        operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(painel_a_inserir, painel_baixo, pos_painel_baixo, prefixos.prefixo_painel_select);
+                        nomes_radios.clear();
+                    }
                 }else{
                     aviso.mensagem_atencao("Insira no mínimo 2 elementos em seu formulário.", "Número insuficiente");
                 }

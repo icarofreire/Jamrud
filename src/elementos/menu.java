@@ -187,33 +187,33 @@ public class menu extends JFrame {
                  if( menu_lateral.se_chave(MenuLateral.input_text, index) )
                  {
                          JPanel painel_cadastrar = pc.input_text(painel_baixo, pos);
-                         painel_cima = operacoes_painel.add_painel_filho_ao_PAI(painel_cima, painel_cadastrar, "scroll_painel_cadastrar", pos_paineis_internos);
+                         painel_cima = operacoes_painel.add_painel_filho_ao_PAI(painel_cima, painel_cadastrar, "scroll_painel_cadastrar", pos);
                          operacoes_painel.atualizar_painel(painel_cima);
                          
                  }else if( menu_lateral.se_chave(MenuLateral.input_data, index) )
                  {
                          JPanel painel_cadastrar = pc.input_data(painel_baixo, pos);
-                         painel_cima = operacoes_painel.add_painel_filho_ao_PAI(painel_cima, painel_cadastrar, "scroll_painel_cadastrar", pos_paineis_internos);
+                         painel_cima = operacoes_painel.add_painel_filho_ao_PAI(painel_cima, painel_cadastrar, "scroll_painel_cadastrar", pos);
                          operacoes_painel.atualizar_painel(painel_cima);
                  }
                  else if( menu_lateral.se_chave(MenuLateral.input_hora, index) )
                  {
-                         JPanel painel_cadastrar = pc.input_hora(painel_baixo, pos_paineis_internos);
-                         painel_cima = operacoes_painel.add_painel_filho_ao_PAI(painel_cima, painel_cadastrar, "scroll_painel_cadastrar", pos_paineis_internos);
+                         JPanel painel_cadastrar = pc.input_hora(painel_baixo, pos);
+                         painel_cima = operacoes_painel.add_painel_filho_ao_PAI(painel_cima, painel_cadastrar, "scroll_painel_cadastrar", pos);
                          operacoes_painel.atualizar_painel(painel_cima);
                  }
-                 else if( menu_lateral.se_chave(MenuLateral.input_text_password, index) )
-                 {                        
-                        JPanel pl = pc.input_text_password();
-                        painel_cima = operacoes_painel.add_painel_filho_ao_PAI(painel_cima, pl, "scroll_pl", pos);
-                        operacoes_painel.atualizar_painel(painel_cima);
-                 }
-                 else if( menu_lateral.se_chave(MenuLateral.label, index) )
-                 {                        
-                        JPanel pl = pc.label();
-                        painel_cima = operacoes_painel.add_painel_filho_ao_PAI(painel_cima, pl, "scroll_pl", pos);
-                        operacoes_painel.atualizar_painel(painel_cima);
-                 }
+//                 else if( menu_lateral.se_chave(MenuLateral.input_text_password, index) )
+//                 {                        
+//                        JPanel pl = pc.input_text_password();
+//                        painel_cima = operacoes_painel.add_painel_filho_ao_PAI(painel_cima, pl, "scroll_pl", pos);
+//                        operacoes_painel.atualizar_painel(painel_cima);
+//                 }
+//                 else if( menu_lateral.se_chave(MenuLateral.label, index) )
+//                 {                        
+//                        JPanel pl = pc.label();
+//                        painel_cima = operacoes_painel.add_painel_filho_ao_PAI(painel_cima, pl, "scroll_pl", pos);
+//                        operacoes_painel.atualizar_painel(painel_cima);
+//                 }
                  else if( menu_lateral.se_chave(MenuLateral.opcoes, index) )
                  {                        
                         JPanel pl = pc.grupo_opcoes_radio(painel_baixo, pos);
@@ -279,6 +279,8 @@ public class menu extends JFrame {
                 System.out.println( "Tamanho serializado: " + painel_baixo_serializado.length() );
                 new popup(painel_baixo_serializado);
                 
+                painel_baixo.removeAll();
+                operacoes_painel.atualizar_painel(painel_baixo);
             }
         });
         
