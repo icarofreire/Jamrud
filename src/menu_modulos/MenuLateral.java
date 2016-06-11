@@ -26,7 +26,8 @@ public class MenuLateral {
     public static String pesquisar_editar = "Pesquisar/Editar";
     public static String backup_banco = "Backup";
     public static String temas = "Temas";
-    
+    public static String criar_formulario = "Criar formulário";
+    public static String gerar_planilha = "Gerar planilha";
     
     
     private Map<String, ImageIcon> map = new HashMap<>();
@@ -39,8 +40,10 @@ public class MenuLateral {
         /* \/ A ordem em que forem adicionados será a ordem em que aparecerá no menu. \/ */
         nomes.add(form_cadastrar); /* => */ icones.add("icones/cadastrar.png");
         nomes.add(pesquisar_editar); /* => */ icones.add("icones/pesquisar_e_editar.png");
-//        nomes.add("Lixeira"); /* => */ icones.add("icones/lixo2.png");
-        nomes.add(backup_banco); /* => */ icones.add("icones/1460597575_document-save.png");
+        nomes.add(gerar_planilha); /* => */ icones.add("icones/planilha.png");
+        //        nomes.add("Lixeira"); /* => */ icones.add("icones/lixo2.png");
+        //        nomes.add(backup_banco); /* => */ icones.add("icones/1460597575_document-save.png");
+        nomes.add(criar_formulario); /* => */ icones.add("icones/criar.png");
         nomes.add(temas); /* => */ icones.add("icones/aparencia1.png");
 
         

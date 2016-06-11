@@ -62,28 +62,17 @@ public class criar_opcoes_select {
         
         final JTextField cmp1 = new JTextField(10);
         cmp1.setName( operacoes.gerar_name_para_componente(prefixo_campo_add) );
-        JButton btn_mais = new JButton("Mais uma opcao", new ImageIcon("icones/add-24.png"));
+        JButton btn_mais = new JButton("Mais uma opção", new ImageIcon("icones/add-24.png"));
         JButton btn_aplicar = new JButton(nome_botao_aplicar);
         
-        final JLabel titulo = new JLabel("Nome:");
-        
-        cmp1.addFocusListener(new FocusListener(){
-            @Override
-            public void focusGained(FocusEvent fe) {
-                cmp1.setText("");
-            }
+        final JLabel titulo = new JLabel("Titulo:");
 
-            @Override
-            public void focusLost(FocusEvent fe) {
-            }
-        });
-
-        painel.add(btn_aplicar, pos.expandW());
+        painel.add(btn_mais, pos.expandW());
+        painel.add(btn_aplicar, pos.expandW().nextCol());
         painel.add(new Gap(GAP) , pos.nextRow());
         
         painel.add(titulo, pos.nextRow().expandW());
         painel.add(cmp1, pos.nextCol().expandW());
-        painel.add(btn_mais, pos.nextCol().expandW());
         
         btn_mais.addActionListener(new ActionListener(){
             int id_campo = 1;
@@ -91,8 +80,8 @@ public class criar_opcoes_select {
             public void actionPerformed(ActionEvent ae) {
                 
                 final JTextField campos = new JTextField(10);
-                final JLabel titulo2 = new JLabel("Nome:");
-                final JButton btn_excluir = new JButton("", new ImageIcon("icones/erro-24.png"));
+                final JLabel titulo2 = new JLabel("Titulo:");
+                final JButton btn_excluir = new JButton("Excluir", new ImageIcon("icones/erro-24.png"));
                 
                 String chave = operacoes.gerar_chave();
                 titulo2.setName( prefix_id + chave );

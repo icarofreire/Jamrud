@@ -41,7 +41,7 @@ public class criar_campo_hora {
         JPanel painel = new JPanel(new GridBagLayout());
         GBHelper pos = new GBHelper();
         
-        JLabel lcmp1 = new JLabel("Nome:");
+        JLabel lcmp1 = new JLabel("Titulo:");
         final JTextField cmp1 = new JTextField(20);
         final JLabel titulo = new JLabel();
         

@@ -22,17 +22,17 @@ import javax.swing.JList;
 public class MenuLateral {
     
     /* \/ Titulo para os componentes; \/ */
-    public static String input_text = "Campo de texto";
-    public static String input_data = "Campo de Data";
-    public static String input_hora = "Campo de Hora";
+    public static String input_text = "Campo de informação";
+    public static String input_data = "Campo de data";
+    public static String input_hora = "Campo de hora";
     public static String input_text_password = "Campo de senha";
     public static String label = "Nome simples";
-    public static String opcoes = "Selecionar uma opção";
+    public static String opcoes = "Escolher opção";
     public static String checkbox = "Selecionar opções";
     public static String textarea = "Área para texto";
-    public static String texto = "Texto";
-    public static String titulo = "Um titulo";
-    public static String select = "Selecionar opção";
+    public static String texto = "Escrever texto";
+    public static String titulo = "Escrever titulo";
+    public static String select = "Lista de opções";
     
     private Map<String, ImageIcon> map = new HashMap<>();
     private Map<String, Integer> modulo = new HashMap<>();

@@ -202,7 +202,13 @@ public class menu extends JFrame {
                         JPanel painel_temas = new painel_temas().painel_p_temas();
                         painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_temas, "scroll_painel_temas", pos);
                  }
-                 
+                 else if( menu_lateral.se_chave(MenuLateral.criar_formulario, index) )
+                 {
+                        JPanel painel_criar_formulario = new JPanel();
+                        painel_criar_formulario.add( new JLabel("Criar formulário") );
+                        painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_criar_formulario, "scroll_painel_temas", pos);
+                        Trei_big.menu_elementos();
+                 }
                  
              }// fim mouseClicked(MouseEvent me);
 

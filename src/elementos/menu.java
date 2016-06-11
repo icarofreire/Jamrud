@@ -60,12 +60,14 @@ public class menu extends JFrame {
     private static final int BORDER = 12;  // Window border in pixels.
     private static final int GAP = 5;   // Default gap btwn components.
     
+    private JTextField nome_formulario = new JTextField(20);
     private JTextField pesquisa = new JTextField(20);
     private DefaultListModel dlm = new DefaultListModel();
     private JList lista = new JList(dlm);
     private JButton botao_exibir_listagem = new JButton();
     private JButton botao_exibir_listagem2 = new JButton();
     private JButton botao_criar_formulario = new JButton("Gerar Formulário");
+    private JButton botao_fechar = new JButton("Fechar", new ImageIcon("icones/erro-24.png"));
     
     private JMenu menu = new JMenu("Arquivo");
     private JMenuItem item_menu_sobre = new JMenuItem("Sobre");
@@ -79,6 +81,9 @@ public class menu extends JFrame {
     
     private JPanel painel_cima = new JPanel(new GridBagLayout());
     private JPanel painel_baixo = new JPanel(new GridBagLayout());
+    
+    private int largura = 1200;
+    private int altura = 700;
     
     
     public menu(String titulo) {
@@ -113,9 +118,9 @@ public class menu extends JFrame {
         super.setContentPane(windowContent);
         super.pack();                               // Layout components.
         super.setTitle(titulo);
-        super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         super.setLocationRelativeTo(null);          // Center window.
-        super.setSize(1100, 700);
+        super.setSize(new Dimension(largura, altura));
 //        super.setExtendedState(JFrame.MAXIMIZED_BOTH);// <= maximixar a janela ao iniciar;
         super.setVisible(true);
     }
@@ -166,11 +171,14 @@ public class menu extends JFrame {
         
         content.add(painel_direito, pos.nextCol().expandir());
         
-        painel_direito.add( operacoes_painel.painel_com_scroll_sem_borda(painel_cima) , pos_paineis_internos.expandir());
+        JPanel p_nome_form = operacoes_painel.add_componente_em_painel(new JLabel("Nome do formulário:"), nome_formulario, 2);
+        painel_direito.add(p_nome_form, pos_paineis_internos.expandW());
+        
+        painel_direito.add( operacoes_painel.painel_com_scroll_sem_borda(painel_cima) , pos_paineis_internos.nextRow().expandir());
         painel_direito.add( operacoes_painel.painel_com_scroll_sem_borda(painel_baixo) , pos_paineis_internos.nextRow().expandir());
         pos.nextRow();
-        painel_direito.add(botao_criar_formulario, pos.nextRow().expandW());
-        
+        JPanel p_botoes = operacoes_painel.add_componente_em_painel(botao_criar_formulario, botao_fechar, 2);
+        painel_direito.add(p_botoes, pos_paineis_internos.nextRow().expandW());
         
         lista.addMouseListener(new MouseListener(){
              @Override
@@ -202,18 +210,6 @@ public class menu extends JFrame {
                          painel_cima = operacoes_painel.add_painel_filho_ao_PAI(painel_cima, painel_cadastrar, "scroll_painel_cadastrar", pos);
                          operacoes_painel.atualizar_painel(painel_cima);
                  }
-//                 else if( menu_lateral.se_chave(MenuLateral.input_text_password, index) )
-//                 {                        
-//                        JPanel pl = pc.input_text_password();
-//                        painel_cima = operacoes_painel.add_painel_filho_ao_PAI(painel_cima, pl, "scroll_pl", pos);
-//                        operacoes_painel.atualizar_painel(painel_cima);
-//                 }
-//                 else if( menu_lateral.se_chave(MenuLateral.label, index) )
-//                 {                        
-//                        JPanel pl = pc.label();
-//                        painel_cima = operacoes_painel.add_painel_filho_ao_PAI(painel_cima, pl, "scroll_pl", pos);
-//                        operacoes_painel.atualizar_painel(painel_cima);
-//                 }
                  else if( menu_lateral.se_chave(MenuLateral.opcoes, index) )
                  {                        
                         JPanel pl = pc.grupo_opcoes_radio(painel_baixo, pos);
@@ -275,12 +271,30 @@ public class menu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent event) {
                 
-                String painel_baixo_serializado = operacoes_painel.serializar_obj( remover_bordas_vermelhas_e_botes_excluir() );
-                System.out.println( "Tamanho serializado: " + painel_baixo_serializado.length() );
-                new popup(painel_baixo_serializado);
+                if( !nome_formulario.getText().trim().isEmpty() )
+                {
+                    if( numero_componentes_add_em_painel() > 0 )
+                    {
+                        String painel_baixo_serializado = operacoes_painel.serializar_obj( remover_bordas_vermelhas_e_botes_excluir() );
+                        System.out.println( "Tamanho serializado: " + painel_baixo_serializado.length() );
+                        new popup(painel_baixo_serializado);
+
+                        painel_baixo.removeAll();
+                        operacoes_painel.atualizar_painel(painel_baixo);
+                    }else{
+                        aviso.mensagem_atencao("Adicione componentes em seu formulário.", "Formulário vazio");
+                    }
+                }else{
+                    aviso.mensagem_atencao("Insira o nome de seu formulário.", "Nome vazio");
+                }
                 
-                painel_baixo.removeAll();
-                operacoes_painel.atualizar_painel(painel_baixo);
+            }
+        });
+        
+        botao_fechar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                dispose();
             }
         });
         
@@ -294,7 +308,7 @@ public class menu extends JFrame {
         Component[] components = copia_painel_baixo.getComponents();
         for (int i=0; i < components.length; i++)
         {
-            String name_componente = components[i].getName();                    
+            String name_componente = components[i].getName();
             for (int j=0; j < prefixos.prefixos_paineis.length; j++){
                 // \/ remove as bordas vermelhas;
                 if( (name_componente != null) && (name_componente.indexOf(prefixos.prefixos_paineis[j]) != -1)  ){
@@ -309,6 +323,22 @@ public class menu extends JFrame {
                     
         }//fim for;
         return copia_painel_baixo;
+    }
+    
+    public int numero_componentes_add_em_painel()
+    {
+        int con = 0;
+        Component[] components = painel_baixo.getComponents();
+        for (int i=0; i < components.length; i++){
+            if( components[i] != null )
+            {
+                String name_componente = components[i].getName();
+                if(name_componente != null){
+                    con++;
+                }
+            }
+        }
+        return con;
     }
      
 }

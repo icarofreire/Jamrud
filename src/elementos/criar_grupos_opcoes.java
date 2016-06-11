@@ -81,23 +81,11 @@ public class criar_grupos_opcoes {
         
         
         final JTextField cmp1 = new JTextField(10);
-        JButton btn_mais = new JButton("Mais uma opcao", new ImageIcon("icones/add-24.png"));
+        JButton btn_mais = new JButton("Mais uma opção", new ImageIcon("icones/add-24.png"));
         JButton btn_aplicar = new JButton(nome_botao_aplicar);
         
         final JRadioButton birdButton = new JRadioButton();
         birdButton.setName( operacoes.gerar_name_para_componente(prefix_id) );
-        
-        cmp1.addFocusListener(new FocusListener(){
-            @Override
-            public void focusGained(FocusEvent fe) {
-                cmp1.setText("");
-                birdButton.setText("");
-            }
-
-            @Override
-            public void focusLost(FocusEvent fe) {
-            }
-        });
                 
         evento_escrever_nome_p_opcao(birdButton, cmp1);
         
@@ -106,12 +94,12 @@ public class criar_grupos_opcoes {
         
         group.add(birdButton);
         
-        painel.add(btn_aplicar, pos.expandW());
+        painel.add(btn_mais, pos.expandW());
+        painel.add(btn_aplicar, pos.expandW().nextCol());
         painel.add(new Gap(GAP) , pos.nextRow());
         
         painel.add(birdButton, pos.nextRow().expandW());
         painel.add(cmp1, pos.nextCol().expandW());
-        painel.add(btn_mais, pos.nextCol().expandW());
         
         btn_mais.addActionListener(new ActionListener(){
             @Override
@@ -131,17 +119,6 @@ public class criar_grupos_opcoes {
                 painel.add(campos, pos.nextCol().expandW());
                 painel.add(btn_excluir, pos.nextCol().expandW());
                 operacoes_painel.atualizar_painel(painel);
-                
-                campos.addFocusListener(new FocusListener(){
-                    @Override
-                    public void focusGained(FocusEvent fe) {
-                        catButton.setText("");
-                    }
-
-                    @Override
-                    public void focusLost(FocusEvent fe) {
-                    }
-                });
                 
                 add_botao_excluir(btn_excluir, "campo");
                 

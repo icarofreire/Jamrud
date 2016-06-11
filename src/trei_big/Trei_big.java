@@ -58,24 +58,15 @@ public class Trei_big {
      */
     public static void main(String[] args) {
           
-//          menu();
-//        for (int count = 0; count < 20; count++) {banco.iniciar();}
-//carregando.main(args);
+//        menu();
         menu_elementos();
         
+          
 //        banco.conectar();
 //        String nome_tabela = "cadastro_1";
 //        String arq = "/home/icaro/Imagens/CADASTRO_1-hnq9f.del";
 //        banco.executar_query("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE(null,'"+ nome_tabela.toUpperCase() +"','"+ arq +"',';','%',null,0)");
 //        banco.executar_query( "SHOW COLUMNS FROM "+ nome_tabela.toUpperCase() +"" );
-       
-        
-//        String pre = "icaro_";
-//        String name = operacoes.gerar_name_para_componente(pre);
-//        System.out.println("name:"+name);
-//        
-//        String chave = operacoes.pegar_chave_em_string(name);
-//        System.out.println("chave:"+chave);
         
         
     }
