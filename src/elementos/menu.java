@@ -66,7 +66,7 @@ public class menu extends JFrame {
     private JList lista = new JList(dlm);
     private JButton botao_exibir_listagem = new JButton();
     private JButton botao_exibir_listagem2 = new JButton();
-    private JButton botao_criar_formulario = new JButton("Gerar Formulário");
+    private JButton botao_criar_formulario = new JButton("Gerar Formulário", new ImageIcon("icones/construir-24.png"));
     private JButton botao_fechar = new JButton("Fechar", new ImageIcon("icones/erro-24.png"));
     
     private JMenu menu = new JMenu("Arquivo");
@@ -279,8 +279,49 @@ public class menu extends JFrame {
                         System.out.println( "Tamanho serializado: " + painel_baixo_serializado.length() );
                         new popup(nome, painel_baixo_serializado);
 
-                        painel_baixo.removeAll();
+                        
+                        //---
+                        JPanel copia_painel_baixo = painel_baixo;
+                        Component[] components = copia_painel_baixo.getComponents();
+                        for (int i=0; i < components.length; i++)
+                        {
+                            String name_componente = components[i].getName();
+                            for (int j=0; j < prefixos.prefixos_paineis.length; j++)
+                            {
+                                if( (name_componente != null) && (name_componente.indexOf(prefixos.prefixos_paineis[j]) != -1) )
+                                {
+                                    JPanel p = (JPanel) components[i];
+                                    Vector<Component> cmps_p_internos = operacoes.pegar_componentes_por_prefixo(p, prefixos.prefixo_painel_interno);
+                                    
+                                    for (int a=0; a < cmps_p_internos.size(); a++)
+                                    {
+                                        Vector<Component> cmps_p_internos_titulos = operacoes.pegar_componentes_por_prefixo( (JPanel) cmps_p_internos.get(a), prefixos.prefixo_titulos_dos_componentes);
+                                        
+                                        for (int b=0; b < cmps_p_internos_titulos.size(); b++)
+                                        {
+                                            String name_componente_p = ((JLabel) cmps_p_internos_titulos.get(b)).getText();
+                                            System.out.println( "-> titulo: " + name_componente_p );
+                                        }
+                                         
+                                    }
+                                    
+                                    
+                                }
+                            }
+                            
+//                            if( (name_componente != null) && (name_componente.indexOf(prefixos.prefixo_titulos_dos_componentes) != -1)  ){
+//                                JLabel titulo_ = (JLabel) components[i];
+//                                String ti_ = titulo_.getText().trim();
+//                                System.out.println( "-> titulo: " + name_componente );
+//                            }
+
+                        }//fim for;
+                        //---
+                        
+                        
+//                        painel_baixo.removeAll();
                         operacoes_painel.atualizar_painel(painel_baixo);
+                        
                     }else{
                         aviso.mensagem_atencao("Adicione componentes em seu formulário.", "Formulário vazio");
                     }

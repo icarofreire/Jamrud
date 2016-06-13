@@ -37,7 +37,7 @@ public class criar_texto {
         JPanel painel = new JPanel(new GridBagLayout());
         GBHelper pos = new GBHelper();
         final JTextArea campo_valor = new JTextArea();
-        JButton btn_aplicar = new JButton(nome_botao_aplicar);
+        JButton btn_aplicar = new JButton(nome_botao_aplicar, new ImageIcon("icones/add_formulario-24.png"));
         
         campo_valor.setColumns(20);
         campo_valor.setRows(5);

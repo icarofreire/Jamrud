@@ -19,6 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
@@ -47,7 +48,7 @@ public class criar_campo_data {
         final JTextField cmp1 = new JTextField(20);
         final JLabel titulo = new JLabel();
         
-        JButton btn_aplicar = new JButton(nome_botao_aplicar);
+        JButton btn_aplicar = new JButton(nome_botao_aplicar, new ImageIcon("icones/add_formulario-24.png"));
         
         painel.add(lcmp1, pos.expandW());
         painel.add(cmp1, pos.nextCol().expandW());

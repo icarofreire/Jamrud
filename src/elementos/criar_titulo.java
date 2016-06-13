@@ -39,7 +39,7 @@ public class criar_titulo {
         JLabel lcmp1 = new JLabel("Titulo:");
         final JTextField cmp1 = new JTextField(20);
         
-        JButton btn_aplicar = new JButton(nome_botao_aplicar);
+        JButton btn_aplicar = new JButton(nome_botao_aplicar, new ImageIcon("icones/add_formulario-24.png"));
         final Font font = new Font("helvitica", Font.BOLD, 24);
 //        final JLabel titulo = new JLabel();
 //        titulo.setFont(font);

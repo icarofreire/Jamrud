@@ -10,6 +10,7 @@ import ferramenta_gui.Gap;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -36,7 +37,7 @@ public class criar_campo_input {
         final JTextField cmp1 = new JTextField(20);
         final JLabel titulo = new JLabel();
         
-        JButton btn_aplicar = new JButton(nome_botao_aplicar);
+        JButton btn_aplicar = new JButton(nome_botao_aplicar, new ImageIcon("icones/add_formulario-24.png"));
         
         painel.add(lcmp1, pos.expandW());
         painel.add(cmp1, pos.nextCol().expandW());

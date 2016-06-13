@@ -5,7 +5,12 @@
  */
 package trei_big;
 
+import elementos.prefixos;
+import java.awt.Component;
 import java.util.Random;
+import java.util.Vector;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
 
 /**
  *
@@ -21,6 +26,20 @@ public class operacoes {
     public static String pegar_name(String prefixo, String chave)
     {
         return prefixo + "={" + chave + "}";
+    }
+    
+    public static Vector<Component> pegar_componentes_por_prefixo(JPanel painel, String prefixo)
+    {
+        Vector<Component> componente = new Vector<Component>();
+        Component[] components = painel.getComponents();
+        for (int i=0; i < components.length; i++)
+        {
+            String name_componente = components[i].getName();
+            if( (name_componente != null) && (name_componente.indexOf(prefixo) != -1) ){
+                 componente.add(components[i]);
+            }
+        }
+        return componente;
     }
     
     public static String gerar_chave()

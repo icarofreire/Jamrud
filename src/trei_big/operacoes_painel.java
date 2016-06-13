@@ -164,6 +164,7 @@ public class operacoes_painel {
         JPanel p_group = new JPanel(new GridBagLayout());
         GBHelper pos_p_group = new GBHelper();
         
+        p_group.setName( operacoes.gerar_name_para_componente(prefixos.prefixo_painel_interno) );
         p_group.add(comp, pos_p_group.expandir());
         
         return p_group;
@@ -178,7 +179,9 @@ public class operacoes_painel {
         JPanel p_group = new JPanel(new GridBagLayout());
         GBHelper pos_p_group = new GBHelper();
         
+        p_group.setName( operacoes.gerar_name_para_componente(prefixos.prefixo_painel_interno) );
         p_group.add(comp1, pos_p_group.expandir());
+        
         if( vertical_ou_horizontal == 1 ){
             p_group.add(comp2, pos_p_group.nextRow().expandir());
         }else if( vertical_ou_horizontal == 2 ){

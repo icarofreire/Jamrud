@@ -141,7 +141,7 @@ public class criar_grupos_opcoes {
         JLabel label_titulo = new JLabel("Titulo:");
         
         JButton btn_mais = new JButton("Mais uma opção", new ImageIcon("icones/add-24.png"));
-        JButton btn_aplicar = new JButton(nome_botao_aplicar);
+        JButton btn_aplicar = new JButton(nome_botao_aplicar, new ImageIcon("icones/add_formulario-24.png"));
         
         final ButtonGroup group = new ButtonGroup();
         if( tipo_componente == 1 )
