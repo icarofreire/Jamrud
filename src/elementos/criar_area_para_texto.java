@@ -20,6 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import trei_big.aviso;
+import trei_big.operacoes;
 import trei_big.operacoes_painel;
 
 /**
@@ -54,6 +55,7 @@ public class criar_area_para_texto {
                 if( !nome_titulo.isEmpty() )
                 {
                     JLabel titulo = new JLabel();
+                    titulo.setName( operacoes.gerar_name_para_componente(prefixos.prefixo_titulos_dos_componentes) );
                     titulo.setText(nome_titulo);
                     JTextArea campo_valor_add = new JTextArea();
                     campo_valor_add.setColumns(20);

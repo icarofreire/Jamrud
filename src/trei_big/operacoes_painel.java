@@ -24,6 +24,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -222,6 +223,26 @@ public class operacoes_painel {
         painel_criar_titulo.setBorder(BorderFactory.createLineBorder(Color.RED));
         operacoes_painel.add_botao_excluir_painel(painel_baixo, pos_painel_baixo, painel_criar_titulo, btn_excluir_painel, prefixo_painel, prefixos.prefixo_btn_excluir_painel);
                     
+        painel_baixo.add( painel_criar_titulo, pos_painel_baixo.nextRow().expandW() );
+        painel_baixo.add( btn_excluir_painel, pos_painel_baixo.nextCol().expandW() );
+        painel_baixo.add(new Gap(GAP) , pos_painel_baixo.nextRow());
+        operacoes_painel.atualizar_painel(painel_baixo);
+    }
+    
+    /* Adiciona o componente em um painel com borda vermelha, e um botão de excluir com prefixo já definido.
+    */
+    public static void add_componente_painel_baixo_e_add_botao_exluir(final JComponent componente, final JPanel painel_baixo, final GBHelper pos_painel_baixo, final String prefixo_painel, final String titulo_para_componente)
+    {
+        final int GAP = 5;
+        JButton btn_excluir_painel = new JButton("Excluir", new ImageIcon("icones/erro-24.png"));
+        
+        JLabel label_titulo_componente = new JLabel(titulo_para_componente);
+        label_titulo_componente.setName( operacoes.gerar_name_para_componente(prefixos.prefixo_titulos_dos_componentes) );
+        
+        JPanel painel_criar_titulo = operacoes_painel.add_componente_em_painel( label_titulo_componente, componente, 1 );
+        painel_criar_titulo.setBorder(BorderFactory.createLineBorder(Color.RED));
+        operacoes_painel.add_botao_excluir_painel(painel_baixo, pos_painel_baixo, painel_criar_titulo, btn_excluir_painel, prefixo_painel, prefixos.prefixo_btn_excluir_painel);
+        
         painel_baixo.add( painel_criar_titulo, pos_painel_baixo.nextRow().expandW() );
         painel_baixo.add( btn_excluir_painel, pos_painel_baixo.nextCol().expandW() );
         painel_baixo.add(new Gap(GAP) , pos_painel_baixo.nextRow());

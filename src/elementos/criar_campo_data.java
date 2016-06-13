@@ -62,6 +62,7 @@ public class criar_campo_data {
                 if( !nome_titulo.isEmpty() )
                 {
                     JLabel titulo = new JLabel();
+                    titulo.setName( operacoes.gerar_name_para_componente(prefixos.prefixo_titulos_dos_componentes) );
                     final JFormattedTextField campo_data = new JFormattedTextField();
                     campo_data.setName( operacoes.gerar_name_para_componente(prefixos.prefixo_campo_data) );
  

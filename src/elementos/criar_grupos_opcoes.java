@@ -53,6 +53,7 @@ public class criar_grupos_opcoes {
     private String prefixo_campo_add = "comp_campo_add";
     private String prefixo_btn_excluir_add = "comp_btn_excluir_add_";
     
+    private JTextField campo_para_titulo_componente = new JTextField(20);
     
     private int tipo_componente;
 
@@ -136,7 +137,9 @@ public class criar_grupos_opcoes {
     }
     
     public JPanel grupo_botoes(final JPanel painel_baixo, final GBHelper pos_painel_baixo) {
-                
+        
+        JLabel label_titulo = new JLabel("Titulo:");
+        
         JButton btn_mais = new JButton("Mais uma opção", new ImageIcon("icones/add-24.png"));
         JButton btn_aplicar = new JButton(nome_botao_aplicar);
         
@@ -152,6 +155,10 @@ public class criar_grupos_opcoes {
             JCheckBox birdButton = new JCheckBox();
             birdButton.setName( operacoes.gerar_name_para_componente(prefix_id) );
         }
+        
+        painel.add(label_titulo, pos.expandW());
+        painel.add(campo_para_titulo_componente, pos.expandW().nextCol());
+        painel.add(new Gap(GAP) , pos.nextRow());
         
         painel.add(btn_mais, pos.expandW());
         painel.add(btn_aplicar, pos.expandW().nextCol());
@@ -202,7 +209,8 @@ public class criar_grupos_opcoes {
                     painel_componentes_add.add(comp, pos_painel_componentes_add.nextRow().expandW());
                     painel_componentes_add.add(campos, pos_painel_componentes_add.nextCol().expandW());
                 }
-                else if( tipo_componente == 3 ){
+                else if( tipo_componente == 3 )
+                {
                     JLabel titulo2 = new JLabel("Titulo:");
                     titulo2.setName( prefixo_campo_add + chave );
                     comp.setName( prefix_id + chave );
@@ -229,9 +237,9 @@ public class criar_grupos_opcoes {
                 
             }
         });
-        
+
         evento_botao_aplicar(btn_aplicar, painel_baixo, pos_painel_baixo);
-        
+
         return painel;
     }
     
@@ -338,27 +346,35 @@ public class criar_grupos_opcoes {
                    }
                 }//fim for;
                 
-                if( nomes_radios.size() > 1 )
-                {
-                    if( nomes_radios.contains("") ){
-                        aviso.mensagem_atencao("Insira o titulo para as opções que irá adicionar em seu formulário.", "Titulo vazio");
+                String nome_titulo_componente = campo_para_titulo_componente.getText().trim();
+                if( !nome_titulo_componente.isEmpty() )
+                {                
+                    if( nomes_radios.size() > 1 )
+                    {
+                        if( nomes_radios.contains("") ){
+                            aviso.mensagem_atencao("Insira o titulo para as opções que irá adicionar em seu formulário.", "Titulo vazio");
+                        }else{
+                            JPanel painel_a_inserir = null;
+                            if( tipo_componente == 1 ){
+                                painel_a_inserir = criar_radios_por_nome(nomes_radios);
+                            }
+                            else if( tipo_componente == 2 ){
+                                painel_a_inserir = criar_checkbox_por_nome(nomes_radios);
+                            }
+                            else if( tipo_componente == 3 ){
+                                painel_a_inserir = criar_select_por_nome(nomes_radios);
+                            }
+
+                            operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(painel_a_inserir, painel_baixo, pos_painel_baixo, prefixos.prefixo_painel_radios, campo_para_titulo_componente.getText().trim());
+                            nomes_radios.clear();
+                        }
                     }else{
-                        JPanel painel_a_inserir = null;
-                        if( tipo_componente == 1 ){
-                            painel_a_inserir = criar_radios_por_nome(nomes_radios);
-                        }
-                        else if( tipo_componente == 2 ){
-                            painel_a_inserir = criar_checkbox_por_nome(nomes_radios);
-                        }
-                        else if( tipo_componente == 3 ){
-                            painel_a_inserir = criar_select_por_nome(nomes_radios);
-                        }
-                        operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(painel_a_inserir, painel_baixo, pos_painel_baixo, prefixos.prefixo_painel_radios);
-                        nomes_radios.clear();
+                        aviso.mensagem_atencao("Insira no mínimo 2 elementos em seu formulário.", "Número insuficiente");
                     }
                 }else{
-                    aviso.mensagem_atencao("Insira no mínimo 2 elementos em seu formulário.", "Número insuficiente");
+                    aviso.mensagem_atencao("Informe um titulo para seu componente.", "Titulo vazio");
                 }
+                
             }
         });
     }

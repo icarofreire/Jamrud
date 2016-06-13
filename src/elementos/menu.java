@@ -322,6 +322,7 @@ public class menu extends JFrame {
             }
                     
         }//fim for;
+        copia_painel_baixo.setBorder(null);
         return copia_painel_baixo;
     }
     

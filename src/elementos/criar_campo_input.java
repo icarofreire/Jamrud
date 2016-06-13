@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import trei_big.aviso;
+import trei_big.operacoes;
 import trei_big.operacoes_painel;
 
 /**
@@ -50,6 +51,7 @@ public class criar_campo_input {
                 if( !nome_titulo.isEmpty() )
                 {
                     JLabel titulo = new JLabel();
+                    titulo.setName( operacoes.gerar_name_para_componente(prefixos.prefixo_titulos_dos_componentes) );
                     JTextField campo = new JTextField(20);
                     titulo.setText(nome_titulo);
                     

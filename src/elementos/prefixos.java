@@ -39,5 +39,6 @@ public class prefixos {
     
     public static String prefixo_campo_data = "pfx_campo_data";
     public static String prefixo_campo_hora = "pfx_campo_hora";
+    public static String prefixo_titulos_dos_componentes = "pfx_titulos_componentes";
     
 }
