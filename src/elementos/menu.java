@@ -270,14 +270,14 @@ public class menu extends JFrame {
         botao_criar_formulario.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                
-                if( !nome_formulario.getText().trim().isEmpty() )
+                String nome = nome_formulario.getText().trim();
+                if( !nome.isEmpty() )
                 {
                     if( numero_componentes_add_em_painel() > 0 )
                     {
                         String painel_baixo_serializado = operacoes_painel.serializar_obj( remover_bordas_vermelhas_e_botes_excluir() );
                         System.out.println( "Tamanho serializado: " + painel_baixo_serializado.length() );
-                        new popup(painel_baixo_serializado);
+                        new popup(nome, painel_baixo_serializado);
 
                         painel_baixo.removeAll();
                         operacoes_painel.atualizar_painel(painel_baixo);

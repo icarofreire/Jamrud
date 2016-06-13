@@ -102,19 +102,17 @@ public class paineis_componentes {
     
     public JPanel grupo_opcoes_radio(JPanel painel_baixo, GBHelper pos_painel_baixo){
 
-        JPanel painel = new criar_grupos_opcoes().grupo_botoes(painel_baixo, pos_painel_baixo);
+        JPanel painel = new criar_grupos_opcoes(1).grupo_botoes(painel_baixo, pos_painel_baixo);
         return painel;
     }
     
     public JPanel grupo_opcoes_checkbox(JPanel painel_baixo, GBHelper pos_painel_baixo){
-        
-        JPanel painel = new criar_opcoes_checkbox().grupo_botoes(painel_baixo, pos_painel_baixo);
+        JPanel painel = new criar_grupos_opcoes(2).grupo_botoes(painel_baixo, pos_painel_baixo);
         return painel;
     }
     
     public JPanel lista_select(final JPanel painel_baixo, final GBHelper pos_painel_baixo){
-        
-        JPanel painel = new criar_opcoes_select().lista_select(painel_baixo, pos_painel_baixo);
+        JPanel painel = new criar_grupos_opcoes(3).grupo_botoes(painel_baixo, pos_painel_baixo);
         return painel;
     }
     
