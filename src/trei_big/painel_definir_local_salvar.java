@@ -54,7 +54,7 @@ public class painel_definir_local_salvar extends JDialog {
     public painel_definir_local_salvar() {
         
         Obter_caminho_e_definido();
-        if(!caminho_definido.isEmpty()){
+        if( caminho_definido != null ){
             caminho_exportar.setText(caminho_definido);
         }
         
@@ -92,7 +92,7 @@ public class painel_definir_local_salvar extends JDialog {
             public void actionPerformed(ActionEvent ae) {
                 if( (pasta_selecionada != null) && (!pasta_selecionada.isEmpty()) )
                 {                    
-                    if( (caminho_definido.isEmpty()) && (ID_caminho_definido.isEmpty()) )
+                    if( (caminho_definido == null) && (ID_caminho_definido == null) )
                     {
                         //Inserido;
                         banco.executar_query( 
@@ -130,10 +130,13 @@ public class painel_definir_local_salvar extends JDialog {
     private static void Obter_caminho_e_definido()
     {
         Vector<Vector<String>> linhas = banco.obter_dados_da_tabela(SQL.nome_tabela_local_arquivos);
-        Vector<String> vl = linhas.lastElement();
-        if( !vl.lastElement().isEmpty() ){
-            caminho_definido = vl.lastElement();
-            ID_caminho_definido = vl.firstElement();
+        if( (linhas != null) && (!linhas.isEmpty()) )
+        {
+            Vector<String> vl = linhas.lastElement();
+            if( !vl.lastElement().isEmpty() ){
+                caminho_definido = vl.lastElement();
+                ID_caminho_definido = vl.firstElement();
+            }
         }
     }
         

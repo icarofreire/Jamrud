@@ -72,7 +72,7 @@ public class Trei_big {
 //        banco.executar_query("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE(null,'"+ nome_tabela.toUpperCase() +"','"+ arq +"',';','%',null,0)");
 //        banco.executar_query( "SHOW COLUMNS FROM "+ SQL.nome_tabela_local_arquivos.toUpperCase() +"" );
         
-//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_local_arquivos.toUpperCase(), 301) );
+//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_local_arquivos.toUpperCase(), 1) );
 //        banco.exibir_tabela( SQL.nome_tabela_local_arquivos.toUpperCase() );
         
 //        System.out.println( SQL.sql_tabela + "\n***" );
