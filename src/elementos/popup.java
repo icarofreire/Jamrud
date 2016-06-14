@@ -58,4 +58,29 @@ public class popup extends JDialog {
         
     }
     
+    public popup(String nome_formulario, Object form) {
+      
+        this.titulo_janela = nome_formulario;
+        painel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        JComponent comp = (JComponent) form;
+        painel.add( comp, pos.expandir());
+        painel.add(botao_fechar, pos.nextRow().expandW());
+        
+        
+        botao_fechar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                dispose();
+            }
+        });
+        
+        super.setContentPane( operacoes_painel.painel_com_scroll_sem_borda(painel) );
+        super.pack();
+        super.setTitle(titulo_janela);
+        super.setSize(new Dimension(largura, altura));
+        super.setVisible(true);
+        super.setLocationRelativeTo(null);
+        
+    }
+    
 }

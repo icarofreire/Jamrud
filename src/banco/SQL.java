@@ -27,6 +27,24 @@ public class SQL {
     "DATA VARCHAR(100),\n" +
     "OBSERVACOES VARCHAR(100) )";
     
+//    public static String nome_tabela_formulario = "formularios_cadastros";
+//    public static String sql_tabela_formulario = 
+//    "CREATE table "+ nome_tabela_formulario +" (\n" +
+//    "ID INTEGER NOT NULL \n" +
+//    "PRIMARY KEY GENERATED ALWAYS AS IDENTITY \n" +
+//    "(START WITH 1, INCREMENT BY 1),\n" +
+//    "NOME VARCHAR(200), \n" +
+//    "HASH_FORMULARIO VARCHAR(50000) )";
+//    
+//    public static String nome_tabela_local_arquivos = "local_salvar_arquivos";
+//    public static String sql_tabela_local_arquivos = 
+//    "CREATE table "+ nome_tabela_local_arquivos +" (\n" +
+//    "ID INTEGER NOT NULL \n" +
+//    "PRIMARY KEY GENERATED ALWAYS AS IDENTITY \n" +
+//    "(START WITH 1, INCREMENT BY 1),\n" +
+//    "NOME VARCHAR(200), \n" +
+//    "HASH_FORMULARIO VARCHAR(50000) )";
+    
     public static String montar_sql_deletar_linha(int ID)
     {
         return "DELETE FROM "+ nome_tabela +" WHERE id = "+ ID +"";
@@ -55,6 +73,22 @@ public class SQL {
     {
         String SQL = "update "+ nome_tabela +" set "+ campo +" = '"+ valor_campo +"' where id = " + id;
         return SQL;
+    }
+    
+    public static String montar_sql_criar_tabela(String[] colunas, String nome_para_tabela)
+    {
+        String sql_tabela = 
+        "CREATE table "+ nome_para_tabela +" (\n" +
+        "ID INTEGER NOT NULL \n" +
+        "PRIMARY KEY GENERATED ALWAYS AS IDENTITY \n" +
+        "(START WITH 1, INCREMENT BY 1),\n";
+        
+        for(int i=0; i<colunas.length-1; i++) {
+            sql_tabela += colunas[i].toUpperCase() + "VARCHAR(200),\n";
+        }
+        sql_tabela += colunas[colunas.length-1].toUpperCase() + "VARCHAR(200) )";
+        
+        return sql_tabela;
     }
     
 }

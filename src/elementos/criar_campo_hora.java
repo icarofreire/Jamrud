@@ -87,7 +87,7 @@ public class criar_campo_hora {
                     
                     JPanel p_int = operacoes_painel.add_componente_em_painel(titulo, campo_data, 2);
                     operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(p_int, painel_baixo, pos_painel_baixo, prefixos.prefixo_painel_criar_campo_hora);
-
+                    cmp1.setText(null);
                 }else{
                     aviso.mensagem_atencao("Informe um titulo para o campo.", "Titulo vazio");
                 }

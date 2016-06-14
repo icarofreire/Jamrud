@@ -60,6 +60,7 @@ public class criar_texto {
                     texto.setText( (html1+"500"+html2) + campo_valor.getText() );
 
                     operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(texto, painel_baixo, pos_painel_baixo, prefixos.prefixo_painel_texto);
+                    campo_valor.setText(null);
                 }else{
                     aviso.mensagem_atencao("Escreva um texto para adicionar em seu formulário.", "Conteúdo vazio");
                 }

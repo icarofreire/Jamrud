@@ -140,7 +140,7 @@ public class criar_grupos_opcoes {
         
         JLabel label_titulo = new JLabel("Titulo:");
         
-        JButton btn_mais = new JButton("Mais uma opção", new ImageIcon("icones/add-24.png"));
+        JButton btn_mais = new JButton("Adicionar opções", new ImageIcon("icones/add-24.png"));
         JButton btn_aplicar = new JButton(nome_botao_aplicar, new ImageIcon("icones/add_formulario-24.png"));
         
         final ButtonGroup group = new ButtonGroup();
@@ -367,6 +367,7 @@ public class criar_grupos_opcoes {
                             
                             operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(painel_a_inserir, painel_baixo, pos_painel_baixo, prefixos.prefixo_painel_opcoes, campo_para_titulo_componente.getText().trim());
                             nomes_radios.clear();
+                            campo_para_titulo_componente.setText(null);
                         }
                     }else{
                         aviso.mensagem_atencao("Insira no mínimo 2 elementos em seu formulário.", "Número insuficiente");

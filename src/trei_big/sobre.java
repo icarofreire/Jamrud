@@ -29,7 +29,7 @@ public class sobre extends JDialog {
     private JTextArea campo_valor = new JTextArea();
     private JButton botao_fechar = new JButton("Fechar", new ImageIcon("icones/erro-24.png"));
     private int largura = 500;
-    private int altura = 200;
+    private int altura = 500;
     
     private String titulo_janela = "Sobre";
     private String texto = "Desenvolvedor: Ícaro Freire Martins\n"

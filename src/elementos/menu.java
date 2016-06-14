@@ -22,11 +22,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
@@ -149,7 +152,6 @@ public class menu extends JFrame {
         JScrollPane scroll = new JScrollPane(lista);
         scroll.setPreferredSize(new Dimension(300, 0));
         scroll.setMinimumSize(new Dimension(300, 0));
-         
         
         JLabel imageLbl = new JLabel();
         imageLbl.setBounds(0, 0, 286, 40);
@@ -275,49 +277,24 @@ public class menu extends JFrame {
                 {
                     if( numero_componentes_add_em_painel() > 0 )
                     {
-                        String painel_baixo_serializado = operacoes_painel.serializar_obj( remover_bordas_vermelhas_e_botes_excluir() );
+                        JPanel painel_a_serializar = remover_bordas_vermelhas_e_botes_excluir();
+                        
+                        try {
+                            serializar.serialize(painel_a_serializar, nome.replaceAll(" ", "-") + ".form" );
+                        } catch (IOException ex) {
+                            Logger.getLogger(menu.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
+                        String painel_baixo_serializado = operacoes_painel.serializar_obj( painel_a_serializar );
                         System.out.println( "Tamanho serializado: " + painel_baixo_serializado.length() );
                         new popup(nome, painel_baixo_serializado);
 
                         
                         //---
-                        JPanel copia_painel_baixo = painel_baixo;
-                        Component[] components = copia_painel_baixo.getComponents();
-                        for (int i=0; i < components.length; i++)
-                        {
-                            String name_componente = components[i].getName();
-                            for (int j=0; j < prefixos.prefixos_paineis.length; j++)
-                            {
-                                if( (name_componente != null) && (name_componente.indexOf(prefixos.prefixos_paineis[j]) != -1) )
-                                {
-                                    JPanel p = (JPanel) components[i];
-                                    Vector<Component> cmps_p_internos = operacoes.pegar_componentes_por_prefixo(p, prefixos.prefixo_painel_interno);
-                                    
-                                    for (int a=0; a < cmps_p_internos.size(); a++)
-                                    {
-                                        Vector<Component> cmps_p_internos_titulos = operacoes.pegar_componentes_por_prefixo( (JPanel) cmps_p_internos.get(a), prefixos.prefixo_titulos_dos_componentes);
-                                        for (int b=0; b < cmps_p_internos_titulos.size(); b++)
-                                        {
-                                            String name_componente_p = ((JLabel) cmps_p_internos_titulos.get(b)).getText();
-                                            System.out.println( "-> titulo: " + name_componente_p );
-                                        }
-                                    }
-                                    
-                                    Vector<Component> cmps_p_opcoes = operacoes.pegar_componentes_por_prefixo(p, prefixos.prefixo_titulos_dos_componentes);
-                                    Component[] c = p.getComponents();
-                                    String titulos_opcoes = ((JLabel) cmps_p_opcoes.firstElement()).getText();
-                                    System.out.println( "Titulo >> " + ((JLabel) cmps_p_opcoes.firstElement()).getText() );
-                                    
-                                }
-                            }
-                            
-//                            if( (name_componente != null) && (name_componente.indexOf(prefixos.prefixo_titulos_dos_componentes) != -1)  ){
-//                                JLabel titulo_ = (JLabel) components[i];
-//                                String ti_ = titulo_.getText().trim();
-//                                System.out.println( "-> titulo: " + name_componente );
-//                            }
-
-                        }//fim for;
+                        String[] titulos = obter_todos_os_titulos();
+                        for(int i=0; i<titulos.length; i++){
+                            System.out.println( "titulo: " + titulos[i] );
+                        }
                         //---
                         
                         
@@ -366,6 +343,11 @@ public class menu extends JFrame {
                     
         }//fim for;
         copia_painel_baixo.setBorder(null);
+        
+        copia_painel_baixo.add(new Gap(GAP), pos.nextRow());
+        copia_painel_baixo.add(new Gap(GAP), pos.nextRow());
+        copia_painel_baixo.add( new JButton("Enviar", new ImageIcon("icones/go-32.png")), pos.nextRow().expandW() );
+        
         return copia_painel_baixo;
     }
     
@@ -384,6 +366,43 @@ public class menu extends JFrame {
         }
         return con;
     }
-     
+    
+    public String[] obter_todos_os_titulos()
+    {
+          Vector<String> titulos = new Vector<String>();
+          JPanel copia_painel_baixo = painel_baixo;
+          Component[] components = copia_painel_baixo.getComponents();
+          for (int i=0; i < components.length; i++)
+          {
+              String name_componente = components[i].getName();
+              for (int j=0; j < prefixos.prefixos_paineis.length; j++)
+              {
+                  if( (name_componente != null) && (name_componente.indexOf(prefixos.prefixos_paineis[j]) != -1) )
+                  {
+                      JPanel p = (JPanel) components[i];
+                      Vector<Component> cmps_p_internos = operacoes.pegar_componentes_por_prefixo(p, prefixos.prefixo_painel_interno);
+
+                      for (int a=0; a < cmps_p_internos.size(); a++)
+                      {
+                          Vector<Component> cmps_p_internos_titulos = operacoes.pegar_componentes_por_prefixo( (JPanel) cmps_p_internos.get(a), prefixos.prefixo_titulos_dos_componentes);
+                          for (int b=0; b < cmps_p_internos_titulos.size(); b++)
+                          {
+                              String name_componente_p = ((JLabel) cmps_p_internos_titulos.get(b)).getText();
+                              titulos.add( name_componente_p );
+                          }
+                      }
+
+                      Vector<Component> cmps_p_opcoes = operacoes.pegar_componentes_por_prefixo(p, prefixos.prefixo_titulos_dos_componentes);
+                      if( cmps_p_opcoes.size() > 0 ) {
+                            String titulos_opcoes = ((JLabel) cmps_p_opcoes.lastElement()).getText();
+                            titulos.add( titulos_opcoes );
+                      }
+                  }
+              }
+
+          }//fim for;
+          return titulos.toArray(new String[]{});
+    }
+    
 }
 

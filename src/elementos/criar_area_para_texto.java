@@ -66,6 +66,7 @@ public class criar_area_para_texto {
                     JPanel p_int = operacoes_painel.add_componente_em_painel(titulo, scroll_campo_valor_add, 1);
 
                     operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(p_int, painel_baixo, pos_painel_baixo, prefixos.prefixo_painel_area_para_texto);
+                    cmp1.setText(null);
                 }else{
                     aviso.mensagem_atencao("Informe um titulo para o campo.", "Titulo vazio");
                 }

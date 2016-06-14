@@ -45,7 +45,7 @@ public class painel_cadastro {
         Font f = l1.getFont();
         l1.setFont(f.deriveFont(f.getStyle() | Font.BOLD));// negrito
         
-        JButton btn_cadastrar = new JButton("Cadastrar", new ImageIcon("icones/adicionar-32.png"));
+        JButton btn_cadastrar = new JButton("Cadastrar", new ImageIcon("icones/go-32.png"));
         JButton btn_cancelar = new JButton("Cancelar", new ImageIcon("icones/deletar-32.png"));
         
         JLabel lobs = new JLabel("Observações:");

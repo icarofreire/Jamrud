@@ -67,6 +67,7 @@ public class menu extends JFrame {
     private JMenu menu = new JMenu("Arquivo");
     private JMenuItem item_menu_sobre = new JMenuItem("Sobre");
     private JMenuItem item_menu_ajuda = new JMenuItem("Ajuda");
+    private JMenuItem item_menu_local = new JMenuItem("Definir local");
     private JMenuBar barra_de_menu = new JMenuBar();
     
     private JLabel x = new JLabel("Formulário de cadastrar");
@@ -84,6 +85,7 @@ public class menu extends JFrame {
         windowContent.add( gui() , BorderLayout.CENTER);
 
         barra_de_menu.add(menu);
+        menu.add(item_menu_local);
         menu.add(item_menu_ajuda);
         menu.add(item_menu_sobre);
     
@@ -98,6 +100,13 @@ public class menu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent event) {
                 new ajuda();
+            }
+        });
+        
+        item_menu_local.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                new painel_definir_local_salvar();
             }
         });
 
@@ -208,6 +217,11 @@ public class menu extends JFrame {
                         painel_criar_formulario.add( new JLabel("Criar formulário") );
                         painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_criar_formulario, "scroll_painel_temas", pos);
                         Trei_big.menu_elementos();
+                 }
+                 else if( menu_lateral.se_chave(MenuLateral.historico, index) )
+                 {
+                        JPanel painel_historico = new painel_historico().painel_p_historico();
+                        painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_historico, "scroll_painel_cadastrar", pos);
                  }
                  
              }// fim mouseClicked(MouseEvent me);

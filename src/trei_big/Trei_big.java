@@ -5,7 +5,10 @@
  */
 package trei_big;
 
+import banco.SQL;
 import banco.banco;
+import elementos.popup;
+import java.io.IOException;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import menu_modulos.*;
@@ -56,17 +59,23 @@ public class Trei_big {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
           
-//        menu();
-        menu_elementos();
-        
+        menu();
+//        menu_elementos();
+//        new painel_definir_local_salvar();
           
 //        banco.conectar();
 //        String nome_tabela = "cadastro_1";
 //        String arq = "/home/icaro/Imagens/CADASTRO_1-hnq9f.del";
 //        banco.executar_query("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE(null,'"+ nome_tabela.toUpperCase() +"','"+ arq +"',';','%',null,0)");
 //        banco.executar_query( "SHOW COLUMNS FROM "+ nome_tabela.toUpperCase() +"" );
+        
+//        System.out.println( SQL.sql_tabela + "\n***" );
+//        System.out.println( SQL.montar_sql_criar_tabela(new String[]{"nome","endereço","telefone","data","observações"}, "X_TESTE_Y") );
+//         System.out.println( SQL.sql_tabela_formulario );
+        
+//        new popup( "exemplo", serializar.deserialize("formul-dad-teste.form") );
         
         
     }

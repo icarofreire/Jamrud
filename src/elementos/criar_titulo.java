@@ -34,15 +34,12 @@ public class criar_titulo {
         
         JPanel painel = new JPanel(new GridBagLayout());
         GBHelper pos = new GBHelper();
-//        painel.setName(prefixo_painel_criar_titulo);
         
         JLabel lcmp1 = new JLabel("Titulo:");
         final JTextField cmp1 = new JTextField(20);
         
         JButton btn_aplicar = new JButton(nome_botao_aplicar, new ImageIcon("icones/add_formulario-24.png"));
         final Font font = new Font("helvitica", Font.BOLD, 24);
-//        final JLabel titulo = new JLabel();
-//        titulo.setFont(font);
         
         painel.add(lcmp1, pos.expandW());
         painel.add(cmp1, pos.nextCol().expandW());
@@ -60,7 +57,7 @@ public class criar_titulo {
                     titulo.setText(nome_titulo);
                     
                     operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(titulo, painel_baixo, pos_painel_baixo, prefixos.prefixo_painel_criar_titulo);
-                
+                    cmp1.setText(null);
                 }else{
                     aviso.mensagem_atencao("Informe o nome do titulo.", "Titulo vazio");
                 }
