@@ -296,15 +296,17 @@ public class menu extends JFrame {
                                     for (int a=0; a < cmps_p_internos.size(); a++)
                                     {
                                         Vector<Component> cmps_p_internos_titulos = operacoes.pegar_componentes_por_prefixo( (JPanel) cmps_p_internos.get(a), prefixos.prefixo_titulos_dos_componentes);
-                                        
                                         for (int b=0; b < cmps_p_internos_titulos.size(); b++)
                                         {
                                             String name_componente_p = ((JLabel) cmps_p_internos_titulos.get(b)).getText();
                                             System.out.println( "-> titulo: " + name_componente_p );
                                         }
-                                         
                                     }
                                     
+                                    Vector<Component> cmps_p_opcoes = operacoes.pegar_componentes_por_prefixo(p, prefixos.prefixo_titulos_dos_componentes);
+                                    Component[] c = p.getComponents();
+                                    String titulos_opcoes = ((JLabel) cmps_p_opcoes.firstElement()).getText();
+                                    System.out.println( "Titulo >> " + ((JLabel) cmps_p_opcoes.firstElement()).getText() );
                                     
                                 }
                             }
@@ -319,7 +321,7 @@ public class menu extends JFrame {
                         //---
                         
                         
-//                        painel_baixo.removeAll();
+                        painel_baixo.removeAll();
                         operacoes_painel.atualizar_painel(painel_baixo);
                         
                     }else{

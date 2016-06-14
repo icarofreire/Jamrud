@@ -364,8 +364,8 @@ public class criar_grupos_opcoes {
                             else if( tipo_componente == 3 ){
                                 painel_a_inserir = criar_select_por_nome(nomes_radios);
                             }
-
-                            operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(painel_a_inserir, painel_baixo, pos_painel_baixo, prefixos.prefixo_painel_radios, campo_para_titulo_componente.getText().trim());
+                            
+                            operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(painel_a_inserir, painel_baixo, pos_painel_baixo, prefixos.prefixo_painel_opcoes, campo_para_titulo_componente.getText().trim());
                             nomes_radios.clear();
                         }
                     }else{
