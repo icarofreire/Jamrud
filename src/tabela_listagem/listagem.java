@@ -222,8 +222,7 @@ public class listagem extends JPanel {
                         int ID__ = Integer.parseInt(ID.toString());
 //                        System.out.println("Deletar registro: [" + ID__ + "]" );
 
-                        banco.conectar();
-                        if(banco.executar_query(SQL.montar_sql_deletar_linha(ID__)))
+                        if(banco.executar_query(SQL.montar_sql_deletar_linha(SQL.nome_tabela, ID__)))
                         {
                             model.removeRow(table.getSelectedRow());
                             aviso.mensagem_ok("Registro deletado com sucesso!");

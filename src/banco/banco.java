@@ -31,12 +31,11 @@ public class banco {
     private static Statement stmt = null;
     
     private static String sql_tabela = SQL.sql_tabela;
-    
     public static Vector<String> nome_colunas_consulta;
 
     public static void iniciar()
     {
-        conectar();
+        criar_tabela_exemplo();
         
         String[] colunas = new String[]{"NOME", "ENDERECO", "TELEFONE", "DATA", "OBSERVACOES"};
         String[] valores = new String[]{"NOME-1", "ENDERECO-1", "TELEFONE-1", "DATA-1", "OBSERVACOES-1"};
@@ -57,14 +56,14 @@ public class banco {
         
     }
     
-    public static void conectar()
+    public static void criar_tabela_exemplo()
     {
         try
         {
             Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
             //Get a connection
             conn = DriverManager.getConnection(dbURL);
-            criar_tabela();
+            criar_tabela(sql_tabela);
         }
         catch (Exception except)
         {
@@ -72,19 +71,32 @@ public class banco {
         }
     }
     
-    private static boolean criar_tabela() {
+    public static void conectar_banco()
+    {
+        try
+        {
+            Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
+            //Get a connection
+            conn = DriverManager.getConnection(dbURL);
+        }
+        catch (Exception except)
+        {
+            except.printStackTrace();
+        }
+    }
+    
+    private static boolean criar_tabela(String nome_da_tabela) {
         boolean bCreatedTables = false;
         Statement statement = null;
         try {
             statement = conn.createStatement();
-            statement.execute(sql_tabela);
+            statement.execute(nome_da_tabela);
             bCreatedTables = true;
         } catch (SQLException ex) {
             if( ex.getSQLState().equalsIgnoreCase("X0Y32") ) {// <= se tabela existe;
 //                System.out.println( ex.getSQLState() + ": Tabela já existe." );
             }else{
                 ex.printStackTrace();
-                
             }
         }
 
@@ -93,6 +105,7 @@ public class banco {
     
     public static boolean executar_query(String sql)
     {
+        conectar_banco();
         boolean flag = false;
         Statement statement = null;
         try {
@@ -116,7 +129,7 @@ public class banco {
         try
         {
             stmt = conn.createStatement();
-            stmt.execute( SQL.montar_sql_insert(colunas, valores) );
+            stmt.execute( SQL.montar_sql_insert(SQL.nome_tabela, colunas, valores) );
             stmt.close();
         }
         catch (SQLException sqlExcept)
@@ -125,14 +138,15 @@ public class banco {
         }
     }
     
-    public static Vector<Vector<String>> selectRestaurants()
+    public static Vector<Vector<String>> obter_dados_da_tabela(String nome_da_tabela)
     {
+        conectar_banco();
         nome_colunas_consulta = new Vector<String>();
         Vector<Vector<String>> dados = new Vector<Vector<String>>();
         try
         {
             stmt = conn.createStatement();
-            ResultSet results = stmt.executeQuery( SQL.listar );
+            ResultSet results = stmt.executeQuery( "select * from " + nome_da_tabela );
             ResultSetMetaData rsmd = results.getMetaData();
             int numberCols = rsmd.getColumnCount();
             for (int i=1; i<=numberCols; i++)
@@ -146,8 +160,8 @@ public class banco {
             while(results.next())
             {
                 int id = results.getInt(1);
-                String restName = results.getString(2);
-                String cityName = results.getString(3);
+//                String restName = results.getString(2);
+//                String cityName = results.getString(3);
 //                System.out.println(id + "\t\t" + restName + "\t\t" + cityName);
                 
                 Vector<String> v = new Vector<String>();
@@ -166,6 +180,43 @@ public class banco {
             sqlExcept.printStackTrace();
         }
         return dados;
+    }
+    
+    public static void exibir_tabela(String nome_da_tabela)
+    {
+        conectar_banco();
+        try
+        {
+            stmt = conn.createStatement();
+            ResultSet results = stmt.executeQuery( "select * from " + nome_da_tabela );
+            ResultSetMetaData rsmd = results.getMetaData();
+            int numberCols = rsmd.getColumnCount();
+            for (int i=1; i<=numberCols; i++)
+            {
+                //print Column Names
+                System.out.print( rsmd.getColumnLabel(i) + "\t|\t" );
+            }
+
+            System.out.println("\n-------------------------------------------------");
+
+            while(results.next())
+            {
+                int id = results.getInt(1);
+                 
+                for (int i=1; i<=numberCols; i++){
+                    String dado = results.getString(i);
+                    System.out.println(id + "\t|\t" + dado );                
+                }
+                
+            }
+            results.close();
+            stmt.close();
+        }
+        catch (SQLException sqlExcept)
+        {
+            sqlExcept.printStackTrace();
+        }
+        
     }
     
     private static void shutdown()

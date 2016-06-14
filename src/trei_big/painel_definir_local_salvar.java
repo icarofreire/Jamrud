@@ -14,6 +14,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -37,7 +38,7 @@ public class painel_definir_local_salvar extends JDialog {
     private JButton botao_aplicar = new JButton("Aplicar", new ImageIcon("icones/aplicar-24.png"));
     private JButton botao_fechar = new JButton("Fechar", new ImageIcon("icones/erro-24.png"));
     private int largura = 700;
-    private int altura = 200;
+    private int altura = 150;
     
     private String titulo_janela = "Definir local para salvar arquivos";
     
@@ -47,8 +48,16 @@ public class painel_definir_local_salvar extends JDialog {
     private JTextField caminho_exportar = new JTextField(20);
     private JButton btn_selecionar_exportar = new JButton("Selecionar local", new ImageIcon("icones/pasta-24.png"));
     
+    private static String caminho_definido;
+    private static String ID_caminho_definido;
+    
     public painel_definir_local_salvar() {
- 
+        
+        Obter_caminho_e_definido();
+        if(!caminho_definido.isEmpty()){
+            caminho_exportar.setText(caminho_definido);
+        }
+        
         caminho_exportar.setEditable(false);
         painel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         
@@ -82,8 +91,20 @@ public class painel_definir_local_salvar extends JDialog {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 if( (pasta_selecionada != null) && (!pasta_selecionada.isEmpty()) )
-                {
-                    System.out.println( "aplicar local definido;" );
+                {                    
+                    if( (caminho_definido.isEmpty()) && (ID_caminho_definido.isEmpty()) )
+                    {
+                        //Inserido;
+                        banco.executar_query( 
+                                SQL.montar_sql_insert( SQL.nome_tabela_local_arquivos, new String[]{"LOCAL_ARQUIVOS"}, new String[]{pasta_selecionada}) 
+                        );
+                    }else
+                    {
+                        //TEM UM local definido;
+//                        banco.exibir_tabela( SQL.nome_tabela_local_arquivos.toUpperCase() );
+                        banco.executar_query( SQL.montar_sql_modificar_local_arquivo(pasta_selecionada, ID_caminho_definido) );
+                    }
+                    dispose();
                 }else{
                     aviso.mensagem_erro("Selecione um local para salvar os arquivos.");
                 }
@@ -104,6 +125,16 @@ public class painel_definir_local_salvar extends JDialog {
         super.setVisible(true);
         super.setLocationRelativeTo(null);
         
+    }
+    
+    private static void Obter_caminho_e_definido()
+    {
+        Vector<Vector<String>> linhas = banco.obter_dados_da_tabela(SQL.nome_tabela_local_arquivos);
+        Vector<String> vl = linhas.lastElement();
+        if( !vl.lastElement().isEmpty() ){
+            caminho_definido = vl.lastElement();
+            ID_caminho_definido = vl.firstElement();
+        }
     }
         
 }

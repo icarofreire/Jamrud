@@ -128,7 +128,7 @@ public class menu extends JFrame {
         
         ArrayList<Object[]> dados_da_tabela = new ArrayList<Object[]>();
 //        banco.conectar();
-        Vector<Vector<String>> linhas = banco.selectRestaurants();
+        Vector<Vector<String>> linhas = banco.obter_dados_da_tabela(SQL.nome_tabela);
         
         String[] colunas = banco.nome_colunas_consulta.toArray(new String[]{});
         banco.nome_colunas_consulta.clear();
