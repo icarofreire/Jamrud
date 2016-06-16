@@ -272,29 +272,22 @@ public class menu extends JFrame {
         botao_criar_formulario.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                String nome = nome_formulario.getText().trim();
+                String nome = nome_formulario.getText().trim().replaceAll(" ", "-");
                 if( !nome.isEmpty() )
                 {
                     if( numero_componentes_add_em_painel() > 0 )
                     {
+                        
                         JPanel painel_a_serializar = remover_bordas_vermelhas_e_botes_excluir();
                         
-                        try {
-                            serializar.serialize(painel_a_serializar, nome.replaceAll(" ", "-") + ".form" );
-                        } catch (IOException ex) {
-                            Logger.getLogger(menu.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        
                         String painel_baixo_serializado = operacoes_painel.serializar_obj( painel_a_serializar );
-                        System.out.println( "Tamanho serializado: " + painel_baixo_serializado.length() );
-                        new popup(nome, painel_baixo_serializado);
+                        banco.inserir_hash_formulario_serializado(nome, painel_baixo_serializado);
+//                        new popup(nome, painel_baixo_serializado);
 
                         
                         //---
-                        String[] titulos = obter_todos_os_titulos();
-                        for(int i=0; i<titulos.length; i++){
-                            System.out.println( "titulo: " + titulos[i] );
-                        }
+                        String[] titulos = obter_todos_os_titulos();                      
+                        banco.executar_query( SQL.montar_sql_criar_tabela(titulos, nome) );
                         //---
                         
                         

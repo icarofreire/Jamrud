@@ -9,6 +9,7 @@ import banco.SQL;
 import banco.banco;
 import elementos.popup;
 import java.io.IOException;
+import java.util.Vector;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import menu_modulos.*;
@@ -23,7 +24,7 @@ public class Trei_big {
     
     public static void menu(){
         banco.criar_tabela_exemplo();
-        banco.executar_query(SQL.sql_tabela_local_arquivos);
+//        banco.executar_query(SQL.sql_tabela_local_arquivos);
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception unused) {
@@ -62,7 +63,7 @@ public class Trei_big {
      */
     public static void main(String[] args) throws IOException, ClassNotFoundException {
           
-        menu();
+//        menu();
 //        menu_elementos();
 //        new painel_definir_local_salvar();
           
@@ -81,6 +82,27 @@ public class Trei_big {
         
 //        new popup( "exemplo", serializar.deserialize("formul-dad-teste.form") );
         
+//          banco.executar_query( "DROP TABLE " + SQL.nome_tabela_local_arquivos );
+//        banco.executar_query(SQL.sql_tabela_formulario);
+        
+//        String hash = operacoes.gerar_chave(70000);
+//        System.out.println( hash.length() );
+        
+//        banco.inserir_hash_formulario_serializado("Y--teste-form2", hash);
+//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 101) );
+        
+//        Vector<Vector<String>> dados = banco.obter_formulario("756-libry");
+//        if( (dados != null) && (!dados.isEmpty()) )
+//        {
+//            Vector<String> linha = dados.lastElement();
+//            if( !linha.lastElement().isEmpty() ){
+//                System.out.println( linha.get(2) );
+//            }
+//        }
+//        banco.exibir_tabela( SQL.nome_tabela_formulario.toUpperCase() );
+//        banco.exibir_tabelas();
+        
+        new popup( "exemplo", operacoes_painel.deserializar_obj(banco.obter_formulario("756-libry") ) );
         
     }
     

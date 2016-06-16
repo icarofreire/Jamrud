@@ -106,7 +106,7 @@ public class menu extends JFrame {
         item_menu_local.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                new painel_definir_local_salvar();
+//                new painel_definir_local_salvar();
             }
         });
 

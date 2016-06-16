@@ -95,14 +95,14 @@ public class painel_definir_local_salvar extends JDialog {
                     if( (caminho_definido == null) && (ID_caminho_definido == null) )
                     {
                         //Inserido;
-                        banco.executar_query( 
-                                SQL.montar_sql_insert( SQL.nome_tabela_local_arquivos, new String[]{"LOCAL_ARQUIVOS"}, new String[]{pasta_selecionada}) 
-                        );
+//                        banco.executar_query( 
+//                                SQL.montar_sql_insert( SQL.nome_tabela_local_arquivos, new String[]{"LOCAL_ARQUIVOS"}, new String[]{pasta_selecionada}) 
+//                        );
                     }else
                     {
                         //TEM UM local definido;
 //                        banco.exibir_tabela( SQL.nome_tabela_local_arquivos.toUpperCase() );
-                        banco.executar_query( SQL.montar_sql_modificar_local_arquivo(pasta_selecionada, ID_caminho_definido) );
+//                        banco.executar_query( SQL.montar_sql_modificar_local_arquivo(pasta_selecionada, ID_caminho_definido) );
                     }
                     dispose();
                 }else{
@@ -129,15 +129,15 @@ public class painel_definir_local_salvar extends JDialog {
     
     private static void Obter_caminho_e_definido()
     {
-        Vector<Vector<String>> linhas = banco.obter_dados_da_tabela(SQL.nome_tabela_local_arquivos);
-        if( (linhas != null) && (!linhas.isEmpty()) )
-        {
-            Vector<String> vl = linhas.lastElement();
-            if( !vl.lastElement().isEmpty() ){
-                caminho_definido = vl.lastElement();
-                ID_caminho_definido = vl.firstElement();
-            }
-        }
+//        Vector<Vector<String>> linhas = banco.obter_dados_da_tabela(SQL.nome_tabela_local_arquivos);
+//        if( (linhas != null) && (!linhas.isEmpty()) )
+//        {
+//            Vector<String> vl = linhas.lastElement();
+//            if( !vl.lastElement().isEmpty() ){
+//                caminho_definido = vl.lastElement();
+//                ID_caminho_definido = vl.firstElement();
+//            }
+//        }
     }
         
 }

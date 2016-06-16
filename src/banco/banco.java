@@ -9,6 +9,7 @@ import banco.*;
 import static banco.SQL.nome_tabela;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -124,6 +125,33 @@ public class banco {
         return flag;
     }
     
+    public static boolean inserir_hash_formulario_serializado(String nome_formulario, String hash)
+    {
+        conectar_banco();
+        banco.executar_query(SQL.sql_tabela_formulario);
+        
+        boolean flag = false;
+        PreparedStatement pstmt = null;
+        try {
+            String sql = "INSERT INTO "+ SQL.nome_tabela_formulario.toUpperCase() +" (NOME,HASH_FORMULARIO) VALUES (?,?)";
+            
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, nome_formulario);
+            pstmt.setString(2, hash);
+            pstmt.executeUpdate();
+            flag = true;
+        } catch (SQLException ex) {
+            if( ex.getSQLState().equalsIgnoreCase("X0Y32") ) {// <= se tabela existe;
+            }else if( ex.getSQLState().equalsIgnoreCase("XIE0S") ){// <= se o arquivo de backup já existe;
+            }else{
+                System.out.println("Estado do ERRO: " + ex.getSQLState() );
+                ex.printStackTrace();
+            }
+        }
+
+        return flag;
+    }
+    
     private static void insertRestaurants(String[] colunas, String[] valores)
     {
         try
@@ -155,15 +183,9 @@ public class banco {
                 nome_colunas_consulta.add( rsmd.getColumnLabel(i) );
             }
 
-//            System.out.println("\n-------------------------------------------------");
-
             while(results.next())
             {
-                int id = results.getInt(1);
-//                String restName = results.getString(2);
-//                String cityName = results.getString(3);
-//                System.out.println(id + "\t\t" + restName + "\t\t" + cityName);
-                
+                int id = results.getInt(1);                
                 Vector<String> v = new Vector<String>();
                 for (int i=1; i<=numberCols; i++){
                     String dado = results.getString(i);
@@ -182,11 +204,61 @@ public class banco {
         return dados;
     }
     
+    public static String obter_formulario(String nome_formulario)
+    {
+        conectar_banco();
+        nome_colunas_consulta = new Vector<String>();
+        Vector<Vector<String>> dados = new Vector<Vector<String>>();
+        try
+        {
+            stmt = conn.createStatement();
+            ResultSet results = stmt.executeQuery( "select * from " + SQL.nome_tabela_formulario.toUpperCase() + " where NOME = '" + nome_formulario + "'" );
+            ResultSetMetaData rsmd = results.getMetaData();
+            int numberCols = rsmd.getColumnCount();
+            for (int i=1; i<=numberCols; i++)
+            {
+                //print Column Names
+                nome_colunas_consulta.add( rsmd.getColumnLabel(i) );
+            }
+
+            while(results.next())
+            {
+                int id = results.getInt(1);                
+                Vector<String> v = new Vector<String>();
+                for (int i=1; i<=numberCols; i++){
+                    String dado = results.getString(i);
+                    v.add(dado);
+                }
+                dados.add(v);
+                
+            }
+            results.close();
+            stmt.close();
+        }
+        catch (SQLException sqlExcept)
+        {
+            sqlExcept.printStackTrace();
+        }
+        
+        String hash = "";
+        if( (dados != null) && (!dados.isEmpty()) )
+        {
+            Vector<String> linha = dados.lastElement();
+            if( !linha.lastElement().isEmpty() ){
+                hash = linha.get(2);
+            }
+        }
+        
+        return hash;
+    }
+    
     public static void exibir_tabela(String nome_da_tabela)
     {
         conectar_banco();
         try
         {
+            System.out.println("-------------------------------------------------");
+            
             stmt = conn.createStatement();
             ResultSet results = stmt.executeQuery( "select * from " + nome_da_tabela );
             ResultSetMetaData rsmd = results.getMetaData();
@@ -249,6 +321,29 @@ public class banco {
            sb += AB.charAt( rnd.nextInt(AB.length()) );
         }
         return sb;
+    }
+    
+    public static void exibir_tabelas()
+    {
+        conectar_banco();
+        System.out.println("----------Tabelas do banco----------");
+        Statement statement = null;
+        try {
+            statement = conn.createStatement();
+            ResultSet results = conn.getMetaData().getTables(null, null, null, null);
+            while(results.next()) {
+                System.out.println( results.getString("TABLE_NAME") );
+            }
+            results.close();
+        } catch (SQLException ex) {
+            if( ex.getSQLState().equalsIgnoreCase("X0Y32") ) {// <= se tabela existe;
+            }else if( ex.getSQLState().equalsIgnoreCase("XIE0S") ){// <= se o arquivo de backup já existe;
+            }else{
+                System.out.println("Estado do ERRO: " + ex.getSQLState() );
+                ex.printStackTrace();
+            }
+        }
+        System.out.println("------------------------------------");
     }
     
 }
