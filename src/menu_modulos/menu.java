@@ -6,6 +6,7 @@
 package menu_modulos;
 
 import banco.*;
+import elementos.prefixos;
 import ferramenta_gui.*;
 import paineis.*;
 import trei_big.*;
@@ -223,6 +224,15 @@ public class menu extends JFrame {
                         JPanel painel_historico = new painel_historico().painel_p_historico();
                         painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_historico, "scroll_painel_cadastrar", pos);
                  }
+                 else if( gerar_painel_formularios_cadastrados(index) )
+                 {
+                     
+                 }
+//                     else{
+//                    JPanel painel_formulario = new JPanel();
+//                    painel_formulario.add( new JLabel("Sem formulário cadastrado.") );
+//                    painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_formulario, "scroll_painel_cadastrar", pos);
+//                 }
                  
              }// fim mouseClicked(MouseEvent me);
 
@@ -246,6 +256,49 @@ public class menu extends JFrame {
         return content;
     }
 
+     private boolean gerar_painel_formularios_cadastrados(int index)
+     {
+        boolean f = false; 
+        if( (menu_lateral.formularios != null) && (!menu_lateral.formularios.isEmpty()) )
+        {
+            for(int i=0; i<menu_lateral.formularios.size(); i++){
+                Vector<String> linha = menu_lateral.formularios.get(i);
+                if( !linha.lastElement().isEmpty() )
+                {
+                    String nome_formulario = linha.get(1);
+//                    menu_lateral.exibir_mapa_menu();
+                    
+                    String token_procurar = "_";
+                    String token_substituir = " ";
+                    if( nome_formulario.indexOf(token_procurar) != -1 ){
+                        nome_formulario = nome_formulario.replaceAll(token_procurar, token_substituir);
+                    }
+                    
+                    String hash = linha.get(2);
+                    if( menu_lateral.se_chave(nome_formulario, index) )
+                    {
+                        JPanel painel_formulario = (JPanel) operacoes_painel.deserializar_obj( hash );
+                        operacoes_painel.exibir_names_em_painel(painel_formulario);
+                        JButton btn_enviar = (JButton) operacoes_painel.pegar_componente_em_painel(painel_formulario, prefixos.prefixo_botao_enviar);
+                        
+                        if( btn_enviar != null )
+                        {
+                            btn_enviar.addActionListener(new ActionListener(){
+                                @Override
+                                public void actionPerformed(ActionEvent ae) {
+                                    System.out.println("ENVIAR");
+                                }
+                            });
+                        }
+                                
+                        painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_formulario, "scroll_painel_cadastrar", pos);
+                        f = false;
+                    }
+                }
+            }
+        }
+        return f;
+     }
     
 }
 

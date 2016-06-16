@@ -63,7 +63,7 @@ public class Trei_big {
      */
     public static void main(String[] args) throws IOException, ClassNotFoundException {
           
-//        menu();
+        menu();
 //        menu_elementos();
 //        new painel_definir_local_salvar();
           
@@ -82,27 +82,28 @@ public class Trei_big {
         
 //        new popup( "exemplo", serializar.deserialize("formul-dad-teste.form") );
         
-//          banco.executar_query( "DROP TABLE " + SQL.nome_tabela_local_arquivos );
+//          banco.executar_query( "DROP TABLE DTJ646HSH");
+//          banco.executar_query( "DROP TABLE FASF_GOT_XLEP_UPLL" );
+//          banco.executar_query( "DROP TABLE JJDJJDF" );
+//          banco.executar_query( "DROP TABLE ICARO_FREIRE" );
+          
 //        banco.executar_query(SQL.sql_tabela_formulario);
         
 //        String hash = operacoes.gerar_chave(70000);
-//        System.out.println( hash.length() );
+//        System.out.println( SQL.montar_sql_criar_tabela(new String[]{"nome", "teste"}, "WFPF") );
         
 //        banco.inserir_hash_formulario_serializado("Y--teste-form2", hash);
-//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 101) );
         
-//        Vector<Vector<String>> dados = banco.obter_formulario("756-libry");
-//        if( (dados != null) && (!dados.isEmpty()) )
-//        {
-//            Vector<String> linha = dados.lastElement();
-//            if( !linha.lastElement().isEmpty() ){
-//                System.out.println( linha.get(2) );
-//            }
-//        }
-//        banco.exibir_tabela( SQL.nome_tabela_formulario.toUpperCase() );
+//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 701) );
+//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 702) );
+//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 802) );
+//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 902) );
+//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 1002) );
+//        
+//        banco.exibir_tabela( SQL.nome_tabela_formulario.toUpperCase() );;
 //        banco.exibir_tabelas();
         
-        new popup( "exemplo", operacoes_painel.deserializar_obj(banco.obter_formulario("756-libry") ) );
+//        new popup( "exemplo", operacoes_painel.deserializar_obj(banco.obter_formulario("756-libry") ) );
         
     }
     

@@ -93,9 +93,9 @@ public class SQL {
         "(START WITH 1, INCREMENT BY 1),\n";
         
         for(int i=0; i<colunas.length-1; i++) {
-            sql_tabela += colunas[i].toUpperCase() + "VARCHAR(200),\n";
+            sql_tabela += colunas[i].toUpperCase() + " VARCHAR(200),\n";
         }
-        sql_tabela += colunas[colunas.length-1].toUpperCase() + "VARCHAR(200) )";
+        sql_tabela += colunas[colunas.length-1].toUpperCase() + " VARCHAR(200) )";
         
         return sql_tabela;
     }

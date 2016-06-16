@@ -101,6 +101,16 @@ public class operacoes_painel {
         return x;
     }
     
+    public static void exibir_names_em_painel(JPanel painel) {
+        System.out.println("----------Names----------");
+        Component[] components = painel.getComponents();
+            for (int i=0; i < components.length; i++) {
+                String name_componente = components[i].getName();
+                System.out.println("name: " + name_componente);
+            }//fim for;
+        System.out.println("-------------------------");
+    }
+    
     public static Vector<Component> pegar_todos_componentes_em_painel_com_prefixo(JPanel painel, String prefixo_componente_no_painel) {
         Vector<Component> vc = new Vector<Component>();
         Component[] components = painel.getComponents();

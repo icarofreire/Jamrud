@@ -5,10 +5,12 @@
  */
 package menu_modulos;
 
+import banco.*;
 import java.awt.Component;
 import java.awt.Font;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Vector;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
@@ -30,6 +32,7 @@ public class MenuLateral {
     public static String criar_formulario = "Criar formulário";
     public static String gerar_planilha = "Gerar planilha";
     
+    public Vector<Vector<String>> formularios = new Vector<Vector<String>>();
     
     private Map<String, ImageIcon> map = new HashMap<>();
     private Map<String, Integer> modulo = new HashMap<>();
@@ -40,6 +43,32 @@ public class MenuLateral {
         
         /* \/ A ordem em que forem adicionados será a ordem em que aparecerá no menu. \/ */
         nomes.add(form_cadastrar); /* => */ icones.add("icones/cadastrar.png");
+        
+        /* \/ Criar links no menu para os formulários cadastrados no banco; \/ */
+        formularios = banco.obter_dados_da_tabela(SQL.nome_tabela_formulario);
+        if( (formularios != null) && (!formularios.isEmpty()) )
+        {
+            for(int i=0; i<formularios.size(); i++)
+            {
+                Vector<String> linha = formularios.get(i);
+                if( !linha.lastElement().isEmpty() ){
+                    String nome_formulario = linha.get(1);
+                    
+                    String token_procurar = "_";
+                    String token_substituir = " ";
+                    if( nome_formulario.indexOf(token_procurar) != -1 ){
+                        nome_formulario = nome_formulario.replaceAll(token_procurar, token_substituir);
+                    }
+                    
+                    String hash = linha.get(2);
+
+                    nomes.add(nome_formulario); /* => */ icones.add("icones/cadastrar.png");
+                    nomes.add("Tabela:" + nome_formulario); /* => */ icones.add("icones/pesquisar_e_editar.png");
+                }
+            }
+        }
+        
+        
         nomes.add(pesquisar_editar); /* => */ icones.add("icones/pesquisar_e_editar.png");
         nomes.add(gerar_planilha); /* => */ icones.add("icones/planilha.png");
         //        nomes.add("Lixeira"); /* => */ icones.add("icones/lixo2.png");
@@ -88,6 +117,17 @@ public class MenuLateral {
         }else{
             return false;
         }
+    }
+    
+    public void exibir_mapa_menu() {
+        
+        System.out.println("----------Mapa Menu----------");
+        for(Entry<String, Integer> entry : modulo.entrySet()) {
+            String key = entry.getKey();
+            Integer value = entry.getValue();
+            System.out.println( "[" + key + "] -> [" + value + "]" );
+        }
+        System.out.println("----------=========----------");
     }
 
 }

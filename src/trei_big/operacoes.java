@@ -71,4 +71,14 @@ public class operacoes {
         return chave;
     }
     
+    public static boolean se_titulo_correto(String titulo)
+    {
+         boolean f = false;
+         char pri = titulo.charAt(0);
+         if (Character.isDigit(pri)){
+             f = true;
+         }
+         return f;
+    }
+    
 }

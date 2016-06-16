@@ -80,6 +80,7 @@ public class menu extends JFrame {
     private JLabel x = new JLabel("Formulário de cadastrar");
     private JLabel x2 = new JLabel("Fazer backup do banco");
     private JLabel l_lixeira = new JLabel("Lixeira");
+    private JPanel painel_esquerdo = new JPanel(new GridBagLayout());
     private JPanel painel_direito = new JPanel(new GridBagLayout());
     
     private JPanel painel_cima = new JPanel(new GridBagLayout());
@@ -161,17 +162,17 @@ public class menu extends JFrame {
         pesquisa.add(imageLbl);
         
         //... Create GridBagLayout content pane; set border.
-        JPanel content = new JPanel(new GridBagLayout());
-        content.setBorder(BorderFactory.createEmptyBorder(BORDER, BORDER, BORDER, BORDER));
+//        JPanel content = new JPanel(new GridBagLayout());
+        painel_esquerdo.setBorder(BorderFactory.createEmptyBorder(BORDER, BORDER, BORDER, BORDER));
         
         //... First row
-        content.add(scroll, pos.nextCol());
-        content.add(new Gap(GAP), pos.nextCol());
+        painel_esquerdo.add(scroll, pos.nextCol());
+        painel_esquerdo.add(new Gap(GAP), pos.nextCol());
         
         painel_cima.setBorder(BorderFactory.createTitledBorder("Componente"));
         painel_baixo.setBorder(BorderFactory.createTitledBorder("Formulário gerado"));
         
-        content.add(painel_direito, pos.nextCol().expandir());
+        painel_esquerdo.add(painel_direito, pos.nextCol().expandir());
         
         JPanel p_nome_form = operacoes_painel.add_componente_em_painel(new JLabel("Nome do formulário:"), nome_formulario, 2);
         painel_direito.add(p_nome_form, pos_paineis_internos.expandW());
@@ -272,7 +273,10 @@ public class menu extends JFrame {
         botao_criar_formulario.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                String nome = nome_formulario.getText().trim().replaceAll(" ", "-");
+                String nome = nome_formulario.getText().trim();
+                if( nome.indexOf(" ") != -1 ){
+                    nome = nome.replaceAll(" ", "_");
+                }
                 if( !nome.isEmpty() )
                 {
                     if( numero_componentes_add_em_painel() > 0 )
@@ -281,18 +285,27 @@ public class menu extends JFrame {
                         JPanel painel_a_serializar = remover_bordas_vermelhas_e_botes_excluir();
                         
                         String painel_baixo_serializado = operacoes_painel.serializar_obj( painel_a_serializar );
-                        banco.inserir_hash_formulario_serializado(nome, painel_baixo_serializado);
+//                        banco.inserir_hash_formulario_serializado(nome, painel_baixo_serializado);
 //                        new popup(nome, painel_baixo_serializado);
 
                         
                         //---
+                        System.out.println("nome: " + nome );
                         String[] titulos = obter_todos_os_titulos();                      
-                        banco.executar_query( SQL.montar_sql_criar_tabela(titulos, nome) );
+                        if ( 
+                                banco.executar_query( SQL.montar_sql_criar_tabela(titulos, nome) )
+                           ){
+                            banco.inserir_hash_formulario_serializado(nome, painel_baixo_serializado);
+                        }
                         //---
                         
                         
                         painel_baixo.removeAll();
                         operacoes_painel.atualizar_painel(painel_baixo);
+//                        operacoes_painel.atualizar_painel(painel_esquerdo);
+                        aviso.mensagem_sucesso("Formulário construído com sucesso!");
+                        dispose();
+                        operacoes_painel.atualizar_painel(painel_esquerdo);
                         
                     }else{
                         aviso.mensagem_atencao("Adicione componentes em seu formulário.", "Formulário vazio");
@@ -311,7 +324,7 @@ public class menu extends JFrame {
             }
         });
         
-        return content;
+        return painel_esquerdo;
     }
 
     
@@ -337,9 +350,12 @@ public class menu extends JFrame {
         }//fim for;
         copia_painel_baixo.setBorder(null);
         
+        JButton botao_enviar = new JButton("Enviar", new ImageIcon("icones/go-32.png"));
+        botao_enviar.setName( operacoes.gerar_name_para_componente(prefixos.prefixo_botao_enviar) );
+                
         copia_painel_baixo.add(new Gap(GAP), pos.nextRow());
         copia_painel_baixo.add(new Gap(GAP), pos.nextRow());
-        copia_painel_baixo.add( new JButton("Enviar", new ImageIcon("icones/go-32.png")), pos.nextRow().expandW() );
+        copia_painel_baixo.add( botao_enviar, pos.nextRow().expandW() );
         
         return copia_painel_baixo;
     }
