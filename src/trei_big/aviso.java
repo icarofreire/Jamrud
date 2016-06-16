@@ -55,5 +55,12 @@ public class aviso {
                 "Erro!",
                 JOptionPane.ERROR_MESSAGE, new ImageIcon("icones/erro-64.png"));
     }
+        
+    public static void mensagem_titulo_incorreto(String nome_titulo) {
+        String mensagem_regra_titulo = 
+            "Informe um titulo apenas com letras, espaços em branco e digitos.\n"
+            + "A primeira letra do nome não pode ser um digito.";
+        mensagem_atencao(mensagem_regra_titulo, "Titulo '"+ nome_titulo +"' não aceito");
+    }
     
 }

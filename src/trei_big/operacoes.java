@@ -71,11 +71,22 @@ public class operacoes {
         return chave;
     }
     
+    /* Se o nome da tabela ou coluna é contido apenas com iniciais alfabeticas,
+    e contendo somente: letras alfabeticas, espaços em branco, ou digitos no restante do nome; */
     public static boolean se_titulo_correto(String titulo)
     {
-         boolean f = false;
+         int con = 0;
          char pri = titulo.charAt(0);
-         if (Character.isDigit(pri)){
+         if (Character.isAlphabetic(pri)){
+             con = 1;
+             for(int i=1; i<titulo.length(); i++){
+                 if( (titulo.charAt(i) == ' ') || Character.isLetterOrDigit(titulo.charAt(i)) ){
+                     con++;
+                 }
+             }
+         }
+         boolean f = false;
+         if( con == titulo.length() ){
              f = true;
          }
          return f;

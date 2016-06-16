@@ -279,36 +279,53 @@ public class menu extends JFrame {
                 }
                 if( !nome.isEmpty() )
                 {
-                    if( numero_componentes_add_em_painel() > 0 )
+                    if( operacoes.se_titulo_correto(nome.replaceAll("_", " ")) )
                     {
-                        
-                        JPanel painel_a_serializar = remover_bordas_vermelhas_e_botes_excluir();
-                        
-                        String painel_baixo_serializado = operacoes_painel.serializar_obj( painel_a_serializar );
-//                        banco.inserir_hash_formulario_serializado(nome, painel_baixo_serializado);
-//                        new popup(nome, painel_baixo_serializado);
+                        if( numero_componentes_add_em_painel() > 0 )
+                        {
 
-                        
-                        //---
-                        System.out.println("nome: " + nome );
-                        String[] titulos = obter_todos_os_titulos();                      
-                        if ( 
-                                banco.executar_query( SQL.montar_sql_criar_tabela(titulos, nome) )
-                           ){
-                            banco.inserir_hash_formulario_serializado(nome, painel_baixo_serializado);
+    //                        banco.inserir_hash_formulario_serializado(nome, painel_baixo_serializado);
+    //                        new popup(nome, painel_baixo_serializado);
+
+
+                            //---
+                            int titulos_aceitos = 0;
+                            String[] titulos = obter_todos_os_titulos();
+                            for (int i = 0; i < titulos.length; i++) {
+                                if( operacoes.se_titulo_correto(titulos[i]) )
+                                {
+                                    titulos_aceitos++;
+                                }else{
+                                    aviso.mensagem_titulo_incorreto(titulos[i]);
+                                }                                
+                            }
+                            if( titulos_aceitos == titulos.length )
+                            {
+                                if ( 
+                                        banco.executar_query( SQL.montar_sql_criar_tabela(titulos, nome) )
+                                   )
+                                {
+                                        JPanel painel_a_serializar = remover_bordas_vermelhas_e_botes_excluir();
+                                        String painel_baixo_serializado = operacoes_painel.serializar_obj( painel_a_serializar );
+                                        
+                                        banco.inserir_hash_formulario_serializado(nome, painel_baixo_serializado);
+                                        
+                                        painel_baixo.removeAll();
+                                        operacoes_painel.atualizar_painel(painel_baixo);
+                                        aviso.mensagem_sucesso("Formulário construído com sucesso!");
+                                        dispose();
+                                        operacoes_painel.atualizar_painel(painel_esquerdo);
+                                }
+                            }
+                            //---
+                            
+
+
+                        }else{
+                            aviso.mensagem_atencao("Adicione componentes em seu formulário.", "Formulário vazio");
                         }
-                        //---
-                        
-                        
-                        painel_baixo.removeAll();
-                        operacoes_painel.atualizar_painel(painel_baixo);
-//                        operacoes_painel.atualizar_painel(painel_esquerdo);
-                        aviso.mensagem_sucesso("Formulário construído com sucesso!");
-                        dispose();
-                        operacoes_painel.atualizar_painel(painel_esquerdo);
-                        
                     }else{
-                        aviso.mensagem_atencao("Adicione componentes em seu formulário.", "Formulário vazio");
+                        aviso.mensagem_titulo_incorreto(nome);
                     }
                 }else{
                     aviso.mensagem_atencao("Insira o nome de seu formulário.", "Nome vazio");

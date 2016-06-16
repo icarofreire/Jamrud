@@ -100,10 +100,18 @@ public class Trei_big {
 //        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 902) );
 //        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 1002) );
 //        
-//        banco.exibir_tabela( SQL.nome_tabela_formulario.toUpperCase() );;
+//        banco.exibir_tabela( SQL.nome_tabela_formulario.toUpperCase() );
 //        banco.exibir_tabelas();
         
 //        new popup( "exemplo", operacoes_painel.deserializar_obj(banco.obter_formulario("756-libry") ) );
+        
+//        String nome = "h%fa s    df  nf   dhj --  43";
+//        if( operacoes.se_titulo_correto(nome) ){
+//            System.out.println( "nome valido" );
+//        }else{
+//            System.out.println( "NÃO" );
+//        }
+        
         
     }
     
