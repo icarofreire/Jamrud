@@ -68,7 +68,7 @@ public class menu extends JFrame {
     private JMenu menu = new JMenu("Arquivo");
     private JMenuItem item_menu_sobre = new JMenuItem("Sobre");
     private JMenuItem item_menu_ajuda = new JMenuItem("Ajuda");
-    private JMenuItem item_menu_local = new JMenuItem("Definir local");
+//    private JMenuItem item_menu_local = new JMenuItem("Definir local");
     private JMenuBar barra_de_menu = new JMenuBar();
     
     private JLabel x = new JLabel("Formulário de cadastrar");
@@ -86,7 +86,7 @@ public class menu extends JFrame {
         windowContent.add( gui() , BorderLayout.CENTER);
 
         barra_de_menu.add(menu);
-        menu.add(item_menu_local);
+//        menu.add(item_menu_local);
         menu.add(item_menu_ajuda);
         menu.add(item_menu_sobre);
     
@@ -104,12 +104,12 @@ public class menu extends JFrame {
             }
         });
         
-        item_menu_local.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-//                new painel_definir_local_salvar();
-            }
-        });
+//        item_menu_local.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent event) {
+////                new painel_definir_local_salvar();
+//            }
+//        });
 
         super.setJMenuBar(barra_de_menu);
         

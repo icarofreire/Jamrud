@@ -87,7 +87,7 @@ public class SQL {
     public static String montar_sql_criar_tabela(String[] colunas, String nome_para_tabela)
     {
         String sql_tabela = 
-        "CREATE table "+ nome_para_tabela +" (\n" +
+        "CREATE table "+ nome_para_tabela.toUpperCase() +" (\n" +
         "ID INTEGER NOT NULL \n" +
         "PRIMARY KEY GENERATED ALWAYS AS IDENTITY \n" +
         "(START WITH 1, INCREMENT BY 1),\n";

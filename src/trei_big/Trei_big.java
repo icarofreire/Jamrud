@@ -105,9 +105,9 @@ public class Trei_big {
         
 //        new popup( "exemplo", operacoes_painel.deserializar_obj(banco.obter_formulario("756-libry") ) );
         
-//        String nome = "h%fa s    df  nf   dhj --  43";
-//        if( operacoes.se_titulo_correto(nome) ){
-//            System.out.println( "nome valido" );
+//        String[] nome = new String[]{"ic","ffea","ffea","ick","IC"};
+//        if( operacoes.se_dados_duplicados(nome) ){
+//            System.out.println( "duplicados" );
 //        }else{
 //            System.out.println( "NÃO" );
 //        }

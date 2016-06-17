@@ -7,7 +7,9 @@ package trei_big;
 
 import elementos.prefixos;
 import java.awt.Component;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 import java.util.Vector;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -90,6 +92,21 @@ public class operacoes {
              f = true;
          }
          return f;
+    }
+    
+    public static boolean se_dados_duplicados(final String[] zipcodelist)
+    {
+        Set<String> lump = new HashSet<String>();
+        for (String i : zipcodelist)
+        {
+          i = i.toUpperCase();// <-- trasforma todas em maiuscula para não haver strings duplicadas mesmo insensíveis ao caso;
+          if (lump.contains(i)){ 
+              return true;
+          }else{
+              lump.add(i);
+          }
+        }
+        return false;
     }
     
 }

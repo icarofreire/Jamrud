@@ -284,42 +284,43 @@ public class menu extends JFrame {
                         if( numero_componentes_add_em_painel() > 0 )
                         {
 
-    //                        banco.inserir_hash_formulario_serializado(nome, painel_baixo_serializado);
-    //                        new popup(nome, painel_baixo_serializado);
-
-
-                            //---
+                            //|--->
                             int titulos_aceitos = 0;
                             String[] titulos = obter_todos_os_titulos();
-                            for (int i = 0; i < titulos.length; i++) {
-                                if( operacoes.se_titulo_correto(titulos[i]) )
-                                {
-                                    titulos_aceitos++;
-                                }else{
-                                    aviso.mensagem_titulo_incorreto(titulos[i]);
-                                }                                
-                            }
-                            if( titulos_aceitos == titulos.length )
+                            if( !operacoes.se_dados_duplicados(titulos) )
                             {
-                                if ( 
-                                        banco.executar_query( SQL.montar_sql_criar_tabela(titulos, nome) )
-                                   )
-                                {
-                                        JPanel painel_a_serializar = remover_bordas_vermelhas_e_botes_excluir();
-                                        String painel_baixo_serializado = operacoes_painel.serializar_obj( painel_a_serializar );
-                                        
-                                        banco.inserir_hash_formulario_serializado(nome, painel_baixo_serializado);
-                                        
-                                        painel_baixo.removeAll();
-                                        operacoes_painel.atualizar_painel(painel_baixo);
-                                        aviso.mensagem_sucesso("Formulário construído com sucesso!");
-                                        dispose();
-                                        operacoes_painel.atualizar_painel(painel_esquerdo);
+                                for (int i = 0; i < titulos.length; i++) {
+                                    if( operacoes.se_titulo_correto(titulos[i]) )
+                                    {
+                                        titulos_aceitos++;
+                                    }else{
+                                        aviso.mensagem_titulo_incorreto(titulos[i]);
+                                    }                                
                                 }
-                            }
-                            //---
-                            
+                                if( titulos_aceitos == titulos.length )
+                                {
+                                    if ( 
+                                            banco.executar_query( SQL.montar_sql_criar_tabela(titulos, nome) )
+                                       )
+                                    {
+                                            JPanel painel_a_serializar = remover_bordas_vermelhas_e_botes_excluir();
+                                            String painel_baixo_serializado = operacoes_painel.serializar_obj( painel_a_serializar );
 
+                                            banco.inserir_hash_formulario_serializado(nome, painel_baixo_serializado);
+
+                                            painel_baixo.removeAll();
+                                            operacoes_painel.atualizar_painel(painel_baixo);
+                                            aviso.mensagem_sucesso("Formulário construído com sucesso!");
+                                            dispose();
+                                            operacoes_painel.atualizar_painel(painel_esquerdo);
+                                    }
+                                }
+                            }else{
+                                aviso.mensagem_atencao("Existe titulos iguais em seu formulário,\n"
+                                        + "informe titulos diferentes para o sistema registrar os dados corretamente.",
+                                        "Titulos duplicados");
+                            }
+                            //|--->
 
                         }else{
                             aviso.mensagem_atencao("Adicione componentes em seu formulário.", "Formulário vazio");
