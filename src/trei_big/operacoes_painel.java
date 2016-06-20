@@ -180,6 +180,20 @@ public class operacoes_painel {
         return p_group;
     }
     
+    /*\/ Com um botão adicionado em um painel, quando este painel for adicionado a outro painel
+    que usa os metodos da classe GBHelper, o botão não expandirá para um tamanho a preencher a celula que
+    ele está adicionado pela classe GridBagConstraints. O que expandirá será o painel do botão, 
+    mas o botão manterá seu tamanho default. \/ */
+    public static JPanel add_botao_em_painel(JButton botao) {
+        
+        JPanel painel_botao = new JPanel();
+        painel_botao.add(botao);
+        
+        painel_botao.setName( operacoes.gerar_name_para_componente(prefixos.prefixo_painel_interno_para_botao) );
+        
+        return painel_botao;
+    }
+    
     /*  \/\/
         vertical_ou_horizontal = 1 --> vertical;
         vertical_ou_horizontal = 2 --> horizontal; \/\/

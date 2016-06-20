@@ -156,12 +156,18 @@ public class criar_grupos_opcoes {
             birdButton.setName( operacoes.gerar_name_para_componente(prefix_id) );
         }
         
-        painel.add(label_titulo, pos.expandW());
-        painel.add(campo_para_titulo_componente, pos.expandW().nextCol());
+        JPanel painel_titulo = new JPanel();
+        painel_titulo.add(label_titulo);
+        painel_titulo.add(campo_para_titulo_componente);
+        
+        painel.add(painel_titulo, pos.expandW());
         painel.add(new Gap(GAP) , pos.nextRow());
         
-        painel.add(btn_mais, pos.expandW());
-        painel.add(btn_aplicar, pos.expandW().nextCol());
+        JPanel painel_botao = new JPanel();
+        painel_botao.add(btn_mais);
+        painel_botao.add(btn_aplicar);
+        
+        painel.add(painel_botao, pos.expandW());
         painel.add(new Gap(GAP) , pos.nextRow());
         
         // \/ constroi o painel onde será visualizado os componentes que estão sendo adicionados no momento;

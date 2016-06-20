@@ -47,10 +47,10 @@ public class sobre extends JDialog {
         scroll_observacoes.setViewportView(campo_valor);
         scroll_observacoes.setViewportBorder(null);// <= remover a borda quadrada do scroll dentro do painel;
         
-        painel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        painel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));  
         
         painel.add(scroll_observacoes, pos.expandir());
-        painel.add(botao_fechar, pos.nextRow().expandW());
+        painel.add(operacoes_painel.add_botao_em_painel(botao_fechar), pos.nextRow().expandW());
         
         
         botao_fechar.addActionListener(new ActionListener() {

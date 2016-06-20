@@ -39,10 +39,13 @@ public class criar_campo_input {
         
         JButton btn_aplicar = new JButton(nome_botao_aplicar, new ImageIcon("icones/add_formulario-24.png"));
         
-        painel.add(lcmp1, pos.expandW());
-        painel.add(cmp1, pos.nextCol().expandW());
+        JPanel painel_interno_titulo = new JPanel();
+        painel_interno_titulo.add(lcmp1);
+        painel_interno_titulo.add(cmp1);
+        
+        painel.add(painel_interno_titulo, pos.expandW());
         painel.add(new Gap(GAP) , pos.nextRow());
-        painel.add(btn_aplicar, pos.nextRow().expandW());
+        painel.add(operacoes_painel.add_botao_em_painel(btn_aplicar), pos.nextRow().expandW());
         
         btn_aplicar.addActionListener(new ActionListener(){
             @Override

@@ -45,7 +45,7 @@ public class criar_texto {
         scroll_observacoes.setViewportView(campo_valor);
         
         painel.add(scroll_observacoes, pos.expandW());
-        painel.add(btn_aplicar, pos.nextRow().expandW());
+        painel.add(operacoes_painel.add_botao_em_painel(btn_aplicar), pos.nextRow().expandW());
         
         btn_aplicar.addActionListener(new ActionListener(){
             @Override
