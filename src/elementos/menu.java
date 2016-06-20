@@ -309,6 +309,7 @@ public class menu extends JFrame {
                                             banco.inserir_hash_formulario_serializado(nome, painel_baixo_serializado);
 
                                             painel_baixo.removeAll();
+                                            painel_baixo.setBorder(BorderFactory.createTitledBorder("Formulário gerado"));
                                             operacoes_painel.atualizar_painel(painel_baixo);
                                             aviso.mensagem_sucesso("Formulário construído com sucesso!");
                                             dispose();
@@ -361,7 +362,7 @@ public class menu extends JFrame {
                 }
             }
             // \/ remove os botões de excluir;
-            if( (name_componente != null) && (name_componente.indexOf(prefixos.prefixo_btn_excluir_painel) != -1)  ){
+            if( (name_componente != null) && (name_componente.indexOf(prefixos.prefixo_painel_interno_para_botao) != -1)  ){
                 copia_painel_baixo.remove(components[i]);
             }
                     
@@ -373,7 +374,7 @@ public class menu extends JFrame {
                 
         copia_painel_baixo.add(new Gap(GAP), pos.nextRow());
         copia_painel_baixo.add(new Gap(GAP), pos.nextRow());
-        copia_painel_baixo.add( botao_enviar, pos.nextRow().expandW() );
+        copia_painel_baixo.add( operacoes_painel.add_botao_em_painel(botao_enviar), pos.nextRow().expandW() );
         
         return copia_painel_baixo;
     }

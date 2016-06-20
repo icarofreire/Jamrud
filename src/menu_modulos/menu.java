@@ -279,7 +279,9 @@ public class menu extends JFrame {
                     {
                         JPanel painel_formulario = (JPanel) operacoes_painel.deserializar_obj( hash );
                         operacoes_painel.exibir_names_em_painel(painel_formulario);
-                        JButton btn_enviar = (JButton) operacoes_painel.pegar_componente_em_painel(painel_formulario, prefixos.prefixo_botao_enviar);
+                        
+                        JPanel p_botao = (JPanel) operacoes_painel.pegar_componente_em_painel(painel_formulario, prefixos.prefixo_painel_interno_para_botao);
+                        JButton btn_enviar = (JButton) operacoes_painel.pegar_componente_em_painel(p_botao, prefixos.prefixo_botao_enviar);
                         
                         if( btn_enviar != null )
                         {

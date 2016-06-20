@@ -37,6 +37,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class operacoes_painel {
     
+    private static final int GAP = 5;   // Default gap btwn components.
+    
     public static void atualizar_painel(JPanel painel) {
         painel.revalidate();
         painel.repaint();
@@ -221,20 +223,30 @@ public class operacoes_painel {
         final String name_btn_excluir_painel = operacoes.gerar_name_para_componente(prefixo_btn_excluir_painel);
                 
         painel_criado.setName(name_painel);
-        btn_excluir_painel.setName(name_btn_excluir_painel);
+//        btn_excluir_painel.setName(name_btn_excluir_painel);
+        
+        /*-- cria um painel para o botão excluir, para o botão ficar com o tamanho default;
+        e adiciona este painel do botão ao painel externo; Cria um name para ele, e este mesmo name será 
+        usado para exclui-lo caso ele seja clicado. */
+        JPanel painel_botao = new JPanel();
+        painel_botao.add(btn_excluir_painel);
+        final String name_painel_botao = operacoes.gerar_name_para_componente(prefixos.prefixo_painel_interno_para_botao);
+        painel_botao.setName(name_painel_botao);
+        painel_baixo.add( painel_botao, pos_painel_baixo.nextCol().expandW() );
+        painel_baixo.add(new Gap(GAP) , pos_painel_baixo.nextRow());
+        /*--*/
                 
         btn_excluir_painel.addActionListener(new ActionListener(){
         @Override
         public void actionPerformed(ActionEvent ae) {
                             
                 String chave_painel = operacoes.pegar_chave_em_string(name_painel);      
-                String chave_btn = operacoes.pegar_chave_em_string(name_btn_excluir_painel);
+                String chave_btn = operacoes.pegar_chave_em_string(name_painel_botao);
                         
                 painel_baixo.remove( operacoes_painel.pegar_componente_em_painel(painel_baixo, operacoes.pegar_name(prefixo_painel, chave_painel)) );
-                painel_baixo.remove( operacoes_painel.pegar_componente_em_painel(painel_baixo, operacoes.pegar_name(prefixo_btn_excluir_painel, chave_btn)) );
+                painel_baixo.remove( operacoes_painel.pegar_componente_em_painel(painel_baixo, operacoes.pegar_name(prefixos.prefixo_painel_interno_para_botao, chave_btn)) );
 
                 operacoes_painel.atualizar_painel(painel_baixo);
-//                pos_painel_baixo.gridy--;
             }
         });
     }
@@ -243,16 +255,13 @@ public class operacoes_painel {
     */
     public static void add_componente_painel_baixo_e_add_botao_exluir(final JComponent componente, final JPanel painel_baixo, final GBHelper pos_painel_baixo, final String prefixo_painel)
     {
-        final int GAP = 5;
         JButton btn_excluir_painel = new JButton("Excluir", new ImageIcon("icones/erro-24.png"));
                     
         JPanel painel_criar_titulo = operacoes_painel.add_componente_em_painel( componente );
         painel_criar_titulo.setBorder(BorderFactory.createLineBorder(Color.RED));
-        operacoes_painel.add_botao_excluir_painel(painel_baixo, pos_painel_baixo, painel_criar_titulo, btn_excluir_painel, prefixo_painel, prefixos.prefixo_btn_excluir_painel);
                     
         painel_baixo.add( painel_criar_titulo, pos_painel_baixo.nextRow().expandW() );
-        painel_baixo.add( btn_excluir_painel, pos_painel_baixo.nextCol().expandW() );
-        painel_baixo.add(new Gap(GAP) , pos_painel_baixo.nextRow());
+        operacoes_painel.add_botao_excluir_painel(painel_baixo, pos_painel_baixo, painel_criar_titulo, btn_excluir_painel, prefixo_painel, prefixos.prefixo_btn_excluir_painel);
         operacoes_painel.atualizar_painel(painel_baixo);
     }
     
@@ -260,7 +269,6 @@ public class operacoes_painel {
     */
     public static void add_componente_painel_baixo_e_add_botao_exluir(final JComponent componente, final JPanel painel_baixo, final GBHelper pos_painel_baixo, final String prefixo_painel, final String titulo_para_componente)
     {
-        final int GAP = 5;
         JButton btn_excluir_painel = new JButton("Excluir", new ImageIcon("icones/erro-24.png"));
         
         JLabel label_titulo_componente = new JLabel(titulo_para_componente);
@@ -268,11 +276,9 @@ public class operacoes_painel {
         
         JPanel painel_criar_titulo = operacoes_painel.add_componente_em_painel( label_titulo_componente, componente, 1 );
         painel_criar_titulo.setBorder(BorderFactory.createLineBorder(Color.RED));
-        operacoes_painel.add_botao_excluir_painel(painel_baixo, pos_painel_baixo, painel_criar_titulo, btn_excluir_painel, prefixo_painel, prefixos.prefixo_btn_excluir_painel);
         
         painel_baixo.add( painel_criar_titulo, pos_painel_baixo.nextRow().expandW() );
-        painel_baixo.add( btn_excluir_painel, pos_painel_baixo.nextCol().expandW() );
-        painel_baixo.add(new Gap(GAP) , pos_painel_baixo.nextRow());
+        operacoes_painel.add_botao_excluir_painel(painel_baixo, pos_painel_baixo, painel_criar_titulo, btn_excluir_painel, prefixo_painel, prefixos.prefixo_btn_excluir_painel);
         operacoes_painel.atualizar_painel(painel_baixo);
     }
         
