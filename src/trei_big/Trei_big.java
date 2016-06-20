@@ -87,6 +87,14 @@ public class Trei_big {
 //          banco.executar_query( "DROP TABLE FASF_GOT_XLEP_UPLL" );
 //          banco.executar_query( "DROP TABLE JJDJJDF" );
 //          banco.executar_query( "DROP TABLE ICARO_FREIRE" );
+        
+//            banco.executar_query( "DROP TABLE D2" );
+//            banco.executar_query( "DROP TABLE D22" );
+//            banco.executar_query( "DROP TABLE GIL" );
+//            banco.executar_query( "DROP TABLE PLEBE" );
+//            banco.executar_query( "DROP TABLE SENHAS" );
+//            banco.executar_query( "DROP TABLE XIKE_XIKE" );
+//            banco.executar_query( "DROP TABLE YTRHDFHDF4564" );
           
 //        banco.executar_query(SQL.sql_tabela_formulario);
         
@@ -95,11 +103,14 @@ public class Trei_big {
         
 //        banco.inserir_hash_formulario_serializado("Y--teste-form2", hash);
         
-//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 701) );
-//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 702) );
-//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 802) );
-//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 902) );
-//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 1002) );
+//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 1102) );
+//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 1202) );
+//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 1302) );
+//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 1402) );
+//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 1502) );
+//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 1602) );
+//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 1702) );
+//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 1802) );
 //        
 //        banco.exibir_tabela( SQL.nome_tabela_formulario.toUpperCase() );
 //        banco.exibir_tabelas();

@@ -62,7 +62,7 @@ public class menu extends JFrame {
     
     private JTextField pesquisa = new JTextField(20);
     private DefaultListModel dlm = new DefaultListModel();
-    private JList lista = new JList(dlm);
+    public JList lista = new JList(dlm);
     private JButton botao_exibir_listagem = new JButton();
     private JButton botao_exibir_listagem2 = new JButton();
     private JMenu menu = new JMenu("Arquivo");
@@ -74,6 +74,7 @@ public class menu extends JFrame {
     private JLabel x = new JLabel("Formulário de cadastrar");
     private JLabel x2 = new JLabel("Fazer backup do banco");
     private JLabel l_lixeira = new JLabel("Lixeira");
+    private JPanel painel_esquerdo = new JPanel(new GridBagLayout());
     private JPanel painel_direito = new JPanel(new GridBagLayout());
     
     
@@ -143,8 +144,21 @@ public class menu extends JFrame {
     
      private JPanel gui() {        
       
+        // \/ antigo \/
         this.menu_lateral = new MenuLateral();
         lista = this.menu_lateral.lista();
+        // /\ antigo /\
+        
+        executar_atras tras = new executar_atras(this.lista, this.painel_esquerdo);
+        Thread t = new Thread(tras);t.start();
+        
+//        lista.removeAll();
+//        lista = new MenuLateral().lista();
+         
+//         this.menu_lateral = new MenuLateral();
+//        executar_atras tras = new executar_atras(this);
+//        if(tras.lista != null) this.lista = tras.lista;
+         
         JScrollPane scroll = new JScrollPane(lista);
         scroll.setPreferredSize(new Dimension(300, 0));
         scroll.setMinimumSize(new Dimension(300, 0));
@@ -160,19 +174,18 @@ public class menu extends JFrame {
 
         
         //... Create GridBagLayout content pane; set border.
-        JPanel content = new JPanel(new GridBagLayout());
-        content.setBorder(BorderFactory.createEmptyBorder(BORDER, BORDER, BORDER, BORDER));
+        painel_esquerdo.setBorder(BorderFactory.createEmptyBorder(BORDER, BORDER, BORDER, BORDER));
         
         
         //... First row
-        content.add(scroll, pos.nextCol());
-        content.add(new Gap(GAP), pos.nextCol());
+        painel_esquerdo.add(scroll, pos.nextCol());
+        painel_esquerdo.add(new Gap(GAP), pos.nextCol());
         
 //        final JPanel pane = new JPanel();
         painel_direito.setBorder(BorderFactory.createTitledBorder(""));
 //        pane.add(pesquisa);
         
-        content.add(painel_direito, pos.nextCol().expandir());
+        painel_esquerdo.add(painel_direito, pos.nextCol().expandir());
         
         
         lista.addMouseListener(new MouseListener(){
@@ -253,7 +266,7 @@ public class menu extends JFrame {
              }
         });
         
-        return content;
+        return painel_esquerdo;
     }
 
      private boolean gerar_painel_formularios_cadastrados(int index)
