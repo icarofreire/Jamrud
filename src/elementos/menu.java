@@ -297,12 +297,11 @@ public class menu extends JFrame {
                                         aviso.mensagem_titulo_incorreto(titulos[i]);
                                     }                                
                                 }
-                                if( titulos_aceitos == titulos.length )
+                                if( (titulos_aceitos == titulos.length) )
                                 {
-                                    if ( 
-                                            banco.executar_query( SQL.montar_sql_criar_tabela(titulos, nome) )
-                                       )
-                                    {
+                                    if( titulos_aceitos > 0 ){
+                                        banco.executar_query( SQL.montar_sql_criar_tabela(titulos, nome) );
+                                    }
                                             JPanel painel_a_serializar = remover_bordas_vermelhas_e_botes_excluir();
                                             String painel_baixo_serializado = operacoes_painel.serializar_obj( painel_a_serializar );
 
@@ -314,7 +313,6 @@ public class menu extends JFrame {
                                             aviso.mensagem_sucesso("Formulário construído com sucesso!");
                                             dispose();
                                             operacoes_painel.atualizar_painel(painel_esquerdo);
-                                    }
                                 }
                             }else{
                                 aviso.mensagem_atencao("Existe titulos iguais em seu formulário,\n"

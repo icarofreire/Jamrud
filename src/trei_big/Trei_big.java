@@ -81,48 +81,15 @@ public class Trei_big {
 //        System.out.println( SQL.montar_sql_criar_tabela(new String[]{"nome","endereço","telefone","data","observações"}, "X_TESTE_Y") );
 //         System.out.println( SQL.sql_tabela_formulario );
         
-//        new popup( "exemplo", serializar.deserialize("formul-dad-teste.form") );
         
-//          banco.executar_query( "DROP TABLE DTJ646HSH");
-//          banco.executar_query( "DROP TABLE FASF_GOT_XLEP_UPLL" );
-//          banco.executar_query( "DROP TABLE JJDJJDF" );
-//          banco.executar_query( "DROP TABLE ICARO_FREIRE" );
-        
-//            banco.executar_query( "DROP TABLE D2" );
-//            banco.executar_query( "DROP TABLE D22" );
-//            banco.executar_query( "DROP TABLE GIL" );
-//            banco.executar_query( "DROP TABLE PLEBE" );
-//            banco.executar_query( "DROP TABLE SENHAS" );
-//            banco.executar_query( "DROP TABLE XIKE_XIKE" );
-//            banco.executar_query( "DROP TABLE YTRHDFHDF4564" );
-          
-//        banco.executar_query(SQL.sql_tabela_formulario);
-        
-//        String hash = operacoes.gerar_chave(70000);
-//        System.out.println( SQL.montar_sql_criar_tabela(new String[]{"nome", "teste"}, "WFPF") );
-        
-//        banco.inserir_hash_formulario_serializado("Y--teste-form2", hash);
-        
-//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 1102) );
-//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 1202) );
-//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 1302) );
-//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 1402) );
-//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 1502) );
-//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 1602) );
-//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 1702) );
-//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 1802) );
-//        
+//        banco.executar_query( "DROP TABLE BILLY" );
+//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 2202) );
+
+
 //        banco.exibir_tabela( SQL.nome_tabela_formulario.toUpperCase() );
 //        banco.exibir_tabelas();
         
-//        new popup( "exemplo", operacoes_painel.deserializar_obj(banco.obter_formulario("756-libry") ) );
-        
-//        String[] nome = new String[]{"ic","ffea","ffea","ick","IC"};
-//        if( operacoes.se_dados_duplicados(nome) ){
-//            System.out.println( "duplicados" );
-//        }else{
-//            System.out.println( "NÃO" );
-//        }
+
         
         
     }

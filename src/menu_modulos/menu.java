@@ -6,6 +6,7 @@
 package menu_modulos;
 
 import banco.*;
+import elementos.popup;
 import elementos.prefixos;
 import ferramenta_gui.*;
 import paineis.*;
@@ -21,6 +22,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.net.URL;
@@ -146,11 +149,10 @@ public class menu extends JFrame {
       
         // \/ antigo \/
         this.menu_lateral = new MenuLateral();
-        lista = this.menu_lateral.lista();
+        lista = this.menu_lateral.lista();            
         // /\ antigo /\
         
-        executar_atras tras = new executar_atras(this.lista, this.painel_esquerdo);
-        Thread t = new Thread(tras);t.start();
+        
         
 //        lista.removeAll();
 //        lista = new MenuLateral().lista();
@@ -231,6 +233,23 @@ public class menu extends JFrame {
                         painel_criar_formulario.add( new JLabel("Criar formulário") );
                         painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_criar_formulario, "scroll_painel_temas", pos);
                         Trei_big.menu_elementos();
+                        
+//                        executar_atras tras = new executar_atras(lista, painel_esquerdo);
+//                        Thread t = new Thread(tras);t.start();
+//
+//                        if(executar_atras.se_comecou){
+//                            lista.removeAll();
+//                            lista = new MenuLateral().lista();
+//                            new popup("teste", lista);
+//                        }
+//                        DefaultListModel model = new DefaultListModel();
+//                        model.addElement("one");
+//                        model.addElement("two");
+//                        lista.setModel(model);
+                        
+                        
+//                        operacoes_painel.atualizar_painel(painel_esquerdo);
+                        
                  }
                  else if( menu_lateral.se_chave(MenuLateral.historico, index) )
                  {
@@ -239,13 +258,14 @@ public class menu extends JFrame {
                  }
                  else if( gerar_painel_formularios_cadastrados(index) )
                  {
-                     
+                        /* Aqui são criados as GUI's dos formulários criados e registrados no banco. */
                  }
-//                     else{
-//                    JPanel painel_formulario = new JPanel();
-//                    painel_formulario.add( new JLabel("Sem formulário cadastrado.") );
-//                    painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_formulario, "scroll_painel_cadastrar", pos);
-//                 }
+                 else
+                 {
+                        JPanel painel_formulario = new JPanel();
+                        painel_formulario.add( new JLabel("Sem formulário cadastrado.") );
+                        painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_formulario, "scroll_painel_cadastrar", pos);
+                 }
                  
              }// fim mouseClicked(MouseEvent me);
 
@@ -279,7 +299,6 @@ public class menu extends JFrame {
                 if( !linha.lastElement().isEmpty() )
                 {
                     String nome_formulario = linha.get(1);
-//                    menu_lateral.exibir_mapa_menu();
                     
                     String token_procurar = "_";
                     String token_substituir = " ";
@@ -296,6 +315,7 @@ public class menu extends JFrame {
                         JPanel p_botao = (JPanel) operacoes_painel.pegar_componente_em_painel(painel_formulario, prefixos.prefixo_painel_interno_para_botao);
                         JButton btn_enviar = (JButton) operacoes_painel.pegar_componente_em_painel(p_botao, prefixos.prefixo_botao_enviar);
                         
+                        // \/\/ >> aqui o evento do click no botao ENVIAR em cada formulário; << \/\/
                         if( btn_enviar != null )
                         {
                             btn_enviar.addActionListener(new ActionListener(){
@@ -305,9 +325,49 @@ public class menu extends JFrame {
                                 }
                             });
                         }
+                        // /\/\ >> aqui o evento do click no botao ENVIAR em cada formulário; << /\/\
+                        
+
+                        // \/\/ >> aqui os eventos dos campos de data e hora; << \/\/
+                        JPanel p_campo_hora = (JPanel) operacoes_painel.pegar_componente_em_painel(painel_formulario, prefixos.prefixo_painel_criar_campo_hora);
+                        if( p_campo_hora != null )
+                        {  
+                            JPanel p_int = (JPanel) operacoes_painel.pegar_componente_em_painel(p_campo_hora, prefixos.prefixo_painel_interno);
+                            final JTextField hora = (JTextField) operacoes_painel.pegar_componente_em_painel(p_int, prefixos.prefixo_campo_hora);
+                            
+                            hora.addFocusListener(new FocusListener(){
+                                @Override
+                                public void focusGained(FocusEvent fe) {
+                                    hora.setCaretPosition(0);
+                                }
+
+                                @Override
+                                public void focusLost(FocusEvent fe) {
+                                }
+                            });
+                        }
+                        //***
+                        JPanel p_campo_data = (JPanel) operacoes_painel.pegar_componente_em_painel(painel_formulario, prefixos.prefixo_painel_criar_campo_data);
+                        if( p_campo_data != null )
+                        {  
+                            JPanel p_int = (JPanel) operacoes_painel.pegar_componente_em_painel(p_campo_data, prefixos.prefixo_painel_interno);
+                            final JTextField data = (JTextField) operacoes_painel.pegar_componente_em_painel(p_int, prefixos.prefixo_campo_data);
+                            
+                            data.addFocusListener(new FocusListener(){
+                                @Override
+                                public void focusGained(FocusEvent fe) {
+                                    data.setCaretPosition(0);
+                                }
+
+                                @Override
+                                public void focusLost(FocusEvent fe) {
+                                }
+                            });
+                        }
+                        // /\/\ >> aqui os eventos dos campos de data e hora; << /\/\
                                 
                         painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_formulario, "scroll_painel_cadastrar", pos);
-                        f = false;
+                        f = true;
                     }
                 }
             }
