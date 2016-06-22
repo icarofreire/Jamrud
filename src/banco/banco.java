@@ -8,6 +8,7 @@ package banco;
 import banco.*;
 import static banco.SQL.nome_tabela;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -102,6 +103,19 @@ public class banco {
         }
 
         return bCreatedTables;
+    }
+    
+    public static boolean se_tabela_existe(String nome_da_tabela)
+    {
+        boolean f = false;
+        try {
+            DatabaseMetaData dbm = conn.getMetaData();
+            ResultSet tables = dbm.getTables(null, null, nome_da_tabela.toUpperCase(), null);
+            if (tables.next()) {
+                f = true;
+            }
+        } catch (SQLException ex) { ex.printStackTrace(); }
+        return f;
     }
     
     public static boolean executar_query(String sql)

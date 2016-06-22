@@ -128,23 +128,6 @@ public class menu extends JFrame implements Runnable {
         super.setVisible(true);
     }
     
-    /* \/ inseriri dados na tabela de listagem e exibir a mesma; */
-    private JPanel inserir_dados_na_tabela(){
-        
-        ArrayList<Object[]> dados_da_tabela = new ArrayList<Object[]>();
-//        banco.conectar();
-        Vector<Vector<String>> linhas = banco.obter_dados_da_tabela(SQL.nome_tabela);
-        
-        String[] colunas = banco.nome_colunas_consulta.toArray(new String[]{});
-        banco.nome_colunas_consulta.clear();
-        
-        for (Vector<String> linha : linhas) {
-            dados_da_tabela.add( linha.toArray(new Object[]{}) );
-        }       
-                
-       return new exibir_listagem().obj("Lista de Clientes", colunas, dados_da_tabela);
-    }
-    
      private JPanel gui() {        
       
         this.menu_lateral = new MenuLateral();
@@ -199,7 +182,7 @@ public class menu extends JFrame implements Runnable {
                  }
                  else if( menu_lateral.se_chave(MenuLateral.pesquisar_editar, index) )
                  {                        
-                        JPanel pl = inserir_dados_na_tabela();
+                        JPanel pl = operacoes_painel.obter_dados_banco_em_painel_listagem(SQL.nome_tabela);
                         painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, pl, "scroll_pl", pos);
                  }
                  else if( menu_lateral.se_chave("Lixeira", index) )
@@ -232,6 +215,15 @@ public class menu extends JFrame implements Runnable {
                  else if( gerar_painel_formularios_cadastrados(index) )
                  {
                         /* Aqui são criados as GUI's dos formulários criados e registrados no banco. */
+                 }
+                 else if( menu_lateral.se_chave(titulo, index) )
+                 {
+                        titulo = titulo.substring(titulo.indexOf(":")+1).trim();
+                        if( banco.se_tabela_existe(titulo) )
+                        {
+                            JPanel pl = operacoes_painel.obter_dados_banco_em_painel_listagem(titulo);
+                            painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, pl, "scroll_pl", pos);
+                        }
                  }
                  else
                  {

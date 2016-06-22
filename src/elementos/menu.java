@@ -65,8 +65,7 @@ public class menu extends JFrame {
     
     private JTextField nome_formulario = new JTextField(20);
     private JTextField pesquisa = new JTextField(20);
-    private DefaultListModel dlm = new DefaultListModel();
-    private JList lista = new JList(dlm);
+    private JList lista = new JList();
     private JButton botao_exibir_listagem = new JButton();
     private JButton botao_exibir_listagem2 = new JButton();
     private JButton botao_criar_formulario = new JButton("Gerar Formulário", new ImageIcon("icones/construir-24.png"));
@@ -127,23 +126,6 @@ public class menu extends JFrame {
         super.setSize(new Dimension(largura, altura));
 //        super.setExtendedState(JFrame.MAXIMIZED_BOTH);// <= maximixar a janela ao iniciar;
         super.setVisible(true);
-    }
-    
-    /* \/ inseriri dados na tabela de listagem e exibir a mesma; */
-    private JPanel inserir_dados_na_tabela(){
-        
-        ArrayList<Object[]> dados_da_tabela = new ArrayList<Object[]>();
-//        banco.conectar();
-        Vector<Vector<String>> linhas = banco.obter_dados_da_tabela(SQL.nome_tabela);
-        
-        String[] colunas = banco.nome_colunas_consulta.toArray(new String[]{});
-        banco.nome_colunas_consulta.clear();
-        
-        for (Vector<String> linha : linhas) {
-            dados_da_tabela.add( linha.toArray(new Object[]{}) );
-        }       
-                
-       return new exibir_listagem().obj("Lista de Clientes", colunas, dados_da_tabela);
     }
     
      private JPanel gui() {
@@ -303,7 +285,7 @@ public class menu extends JFrame {
                                         /* \/\/ COMENTADO APENAS PARA FINS DE TESTE;
                                         PARA NÃO CRIAR TABELAS GERADAS PELOS TESTES. \/\/ */
                                         
-//                                        banco.executar_query( SQL.montar_sql_criar_tabela(titulos, nome) );
+                                        banco.executar_query( SQL.montar_sql_criar_tabela(titulos, nome) );
                                         
                                         /* /\/\ COMENTADO APENAS PARA FINS DE TESTE;
                                         PARA NÃO CRIAR TABELAS GERADAS PELOS TESTES. /\/\ */

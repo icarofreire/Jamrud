@@ -27,6 +27,7 @@ public class criar_campo_input {
     
     private static final int GAP = 5;   // Default gap btwn components.
     private String nome_botao_aplicar = "Adicionar ao formulário";
+    private final int tamanho_campo = 40;
     
     public JPanel input_text(final JPanel painel_baixo, final GBHelper pos_painel_baixo){
         
@@ -34,7 +35,7 @@ public class criar_campo_input {
         GBHelper pos = new GBHelper();
         
         JLabel lcmp1 = new JLabel("Titulo:");
-        final JTextField cmp1 = new JTextField(20);
+        final JTextField cmp1 = new JTextField(tamanho_campo);
         final JLabel titulo = new JLabel();
         
         JButton btn_aplicar = new JButton(nome_botao_aplicar, new ImageIcon("icones/add_formulario-24.png"));
@@ -56,10 +57,11 @@ public class criar_campo_input {
                 {
                     JLabel titulo = new JLabel();
                     titulo.setName( operacoes.gerar_name_para_componente(prefixos.prefixo_titulos_dos_componentes) );
-                    JTextField campo = new JTextField(20);
+                    JTextField campo = new JTextField(tamanho_campo);
                     titulo.setText(nome_titulo);
                     
-                    JPanel p_int = operacoes_painel.add_componente_em_painel(titulo, campo, 2);
+//                    JPanel p_int = operacoes_painel.add_componente_em_painel(titulo, campo, 2);
+                    JPanel p_int = operacoes_painel.add_componente_em_painel_flow_layout(titulo, campo);
                     operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(p_int, painel_baixo, pos_painel_baixo, prefixos.prefixo_painel_criar_campo_input);
                     cmp1.setText(null);
                 }else{

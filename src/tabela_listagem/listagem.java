@@ -121,7 +121,14 @@ public class listagem extends JPanel {
     }
     
     public void exibir_numero_registros() {
-        resultados.setText( model.getRowCount() + ": Registro(s)." );
+        int n = model.getRowCount();
+        if( n > 1 ){
+            resultados.setText( model.getRowCount() + ": Registros." );
+        }else if( n == 1 ){
+            resultados.setText( "1: Registro." );
+        }else{
+            resultados.setText( "Nenhum registro." );
+        }
     }
 
     private Component TableExample()

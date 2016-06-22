@@ -5,6 +5,8 @@
  */
 package trei_big;
 
+import banco.SQL;
+import banco.banco;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import elementos.prefixos;
 import ferramenta_gui.GBHelper;
@@ -12,12 +14,14 @@ import ferramenta_gui.Gap;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -30,6 +34,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import tabela_listagem.exibir_listagem;
 
 /**
  *
@@ -217,6 +222,33 @@ public class operacoes_painel {
         return p_group;
     }
     
+    public static JPanel add_componente_em_painel_flow_layout(JComponent comp1, JComponent comp2) {
+        
+        JPanel painel = new JPanel();
+        painel.setName( operacoes.gerar_name_para_componente(prefixos.prefixo_painel_interno) );
+        painel.add(comp1);
+        painel.add(comp2);
+        
+        return painel;
+    }
+    
+    public static JPanel add_componente_em_painel_grid_layout(JComponent comp1, JComponent comp2) {
+        
+        JPanel painel_externo = new JPanel();
+        JPanel painel = new JPanel();
+        painel.setLayout(new GridLayout(1, 2));
+        
+        painel_externo.setName( operacoes.gerar_name_para_componente(prefixos.prefixo_painel_externo) );
+        painel.setName( operacoes.gerar_name_para_componente(prefixos.prefixo_painel_interno) );
+        
+        painel.add(comp1);
+        painel.add(comp2);
+        
+        painel_externo.add(painel);
+        
+        return painel_externo;
+    }
+    
     public static void add_botao_excluir_painel(final JPanel painel_baixo, final GBHelper pos_painel_baixo, final JPanel painel_criado, final JButton btn_excluir_painel, final String prefixo_painel, final String prefixo_btn_excluir_painel)
     {
         final String name_painel = operacoes.gerar_name_para_componente(prefixo_painel);
@@ -280,6 +312,24 @@ public class operacoes_painel {
         painel_baixo.add( painel_criar_titulo, pos_painel_baixo.nextRow().expandW() );
         operacoes_painel.add_botao_excluir_painel(painel_baixo, pos_painel_baixo, painel_criar_titulo, btn_excluir_painel, prefixo_painel, prefixos.prefixo_btn_excluir_painel);
         operacoes_painel.atualizar_painel(painel_baixo);
+    }
+    
+    /* insere o nome da tabela, e retorna o painel da tabela de listagem, com todos os dados do banco
+    inseridos na tabela do painel;
+    */
+    public static JPanel obter_dados_banco_em_painel_listagem(final String nome_da_tabela){
+        
+        ArrayList<Object[]> dados_da_tabela = new ArrayList<Object[]>();
+        Vector<Vector<String>> linhas = banco.obter_dados_da_tabela(nome_da_tabela);
+        
+        String[] colunas = banco.nome_colunas_consulta.toArray(new String[]{});
+        banco.nome_colunas_consulta.clear();
+        
+        for (Vector<String> linha : linhas) {
+            dados_da_tabela.add( linha.toArray(new Object[]{}) );
+        }       
+                
+       return new exibir_listagem().obj("", colunas, dados_da_tabela);
     }
         
 }

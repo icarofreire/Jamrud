@@ -8,8 +8,12 @@ package trei_big;
 import banco.SQL;
 import banco.banco;
 import elementos.popup;
+import java.awt.GridLayout;
 import java.io.IOException;
 import java.util.Vector;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import menu_modulos.*;
@@ -92,7 +96,25 @@ public class Trei_big {
 //        banco.exibir_tabela( SQL.nome_tabela_formulario.toUpperCase() );
 //        banco.exibir_tabelas();
         
-
+        JPanel painel_externo = new JPanel();
+        JPanel painel = new JPanel();
+        painel.setLayout(new GridLayout(0, 2));
+        
+        painel.add(new JLabel("Button 1"));
+        painel.add(new JTextField(20));
+        
+        painel.add(new JLabel("Button 1asfas"));
+        painel.add(new JTextField(20));
+        
+        painel.add(new JLabel("Bla fuasfn fsnf frfiuasfn fwaurfr:"));
+        painel.add(new JLabel(""));
+        
+        painel.add(new JLabel("Button 1frf fasduyf fasgfg"));
+        painel.add(new JTextField(20));
+        
+        painel_externo.add(painel);
+        new popup("teste", painel_externo);
+        
         
         
     }
