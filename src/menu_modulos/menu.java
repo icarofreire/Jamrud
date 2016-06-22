@@ -47,6 +47,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ListModel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import tabela_listagem.exibir_listagem;
@@ -56,7 +57,7 @@ import tabela_listagem.exibir_listagem;
  *
  * @author icaro
  */
-public class menu extends JFrame {
+public class menu extends JFrame implements Runnable {
     
     private MenuLateral menu_lateral;
     private GBHelper pos = new GBHelper();
@@ -232,7 +233,8 @@ public class menu extends JFrame {
                         JPanel painel_criar_formulario = new JPanel();
                         painel_criar_formulario.add( new JLabel("Criar formulário") );
                         painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_criar_formulario, "scroll_painel_temas", pos);
-                        Trei_big.menu_elementos();
+//                        Trei_big.menu_elementos();
+                        elementos.menu m = new elementos.menu("Criar um formulário");
                         
 //                        executar_atras tras = new executar_atras(lista, painel_esquerdo);
 //                        Thread t = new Thread(tras);t.start();
@@ -374,6 +376,30 @@ public class menu extends JFrame {
         }
         return f;
      }
+
+    @Override
+    public void run() {
+        while(true)
+        {
+            try {
+                    Thread.sleep(1000 * 2);
+                    System.out.println("executando tras...");
+                    menu_modulos.MenuLateral mm = new menu_modulos.MenuLateral();
+                    
+                    JList nl = mm.lista();
+                    ListModel lm = nl.getModel();
+                    if( lm.getSize() > this.lista.getModel().getSize() ){
+                        this.lista.removeAll();
+                        this.lista.setModel( lm );
+                        menu_lateral = mm;
+//                        new popup("teste", nl);
+                    }
+                        operacoes_painel.atualizar_painel(painel_esquerdo);
+            } catch (InterruptedException ex) {
+                   break;
+                }
+        }
+    }
     
 }
 

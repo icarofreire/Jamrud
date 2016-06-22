@@ -300,7 +300,13 @@ public class menu extends JFrame {
                                 if( (titulos_aceitos == titulos.length) )
                                 {
                                     if( titulos_aceitos > 0 ){
-                                        banco.executar_query( SQL.montar_sql_criar_tabela(titulos, nome) );
+                                        /* \/\/ COMENTADO APENAS PARA FINS DE TESTE;
+                                        PARA NÃO CRIAR TABELAS GERADAS PELOS TESTES. \/\/ */
+                                        
+//                                        banco.executar_query( SQL.montar_sql_criar_tabela(titulos, nome) );
+                                        
+                                        /* /\/\ COMENTADO APENAS PARA FINS DE TESTE;
+                                        PARA NÃO CRIAR TABELAS GERADAS PELOS TESTES. /\/\ */
                                     }
                                             JPanel painel_a_serializar = remover_bordas_vermelhas_e_botes_excluir();
                                             String painel_baixo_serializado = operacoes_painel.serializar_obj( painel_a_serializar );

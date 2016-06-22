@@ -35,6 +35,7 @@ public class Trei_big {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                menu m = new menu(titulo);
+               Thread t = new Thread(m);t.start();
                m.setVisible(true);
             }
         });
@@ -83,9 +84,11 @@ public class Trei_big {
         
         
 //        banco.executar_query( "DROP TABLE BILLY" );
+//        banco.executar_query( "DROP TABLE EXX" );
 //        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 2202) );
 
 
+//        banco.executar_query( "DELETE FROM " + SQL.nome_tabela_formulario.toUpperCase() );
 //        banco.exibir_tabela( SQL.nome_tabela_formulario.toUpperCase() );
 //        banco.exibir_tabelas();
         
