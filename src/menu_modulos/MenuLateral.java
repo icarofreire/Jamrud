@@ -142,4 +142,9 @@ public class MenuLateral {
         System.out.println("----------=========----------");
     }
 
+    public Map<String, ImageIcon> getMap() {
+        return map;
+    }
+
+
 }

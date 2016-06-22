@@ -63,10 +63,9 @@ public class menu extends JFrame implements Runnable {
     private GBHelper pos = new GBHelper();
     private static final int BORDER = 12;  // Window border in pixels.
     private static final int GAP = 5;   // Default gap btwn components.
-    
+    private final int um_segundo = 1000;
     private JTextField pesquisa = new JTextField(20);
-    private DefaultListModel dlm = new DefaultListModel();
-    public JList lista = new JList(dlm);
+    public JList lista = new JList();
     private JButton botao_exibir_listagem = new JButton();
     private JButton botao_exibir_listagem2 = new JButton();
     private JMenu menu = new JMenu("Arquivo");
@@ -148,19 +147,9 @@ public class menu extends JFrame implements Runnable {
     
      private JPanel gui() {        
       
-        // \/ antigo \/
         this.menu_lateral = new MenuLateral();
         lista = this.menu_lateral.lista();            
-        // /\ antigo /\
         
-        
-        
-//        lista.removeAll();
-//        lista = new MenuLateral().lista();
-         
-//         this.menu_lateral = new MenuLateral();
-//        executar_atras tras = new executar_atras(this);
-//        if(tras.lista != null) this.lista = tras.lista;
          
         JScrollPane scroll = new JScrollPane(lista);
         scroll.setPreferredSize(new Dimension(300, 0));
@@ -233,25 +222,7 @@ public class menu extends JFrame implements Runnable {
                         JPanel painel_criar_formulario = new JPanel();
                         painel_criar_formulario.add( new JLabel("Criar formulário") );
                         painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_criar_formulario, "scroll_painel_temas", pos);
-//                        Trei_big.menu_elementos();
-                        elementos.menu m = new elementos.menu("Criar um formulário");
-                        
-//                        executar_atras tras = new executar_atras(lista, painel_esquerdo);
-//                        Thread t = new Thread(tras);t.start();
-//
-//                        if(executar_atras.se_comecou){
-//                            lista.removeAll();
-//                            lista = new MenuLateral().lista();
-//                            new popup("teste", lista);
-//                        }
-//                        DefaultListModel model = new DefaultListModel();
-//                        model.addElement("one");
-//                        model.addElement("two");
-//                        lista.setModel(model);
-                        
-                        
-//                        operacoes_painel.atualizar_painel(painel_esquerdo);
-                        
+                        elementos.menu m = new elementos.menu("Criar um formulário");                        
                  }
                  else if( menu_lateral.se_chave(MenuLateral.historico, index) )
                  {
@@ -382,22 +353,21 @@ public class menu extends JFrame implements Runnable {
         while(true)
         {
             try {
-                    Thread.sleep(1000 * 2);
-                    System.out.println("executando tras...");
+                    Thread.sleep(um_segundo * 2);
                     menu_modulos.MenuLateral mm = new menu_modulos.MenuLateral();
                     
                     JList nl = mm.lista();
                     ListModel lm = nl.getModel();
-                    if( lm.getSize() > this.lista.getModel().getSize() ){
-                        this.lista.removeAll();
-                        this.lista.setModel( lm );
+                    if( lm.getSize() > this.lista.getModel().getSize() )
+                    {
+                        lista.setModel( lm );
+                        lista.setCellRenderer(new MenuLateralRenderer_2(mm.getMap()));
+                        lista = nl;
                         menu_lateral = mm;
-//                        new popup("teste", nl);
                     }
-                        operacoes_painel.atualizar_painel(painel_esquerdo);
             } catch (InterruptedException ex) {
                    break;
-                }
+            }
         }
     }
     
