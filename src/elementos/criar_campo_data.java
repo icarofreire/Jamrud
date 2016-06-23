@@ -27,7 +27,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
-import lib.criar_layout_grid;
 import trei_big.aviso;
 import trei_big.operacoes;
 import trei_big.operacoes_painel;
@@ -71,9 +70,7 @@ public class criar_campo_data {
                     JLabel titulo = new JLabel();
                     titulo.setName( operacoes.gerar_name_para_componente(prefixos.prefixo_titulos_dos_componentes) );
                     final JFormattedTextField campo_data = new JFormattedTextField();
-                    campo_data.setPreferredSize( new Dimension( 200, 40 ) );
                     campo_data.setName( operacoes.gerar_name_para_componente(prefixos.prefixo_campo_data) );
-//                    titulo.setHorizontalAlignment(JLabel.LEFT);
                     
                     try {
                         MaskFormatter dateMask = new MaskFormatter("##/##/####");
@@ -96,25 +93,7 @@ public class criar_campo_data {
                     
                     titulo.setText(nome_titulo);
                     
-//                    JPanel p_int = operacoes_painel.add_componente_em_painel(titulo, campo_data, 2);
-//                    titulo.setText(titulo.getText()+"  ");
-//                    criar_layout_grid.painel_grid.add(new JLabel(titulo.getText()));
-//                    criar_layout_grid.painel_grid.add(new JFormattedTextField());
-                    
-                    JFormattedTextField n_cmp_form = new JFormattedTextField();
-                    try {
-                        MaskFormatter dateMask = new MaskFormatter("##/##/####");
-                        dateMask.install(n_cmp_form);
-                    } catch (ParseException ex) {
-                        Logger.getLogger(criar_campo_data.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    
-                    criar_layout_grid.painel_grid.add(new JLabel(titulo.getText()), criar_layout_grid.pos.nextRow().expandW());
-                    criar_layout_grid.painel_grid.add(n_cmp_form, criar_layout_grid.pos.nextRow().expandW());
-                    criar_layout_grid.painel_grid.add(new Gap(GAP), criar_layout_grid.pos.nextRow());
-                    
-                    JPanel p_int = operacoes_painel.add_componente_em_painel_grid_layout_vertical(titulo, campo_data);
-                    
+                    JPanel p_int = operacoes_painel.add_componente_em_painel(titulo, campo_data, 1);
                     
                     operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(p_int, painel_baixo, pos_painel_baixo, prefixos.prefixo_painel_criar_campo_data);
                     cmp1.setText(null);

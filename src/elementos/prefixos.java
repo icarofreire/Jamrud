@@ -37,6 +37,7 @@ public class prefixos {
     public static String prefixo_titulos_dos_componentes = "pfx_titulos_componentes";
     public static String prefixo_painel_interno = "pfx_painel_interno";
     public static String prefixo_painel_externo = "pfx_painel_externo";
+    public static String prefixo_painel_centralizar = "pfx_painel_centralizar";
     public static String prefixo_painel_interno_para_botao = "pfx_painel_interno_para_botao";
     public static String prefixo_botao_enviar = "pfx_botao_enviar";
     

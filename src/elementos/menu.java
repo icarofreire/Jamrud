@@ -48,7 +48,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
-import lib.criar_layout_grid;
 import tabela_listagem.exibir_listagem;
 
 
@@ -294,23 +293,18 @@ public class menu extends JFrame {
                                         /* /\/\ COMENTADO APENAS PARA FINS DE TESTE;
                                         PARA NÃO CRIAR TABELAS GERADAS PELOS TESTES. /\/\ */
                                     }
-//                                            JPanel painel_a_serializar = remover_bordas_vermelhas_e_botes_excluir();
-//                                            String painel_baixo_serializado = operacoes_painel.serializar_obj( painel_a_serializar );
-//
-//                                            banco.inserir_hash_formulario_serializado(nome, painel_baixo_serializado);
-//
-//                                            painel_baixo.removeAll();
-//                                            painel_baixo.setBorder(BorderFactory.createTitledBorder("Formulário gerado"));
-//                                            operacoes_painel.atualizar_painel(painel_baixo);
-//                                            aviso.mensagem_sucesso("Formulário construído com sucesso!");
-//                                            dispose();
-//                                            operacoes_painel.atualizar_painel(painel_esquerdo);
+                                            JPanel painel_a_serializar = remover_bordas_vermelhas_e_botes_excluir();
+                                            String painel_baixo_serializado = operacoes_painel.serializar_obj( painel_a_serializar );
+
+                                            banco.inserir_hash_formulario_serializado(nome, painel_baixo_serializado);
+
+                                            painel_baixo.removeAll();
+                                            painel_baixo.setBorder(BorderFactory.createTitledBorder("Formulário gerado"));
+                                            operacoes_painel.atualizar_painel(painel_baixo);
+                                            aviso.mensagem_sucesso("Formulário construído com sucesso!");
+                                            dispose();
+                                            operacoes_painel.atualizar_painel(painel_esquerdo);
                                     
-//                                    JPanel painel_grid_ = new JPanel();
-                                    operacoes_painel.exibir_names_em_painel( painel_baixo );
-                                    Vector<Component> v = operacoes.pegar_componentes_por_prefixo(painel_baixo, prefixos.prefixo_painel_opcoes);
-//                                    painel_grid_.add( pc.grid.getPainel() );
-                                    new popup("teste v", v.get(0) );
                                 }
                             }else{
                                 aviso.mensagem_atencao("Existe titulos iguais em seu formulário,\n"

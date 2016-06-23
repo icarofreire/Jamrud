@@ -30,7 +30,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import lib.criar_layout_grid;
 import trei_big.aviso;
 import trei_big.operacoes;
 import trei_big.operacoes_painel;
@@ -58,16 +57,14 @@ public class criar_grupos_opcoes {
     private JTextField campo_para_titulo_componente = new JTextField(tamanho_campo);
     
     private int tipo_componente;
-    private criar_layout_grid grid;
 
     /*
         tipo_componente = 1 => JRadioButton;
         tipo_componente = 2 => JCheckBox;
         tipo_componente = 3 => JTextField;
     */
-    public criar_grupos_opcoes(int tipo_componente, criar_layout_grid grid) {
+    public criar_grupos_opcoes(int tipo_componente) {
         this.tipo_componente = tipo_componente;
-        this.grid = grid;
     }
     
     

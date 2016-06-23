@@ -7,7 +7,6 @@ package trei_big;
 
 import banco.SQL;
 import banco.banco;
-import lib.criar_layout_grid;
 import elementos.popup;
 import java.awt.GridLayout;
 import java.io.IOException;
@@ -69,8 +68,8 @@ public class Trei_big {
      */
     public static void main(String[] args) throws IOException, ClassNotFoundException {
           
-//        menu();
-        menu_elementos();
+        menu();
+//        menu_elementos();
 //        new painel_definir_local_salvar();
 //        new sobre();  
         

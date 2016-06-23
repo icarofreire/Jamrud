@@ -37,7 +37,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import lib.criar_layout_grid;
 import tabela_listagem.exibir_listagem;
 
 /**
@@ -226,79 +225,6 @@ public class operacoes_painel {
         return p_group;
     }
     
-    public static JPanel add_componente_em_painel_flow_layout(JComponent comp1, JComponent comp2) {
-        
-        JPanel painel = new JPanel();
-        painel.setName( operacoes.gerar_name_para_componente(prefixos.prefixo_painel_interno) );
-        painel.add(comp1);
-        painel.add(comp2);
-        
-        return painel;
-    }
-    
-    public static JPanel add_componente_em_painel_grid_layout(JComponent comp1, JComponent comp2) {
-        
-        JPanel painel_externo = new JPanel();
-        JPanel painel = new JPanel();
-        painel.setLayout(new GridLayout(1, 2));
-        
-        painel_externo.setName( operacoes.gerar_name_para_componente(prefixos.prefixo_painel_externo) );
-        painel.setName( operacoes.gerar_name_para_componente(prefixos.prefixo_painel_interno) );
-        
-        painel.add(comp1);
-        painel.add(comp2);
-        
-        painel_externo.add(painel);
-        
-        return painel_externo;
-    }
-    
-    public static JPanel add_componente_em_painel_grid_layout_vertical(JComponent comp1, JComponent comp2) {
-        
-        JPanel painel_externo = new JPanel();
-        JPanel painel = new JPanel();
-        painel.setLayout(new GridLayout(2, 1));
-        
-        painel_externo.setName( operacoes.gerar_name_para_componente(prefixos.prefixo_painel_externo) );
-        painel.setName( operacoes.gerar_name_para_componente(prefixos.prefixo_painel_interno) );
-        
-        painel.add(comp1);
-        painel.add(comp2);
-        
-        painel_externo.add(painel);
-        
-        return painel_externo;
-    }
-    
-    public static JPanel add_componente_em_painel_box_X_layout(JComponent comp1, JComponent comp2) {
-        
-        JPanel painel = new JPanel();
-        painel.setName( operacoes.gerar_name_para_componente(prefixos.prefixo_painel_interno) );
-        
-        painel.setLayout(new BoxLayout(painel, BoxLayout.X_AXIS));
-        painel.add(comp1);
-        painel.add(Box.createRigidArea(new Dimension(10,10)));
-        painel.add(comp2);
-        
-        return painel;
-    }
-    
-    public static JPanel add_componente_em_painel_box_Y_layout(JComponent comp1, JComponent comp2) {
-        
-        JPanel painel = new JPanel();
-        painel.setName( operacoes.gerar_name_para_componente(prefixos.prefixo_painel_interno) );
-        
-        comp1.setAlignmentX(Component.LEFT_ALIGNMENT);
-        comp2.setAlignmentX(Component.LEFT_ALIGNMENT);
-        
-        painel.setLayout(new BoxLayout(painel, BoxLayout.Y_AXIS));
-        painel.add(comp1);
-        painel.add(Box.createRigidArea(new Dimension(10,10)));
-        painel.add(comp2);
-        
-        return painel;
-    }
-    
     public static void add_botao_excluir_painel(final JPanel painel_baixo, final GBHelper pos_painel_baixo, final JPanel painel_criado, final JButton btn_excluir_painel, final String prefixo_painel, final String prefixo_btn_excluir_painel)
     {
         final String name_painel = operacoes.gerar_name_para_componente(prefixo_painel);
@@ -355,21 +281,13 @@ public class operacoes_painel {
         
         JLabel label_titulo_componente = new JLabel(titulo_para_componente);
         label_titulo_componente.setName( operacoes.gerar_name_para_componente(prefixos.prefixo_titulos_dos_componentes) );
+                
+        JPanel painel_criar_titulo = operacoes_painel.add_componente_em_painel( label_titulo_componente, componente, 1 );
         
+        painel_criar_titulo.setBorder(BorderFactory.createLineBorder(Color.RED));
         
-//        JPanel painel_criar_titulo = operacoes_painel.add_componente_em_painel( label_titulo_componente, componente, 1 );
-        JPanel painel_criar_titulo1 = operacoes_painel.add_componente_em_painel_grid_layout( label_titulo_componente, new JLabel("") );
-        JPanel painel_criar_titulo2 = operacoes_painel.add_componente_em_painel_grid_layout( new JLabel(""), componente );
-        
-        JPanel painel_externo = new JPanel();
-        painel_externo.setLayout(new GridLayout(2, 1));
-        painel_externo.add(painel_criar_titulo1);
-        painel_externo.add(painel_criar_titulo2);
-        
-        painel_externo.setBorder(BorderFactory.createLineBorder(Color.RED));
-        
-        painel_baixo.add( painel_externo/*painel_criar_titulo*/, pos_painel_baixo.nextRow().expandW() );
-        operacoes_painel.add_botao_excluir_painel(painel_baixo, pos_painel_baixo, painel_externo/*painel_criar_titulo*/, btn_excluir_painel, prefixo_painel, prefixos.prefixo_btn_excluir_painel);
+        painel_baixo.add( painel_criar_titulo, pos_painel_baixo.nextRow().expandW() );
+        operacoes_painel.add_botao_excluir_painel(painel_baixo, pos_painel_baixo, painel_criar_titulo, btn_excluir_painel, prefixo_painel, prefixos.prefixo_btn_excluir_painel);
         operacoes_painel.atualizar_painel(painel_baixo);
     }
     

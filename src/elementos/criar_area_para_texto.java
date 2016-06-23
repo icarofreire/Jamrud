@@ -22,7 +22,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import lib.criar_layout_grid;
 import trei_big.aviso;
 import trei_big.operacoes;
 import trei_big.operacoes_painel;
@@ -69,36 +68,8 @@ public class criar_area_para_texto {
                     campo_valor_add.setRows(5);
                     final JScrollPane scroll_campo_valor_add = new JScrollPane();
                     scroll_campo_valor_add.setViewportView(campo_valor_add);
-
-//                    JPanel p_int = operacoes_painel.add_componente_em_painel(titulo, scroll_campo_valor_add, 1);
                     
-                    scroll_campo_valor_add.setPreferredSize(new Dimension(500,150));
-//                    JPanel painel_criar_titulo1 = operacoes_painel.add_componente_em_painel_grid_layout( titulo, new JLabel("") );
-//                    JPanel painel_criar_titulo2 = operacoes_painel.add_componente_em_painel_grid_layout( new JLabel(""), scroll_campo_valor_add );
-
-        
-//        JPanel painel_externo = new JPanel();
-//        painel_externo.setLayout(new BoxLayout(painel_externo, BoxLayout.Y_AXIS));
-//        painel_externo.add(painel_criar_titulo1);
-//        painel_externo.add(painel_criar_titulo2);
-                    
-                    JTextArea area_texto = new JTextArea();
-                    area_texto.setColumns(20);
-                    area_texto.setRows(5);
-                    JScrollPane scroll_area_texto = new JScrollPane();
-                    scroll_area_texto.setViewportView(area_texto);
-//                    JPanel painel_scroll_area_texto = new JPanel();
-//                    painel_scroll_area_texto.add(scroll_area_texto);
-//                    JPanel painel_scroll_area_texto = operacoes_painel.add_componente_em_painel_box_Y_layout(new JLabel(titulo.getText()), scroll_area_texto);
-                    
-//                    criar_layout_grid.painel_grid.add(new JLabel(titulo.getText()));
-//                    criar_layout_grid.painel_grid.add(painel_scroll_area_texto);
-                    
-                    criar_layout_grid.painel_grid.add(new JLabel(titulo.getText()), criar_layout_grid.pos.nextRow().expandW());
-                    criar_layout_grid.painel_grid.add(scroll_area_texto, criar_layout_grid.pos.nextRow().expandW());
-                    criar_layout_grid.painel_grid.add(new Gap(GAP), criar_layout_grid.pos.nextRow());
-                    
-                    JPanel p_int = operacoes_painel.add_componente_em_painel_box_Y_layout(titulo, scroll_campo_valor_add);
+                    JPanel p_int = operacoes_painel.add_componente_em_painel(titulo, scroll_campo_valor_add, 1);
 
                     operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(p_int, painel_baixo, pos_painel_baixo, prefixos.prefixo_painel_area_para_texto);
                     cmp1.setText(null);
