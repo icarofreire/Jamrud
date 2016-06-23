@@ -8,10 +8,13 @@ package elementos;
 import ferramenta_gui.GBHelper;
 import ferramenta_gui.Gap;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -19,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import lib.criar_layout_grid;
 import trei_big.aviso;
 import trei_big.operacoes;
 import trei_big.operacoes_painel;
@@ -31,6 +35,7 @@ public class criar_area_para_texto {
     
     private static final int GAP = 5;   // Default gap btwn components.
     private String nome_botao_aplicar = "Adicionar ao formulário";
+    private final int tamanho_campo = 40;
     
     public JPanel area_para_texto(final JPanel painel_baixo, final GBHelper pos_painel_baixo){
         
@@ -38,7 +43,7 @@ public class criar_area_para_texto {
         GBHelper pos = new GBHelper();
         
         JLabel lcmp1 = new JLabel("Titulo:");
-        final JTextField cmp1 = new JTextField(20);
+        final JTextField cmp1 = new JTextField(tamanho_campo);
         JButton btn_aplicar = new JButton(nome_botao_aplicar, new ImageIcon("icones/add_formulario-24.png"));
         
         JPanel painel_interno_titulo = new JPanel();
@@ -65,7 +70,35 @@ public class criar_area_para_texto {
                     final JScrollPane scroll_campo_valor_add = new JScrollPane();
                     scroll_campo_valor_add.setViewportView(campo_valor_add);
 
-                    JPanel p_int = operacoes_painel.add_componente_em_painel(titulo, scroll_campo_valor_add, 1);
+//                    JPanel p_int = operacoes_painel.add_componente_em_painel(titulo, scroll_campo_valor_add, 1);
+                    
+                    scroll_campo_valor_add.setPreferredSize(new Dimension(500,150));
+//                    JPanel painel_criar_titulo1 = operacoes_painel.add_componente_em_painel_grid_layout( titulo, new JLabel("") );
+//                    JPanel painel_criar_titulo2 = operacoes_painel.add_componente_em_painel_grid_layout( new JLabel(""), scroll_campo_valor_add );
+
+        
+//        JPanel painel_externo = new JPanel();
+//        painel_externo.setLayout(new BoxLayout(painel_externo, BoxLayout.Y_AXIS));
+//        painel_externo.add(painel_criar_titulo1);
+//        painel_externo.add(painel_criar_titulo2);
+                    
+                    JTextArea area_texto = new JTextArea();
+                    area_texto.setColumns(20);
+                    area_texto.setRows(5);
+                    JScrollPane scroll_area_texto = new JScrollPane();
+                    scroll_area_texto.setViewportView(area_texto);
+//                    JPanel painel_scroll_area_texto = new JPanel();
+//                    painel_scroll_area_texto.add(scroll_area_texto);
+//                    JPanel painel_scroll_area_texto = operacoes_painel.add_componente_em_painel_box_Y_layout(new JLabel(titulo.getText()), scroll_area_texto);
+                    
+//                    criar_layout_grid.painel_grid.add(new JLabel(titulo.getText()));
+//                    criar_layout_grid.painel_grid.add(painel_scroll_area_texto);
+                    
+                    criar_layout_grid.painel_grid.add(new JLabel(titulo.getText()), criar_layout_grid.pos.nextRow().expandW());
+                    criar_layout_grid.painel_grid.add(scroll_area_texto, criar_layout_grid.pos.nextRow().expandW());
+                    criar_layout_grid.painel_grid.add(new Gap(GAP), criar_layout_grid.pos.nextRow());
+                    
+                    JPanel p_int = operacoes_painel.add_componente_em_painel_box_Y_layout(titulo, scroll_campo_valor_add);
 
                     operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(p_int, painel_baixo, pos_painel_baixo, prefixos.prefixo_painel_area_para_texto);
                     cmp1.setText(null);

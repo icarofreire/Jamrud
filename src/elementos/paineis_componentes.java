@@ -33,6 +33,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import lib.criar_layout_grid;
 import trei_big.operacoes_painel;
 
 /**
@@ -43,6 +44,8 @@ public class paineis_componentes {
     
     private static final int GAP = 5;   // Default gap btwn components.
     private String nome_botao_aplicar = "Adicionar ao formulário";
+    
+    public criar_layout_grid grid = new criar_layout_grid();
     
     public JPanel input_text(final JPanel painel_baixo, final GBHelper pos_painel_baixo){
         
@@ -102,17 +105,17 @@ public class paineis_componentes {
     
     public JPanel grupo_opcoes_radio(JPanel painel_baixo, GBHelper pos_painel_baixo){
 
-        JPanel painel = new criar_grupos_opcoes(1).grupo_botoes(painel_baixo, pos_painel_baixo);
+        JPanel painel = new criar_grupos_opcoes(1,grid).grupo_botoes(painel_baixo, pos_painel_baixo);
         return painel;
     }
     
     public JPanel grupo_opcoes_checkbox(JPanel painel_baixo, GBHelper pos_painel_baixo){
-        JPanel painel = new criar_grupos_opcoes(2).grupo_botoes(painel_baixo, pos_painel_baixo);
+        JPanel painel = new criar_grupos_opcoes(2,grid).grupo_botoes(painel_baixo, pos_painel_baixo);
         return painel;
     }
     
     public JPanel lista_select(final JPanel painel_baixo, final GBHelper pos_painel_baixo){
-        JPanel painel = new criar_grupos_opcoes(3).grupo_botoes(painel_baixo, pos_painel_baixo);
+        JPanel painel = new criar_grupos_opcoes(3,grid).grupo_botoes(painel_baixo, pos_painel_baixo);
         return painel;
     }
     

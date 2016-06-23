@@ -29,6 +29,7 @@ public class criar_titulo {
     
     private static final int GAP = 5;   // Default gap btwn components.
     private String nome_botao_aplicar = "Adicionar ao formulário";
+    private final int tamanho_campo = 40;
     
     public JPanel um_titulo(final JPanel painel_baixo, final GBHelper pos_painel_baixo){
         
@@ -36,7 +37,7 @@ public class criar_titulo {
         GBHelper pos = new GBHelper();
         
         JLabel lcmp1 = new JLabel("Titulo:");
-        final JTextField cmp1 = new JTextField(20);
+        final JTextField cmp1 = new JTextField(tamanho_campo);
         
         JButton btn_aplicar = new JButton(nome_botao_aplicar, new ImageIcon("icones/add_formulario-24.png"));
         final Font font = new Font("helvitica", Font.BOLD, 24);

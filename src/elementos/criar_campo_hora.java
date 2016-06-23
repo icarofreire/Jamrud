@@ -7,6 +7,7 @@ package elementos;
 
 import ferramenta_gui.GBHelper;
 import ferramenta_gui.Gap;
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +25,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
+import lib.criar_layout_grid;
 import trei_big.aviso;
 import trei_big.operacoes;
 import trei_big.operacoes_painel;
@@ -36,6 +38,7 @@ public class criar_campo_hora {
     
     private static final int GAP = 5;   // Default gap btwn components.
     private String nome_botao_aplicar = "Adicionar ao formulário";
+    private final int tamanho_campo = 40;
     
     public JPanel input_hora(final JPanel painel_baixo, final GBHelper pos_painel_baixo){
         
@@ -43,7 +46,7 @@ public class criar_campo_hora {
         GBHelper pos = new GBHelper();
         
         JLabel lcmp1 = new JLabel("Titulo:");
-        final JTextField cmp1 = new JTextField(20);
+        final JTextField cmp1 = new JTextField(tamanho_campo);
         final JLabel titulo = new JLabel();
         
         JButton btn_aplicar = new JButton(nome_botao_aplicar, new ImageIcon("icones/add_formulario-24.png"));
@@ -66,8 +69,11 @@ public class criar_campo_hora {
                     JLabel titulo = new JLabel();
                     titulo.setName( operacoes.gerar_name_para_componente(prefixos.prefixo_titulos_dos_componentes) );
                     final JFormattedTextField campo_data = new JFormattedTextField();
+                    campo_data.setPreferredSize( new Dimension( 200, 40 ) );
                     campo_data.setName( operacoes.gerar_name_para_componente(prefixos.prefixo_campo_hora) );
- 
+//                    titulo.setHorizontalAlignment(JLabel.LEFT);
+//                    campo_data.setAlignmentX(JFormattedTextField.LEFT);
+                    
                     try {
                         MaskFormatter dateMask = new MaskFormatter("##:##");
                         dateMask.install(campo_data);
@@ -88,7 +94,26 @@ public class criar_campo_hora {
                     
                     titulo.setText(nome_titulo);
                     
-                    JPanel p_int = operacoes_painel.add_componente_em_painel(titulo, campo_data, 2);
+//                    JPanel p_int = operacoes_painel.add_componente_em_painel(titulo, campo_data, 2);
+//                    titulo.setText(titulo.getText()+"  ");
+                    
+//                    criar_layout_grid.painel_grid.add(new JLabel(titulo.getText()));
+//                    criar_layout_grid.painel_grid.add(new JFormattedTextField());
+                    
+                    JFormattedTextField n_cmp_form = new JFormattedTextField();
+                    try {
+                        MaskFormatter dateMask = new MaskFormatter("##:##");
+                        dateMask.install(n_cmp_form);
+                    } catch (ParseException ex) {
+                        Logger.getLogger(criar_campo_data.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    criar_layout_grid.painel_grid.add(new JLabel(titulo.getText()), criar_layout_grid.pos.nextRow().expandW());
+                    criar_layout_grid.painel_grid.add(n_cmp_form, criar_layout_grid.pos.nextRow().expandW());
+                    criar_layout_grid.painel_grid.add(new Gap(GAP), criar_layout_grid.pos.nextRow());
+                    
+                    JPanel p_int = operacoes_painel.add_componente_em_painel_grid_layout_vertical(titulo, campo_data);
+                    
                     operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(p_int, painel_baixo, pos_painel_baixo, prefixos.prefixo_painel_criar_campo_hora);
                     cmp1.setText(null);
                 }else{

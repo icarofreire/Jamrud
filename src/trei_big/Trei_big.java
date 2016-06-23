@@ -7,6 +7,7 @@ package trei_big;
 
 import banco.SQL;
 import banco.banco;
+import lib.criar_layout_grid;
 import elementos.popup;
 import java.awt.GridLayout;
 import java.io.IOException;
@@ -68,8 +69,8 @@ public class Trei_big {
      */
     public static void main(String[] args) throws IOException, ClassNotFoundException {
           
-        menu();
-//        menu_elementos();
+//        menu();
+        menu_elementos();
 //        new painel_definir_local_salvar();
 //        new sobre();  
         
@@ -96,25 +97,19 @@ public class Trei_big {
 //        banco.exibir_tabela( SQL.nome_tabela_formulario.toUpperCase() );
 //        banco.exibir_tabelas();
         
-        JPanel painel_externo = new JPanel();
-        JPanel painel = new JPanel();
-        painel.setLayout(new GridLayout(0, 2));
         
-        painel.add(new JLabel("Button 1"));
-        painel.add(new JTextField(20));
-        
-        painel.add(new JLabel("Button 1asfas"));
-        painel.add(new JTextField(20));
-        
-        painel.add(new JLabel("Bla fuasfn fsnf frfiuasfn fwaurfr:"));
-        painel.add(new JLabel(""));
-        
-        painel.add(new JLabel("Button 1frf fasduyf fasgfg"));
-        painel.add(new JTextField(20));
-        
-        painel_externo.add(painel);
-        new popup("teste", painel_externo);
-        
+//        criar_layout_grid c = new criar_layout_grid();
+//        
+//        c.add(new JLabel("Button 1"), new JTextField(20));
+//        
+//        c.add(new JLabel("Button 1asfas"), new JTextField(20));
+//        
+//        c.add(new JLabel("Bla fuasfn fsnf frfiuasfn fwaurfr:"));
+//        
+//        c.add(new JLabel("Button 1frf fasduyf fasgfg"), new JTextField(20));
+//        
+//        new popup("teste", c.getPainel_externo() );
+
         
         
     }

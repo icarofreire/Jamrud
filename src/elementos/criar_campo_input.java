@@ -7,14 +7,18 @@ package elementos;
 
 import ferramenta_gui.GBHelper;
 import ferramenta_gui.Gap;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import lib.criar_layout_grid;
 import trei_big.aviso;
 import trei_big.operacoes;
 import trei_big.operacoes_painel;
@@ -59,9 +63,20 @@ public class criar_campo_input {
                     titulo.setName( operacoes.gerar_name_para_componente(prefixos.prefixo_titulos_dos_componentes) );
                     JTextField campo = new JTextField(tamanho_campo);
                     titulo.setText(nome_titulo);
-                    
+//                    titulo.setHorizontalAlignment(JLabel.LEFT);
 //                    JPanel p_int = operacoes_painel.add_componente_em_painel(titulo, campo, 2);
-                    JPanel p_int = operacoes_painel.add_componente_em_painel_flow_layout(titulo, campo);
+//                    titulo.setText(titulo.getText()+"  ");
+                    
+                    
+                    JLabel nt = new JLabel(titulo.getText());
+                    JTextField nc = new JTextField(tamanho_campo);;
+                    
+                    criar_layout_grid.painel_grid.add(nt, criar_layout_grid.pos.nextRow().expandW());
+                    criar_layout_grid.painel_grid.add(new JTextField(tamanho_campo), criar_layout_grid.pos.nextRow().expandW());
+                    criar_layout_grid.painel_grid.add(new Gap(GAP), criar_layout_grid.pos.nextRow());
+                    
+                    JPanel p_int = operacoes_painel.add_componente_em_painel_grid_layout_vertical(titulo, campo);
+                    
                     operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(p_int, painel_baixo, pos_painel_baixo, prefixos.prefixo_painel_criar_campo_input);
                     cmp1.setText(null);
                 }else{

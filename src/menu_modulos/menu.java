@@ -294,41 +294,41 @@ public class menu extends JFrame implements Runnable {
                         
 
                         // \/\/ >> aqui os eventos dos campos de data e hora; << \/\/
-                        JPanel p_campo_hora = (JPanel) operacoes_painel.pegar_componente_em_painel(painel_formulario, prefixos.prefixo_painel_criar_campo_hora);
-                        if( p_campo_hora != null )
-                        {  
-                            JPanel p_int = (JPanel) operacoes_painel.pegar_componente_em_painel(p_campo_hora, prefixos.prefixo_painel_interno);
-                            final JTextField hora = (JTextField) operacoes_painel.pegar_componente_em_painel(p_int, prefixos.prefixo_campo_hora);
-                            
-                            hora.addFocusListener(new FocusListener(){
-                                @Override
-                                public void focusGained(FocusEvent fe) {
-                                    hora.setCaretPosition(0);
-                                }
-
-                                @Override
-                                public void focusLost(FocusEvent fe) {
-                                }
-                            });
-                        }
-                        //***
-                        JPanel p_campo_data = (JPanel) operacoes_painel.pegar_componente_em_painel(painel_formulario, prefixos.prefixo_painel_criar_campo_data);
-                        if( p_campo_data != null )
-                        {  
-                            JPanel p_int = (JPanel) operacoes_painel.pegar_componente_em_painel(p_campo_data, prefixos.prefixo_painel_interno);
-                            final JTextField data = (JTextField) operacoes_painel.pegar_componente_em_painel(p_int, prefixos.prefixo_campo_data);
-                            
-                            data.addFocusListener(new FocusListener(){
-                                @Override
-                                public void focusGained(FocusEvent fe) {
-                                    data.setCaretPosition(0);
-                                }
-
-                                @Override
-                                public void focusLost(FocusEvent fe) {
-                                }
-                            });
-                        }
+//                        JPanel p_campo_hora = (JPanel) operacoes_painel.pegar_componente_em_painel(painel_formulario, prefixos.prefixo_painel_criar_campo_hora);
+//                        if( p_campo_hora != null )
+//                        {  
+//                            JPanel p_int = (JPanel) operacoes_painel.pegar_componente_em_painel(p_campo_hora, prefixos.prefixo_painel_interno);
+//                            final JTextField hora = (JTextField) operacoes_painel.pegar_componente_em_painel(p_int, prefixos.prefixo_campo_hora);
+//                            
+//                            hora.addFocusListener(new FocusListener(){
+//                                @Override
+//                                public void focusGained(FocusEvent fe) {
+//                                    hora.setCaretPosition(0);
+//                                }
+//
+//                                @Override
+//                                public void focusLost(FocusEvent fe) {
+//                                }
+//                            });
+//                        }
+//                        //***
+//                        JPanel p_campo_data = (JPanel) operacoes_painel.pegar_componente_em_painel(painel_formulario, prefixos.prefixo_painel_criar_campo_data);
+//                        if( p_campo_data != null )
+//                        {  
+//                            JPanel p_int = (JPanel) operacoes_painel.pegar_componente_em_painel(p_campo_data, prefixos.prefixo_painel_interno);
+//                            final JTextField data = (JTextField) operacoes_painel.pegar_componente_em_painel(p_int, prefixos.prefixo_campo_data);
+//                            
+//                            data.addFocusListener(new FocusListener(){
+//                                @Override
+//                                public void focusGained(FocusEvent fe) {
+//                                    data.setCaretPosition(0);
+//                                }
+//
+//                                @Override
+//                                public void focusLost(FocusEvent fe) {
+//                                }
+//                            });
+//                        }
                         // /\/\ >> aqui os eventos dos campos de data e hora; << /\/\
                                 
                         painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_formulario, "scroll_painel_cadastrar", pos);

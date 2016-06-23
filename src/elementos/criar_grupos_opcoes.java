@@ -30,6 +30,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import lib.criar_layout_grid;
 import trei_big.aviso;
 import trei_big.operacoes;
 import trei_big.operacoes_painel;
@@ -53,17 +54,20 @@ public class criar_grupos_opcoes {
     private String prefixo_campo_add = "comp_campo_add";
     private String prefixo_btn_excluir_add = "comp_btn_excluir_add_";
     
-    private JTextField campo_para_titulo_componente = new JTextField(20);
+    private final int tamanho_campo = 40;
+    private JTextField campo_para_titulo_componente = new JTextField(tamanho_campo);
     
     private int tipo_componente;
+    private criar_layout_grid grid;
 
     /*
         tipo_componente = 1 => JRadioButton;
         tipo_componente = 2 => JCheckBox;
         tipo_componente = 3 => JTextField;
     */
-    public criar_grupos_opcoes(int tipo_componente) {
+    public criar_grupos_opcoes(int tipo_componente, criar_layout_grid grid) {
         this.tipo_componente = tipo_componente;
+        this.grid = grid;
     }
     
     
@@ -372,6 +376,7 @@ public class criar_grupos_opcoes {
                             }
                             
                             operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(painel_a_inserir, painel_baixo, pos_painel_baixo, prefixos.prefixo_painel_opcoes, campo_para_titulo_componente.getText().trim());
+                            
                             nomes_radios.clear();
                             campo_para_titulo_componente.setText(null);
                         }
