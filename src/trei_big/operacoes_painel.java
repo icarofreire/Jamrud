@@ -105,7 +105,7 @@ public class operacoes_painel {
             for (int i=0; i < components.length; i++) {
                 String name_componente = components[i].getName();
                 if( (name_componente != null) && (name_componente.indexOf(name_componente_no_painel) != -1)  ){
-                    x = components[i];
+                    x = components[i]; break;
                 }
             }//fim for;
         return x;

@@ -294,40 +294,52 @@ public class menu extends JFrame implements Runnable {
                         
 
                         // \/\/ >> aqui os eventos dos campos de data e hora; << \/\/
-                        JPanel p_campo_hora = (JPanel) operacoes_painel.pegar_componente_em_painel(painel_formulario, prefixos.prefixo_painel_criar_campo_hora);
-                        if( p_campo_hora != null )
-                        {  
-                            JPanel p_int = (JPanel) operacoes_painel.pegar_componente_em_painel(p_campo_hora, prefixos.prefixo_painel_interno);
-                            final JTextField hora = (JTextField) operacoes_painel.pegar_componente_em_painel(p_int, prefixos.prefixo_campo_hora);
-                            
-                            hora.addFocusListener(new FocusListener(){
-                                @Override
-                                public void focusGained(FocusEvent fe) {
-                                    hora.setCaretPosition(0);
-                                }
+                        Vector<Component> paineis_campo_hora = operacoes_painel.pegar_todos_componentes_em_painel_com_prefixo(painel_formulario, prefixos.prefixo_painel_criar_campo_hora);
+                        if( paineis_campo_hora != null )
+                        {
+                            for (int j = 0; j < paineis_campo_hora.size(); j++) {
+                                JPanel p_hora = (JPanel) paineis_campo_hora.get(j);
+                                JPanel p_int = (JPanel) operacoes_painel.pegar_componente_em_painel(p_hora, prefixos.prefixo_painel_interno);
+                                if( p_int != null )
+                                {
+                                    final JTextField hora = (JTextField) operacoes_painel.pegar_componente_em_painel(p_int, prefixos.prefixo_campo_hora);
 
-                                @Override
-                                public void focusLost(FocusEvent fe) {
+                                    hora.addFocusListener(new FocusListener(){
+                                        @Override
+                                        public void focusGained(FocusEvent fe) {
+                                            hora.setCaretPosition(0);System.out.println("focou h.");
+                                        }
+
+                                        @Override
+                                        public void focusLost(FocusEvent fe) {}
+                                    });
                                 }
-                            });
+                            }
                         }
+                        
                         //***
-                        JPanel p_campo_data = (JPanel) operacoes_painel.pegar_componente_em_painel(painel_formulario, prefixos.prefixo_painel_criar_campo_data);
-                        if( p_campo_data != null )
-                        {  
-                            JPanel p_int = (JPanel) operacoes_painel.pegar_componente_em_painel(p_campo_data, prefixos.prefixo_painel_interno);
-                            final JTextField data = (JTextField) operacoes_painel.pegar_componente_em_painel(p_int, prefixos.prefixo_campo_data);
-                            
-                            data.addFocusListener(new FocusListener(){
-                                @Override
-                                public void focusGained(FocusEvent fe) {
-                                    data.setCaretPosition(0);
-                                }
+                        
+                        Vector<Component> paineis_campo_data = operacoes_painel.pegar_todos_componentes_em_painel_com_prefixo(painel_formulario, prefixos.prefixo_painel_criar_campo_data);
+                        if( paineis_campo_data != null )
+                        {
+                            for (int j = 0; j < paineis_campo_data.size(); j++) {
+                                JPanel p_data = (JPanel) paineis_campo_data.get(j);
+                                JPanel p_int = (JPanel) operacoes_painel.pegar_componente_em_painel(p_data, prefixos.prefixo_painel_interno);
+                                if( p_int != null )
+                                {
+                                    final JTextField data = (JTextField) operacoes_painel.pegar_componente_em_painel(p_int, prefixos.prefixo_campo_data);
 
-                                @Override
-                                public void focusLost(FocusEvent fe) {
+                                    data.addFocusListener(new FocusListener(){
+                                        @Override
+                                        public void focusGained(FocusEvent fe) {
+                                            data.setCaretPosition(0);System.out.println("focou d.");
+                                        }
+
+                                        @Override
+                                        public void focusLost(FocusEvent fe) {}
+                                    });
                                 }
-                            });
+                            }
                         }
                         // /\/\ >> aqui os eventos dos campos de data e hora; << /\/\
                                 
