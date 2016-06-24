@@ -288,7 +288,7 @@ public class menu extends JFrame {
                                         /* \/\/ COMENTADO APENAS PARA FINS DE TESTE;
                                         PARA NÃO CRIAR TABELAS GERADAS PELOS TESTES. \/\/ */
                                         
-//                                        banco.executar_query( SQL.montar_sql_criar_tabela(titulos, nome) );
+                                        banco.executar_query( SQL.montar_sql_criar_tabela(titulos, nome) );
                                         
                                         /* /\/\ COMENTADO APENAS PARA FINS DE TESTE;
                                         PARA NÃO CRIAR TABELAS GERADAS PELOS TESTES. /\/\ */

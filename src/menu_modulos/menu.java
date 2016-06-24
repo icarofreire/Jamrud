@@ -264,6 +264,7 @@ public class menu extends JFrame implements Runnable {
                 if( !linha.lastElement().isEmpty() )
                 {
                     String nome_formulario = linha.get(1);
+                    final String nome_tabela_cadastrar = nome_formulario;
                     
                     String token_procurar = "_";
                     String token_substituir = " ";
@@ -274,11 +275,13 @@ public class menu extends JFrame implements Runnable {
                     String hash = linha.get(2);
                     if( menu_lateral.se_chave(nome_formulario, index) )
                     {
-                        JPanel painel_formulario = (JPanel) operacoes_painel.deserializar_obj( hash );
+                        final JPanel painel_formulario = (JPanel) operacoes_painel.deserializar_obj( hash );
                         operacoes_painel.exibir_names_em_painel(painel_formulario);
                         
                         JPanel p_botao = (JPanel) operacoes_painel.pegar_componente_em_painel(painel_formulario, prefixos.prefixo_painel_interno_para_botao);
                         JButton btn_enviar = (JButton) operacoes_painel.pegar_componente_em_painel(p_botao, prefixos.prefixo_botao_enviar);
+                        
+                        final obter_dados_formulario dados_form = new obter_dados_formulario();
                         
                         // \/\/ >> aqui o evento do click no botao ENVIAR em cada formulário; << \/\/
                         if( btn_enviar != null )
@@ -287,6 +290,51 @@ public class menu extends JFrame implements Runnable {
                                 @Override
                                 public void actionPerformed(ActionEvent ae) {
                                     System.out.println("ENVIAR");
+                                    
+                                    dados_form.apagar_dados();
+                                    dados_form.buscar_componentes_recursivo(painel_formulario);
+                                    
+                                    String[] titulos = dados_form.getTitulos().toArray(new String[]{});
+                                    String[] dados = dados_form.getDados().toArray(new String[]{});
+                                    
+                                    String sql_inserir = SQL.montar_sql_insert(nome_tabela_cadastrar, titulos, dados);
+                                    
+                                   
+//                                    System.out.println("dados len:\n" + dados.length );
+                                    
+                                    int ss = 0;
+                                    for (int j = 0; j < dados.length; j++) {
+                                        String dado = dados[j];
+                                        if( dado.indexOf(obter_dados_formulario.sufixo_detect_campo_radio) != -1 )
+                                        {
+                                            ss++;
+                                        }                                         
+                                    }
+                                    
+                                    if( ss == 0 ){
+                                        aviso.mensagem_atencao("Campo de opções vazio", "Selecione uma opção");
+                                    }
+                                    
+                                    for (int j = 0; j < titulos.length; j++) {
+                                        String dado = titulos[j];
+                                         System.out.println("titulos ->:" + dado );
+                                    }
+                                    for (int j = 0; j < dados.length; j++) {
+                                        String dado = dados[j];
+                                        if( dado.indexOf(obter_dados_formulario.sufixo_detect_campo_radio) != -1 )
+                                        {
+//                                            aviso.mensagem_atencao("Campo de opções vazio", "Selecione uma opção");
+//                                            break;
+                                        }
+                                         System.out.println("dados ->:" + dado + " =="+ dado.indexOf(obter_dados_formulario.sufixo_detect_campo_radio) );
+                                    }
+                                    
+                                    System.out.println("SQL:\n" + sql_inserir );
+                                    
+//                                    if( banco.executar_query(sql_inserir) ){
+//                                        aviso.mensagem_sucesso("Informações cadastradas com sucesso!");
+//                                    }
+//                                    System.out.println("cadastrar em: " + nome_tabela_cadastrar );
                                 }
                             });
                         }
@@ -307,7 +355,7 @@ public class menu extends JFrame implements Runnable {
                                     hora.addFocusListener(new FocusListener(){
                                         @Override
                                         public void focusGained(FocusEvent fe) {
-                                            hora.setCaretPosition(0);System.out.println("focou h.");
+                                            hora.setCaretPosition(0);
                                         }
 
                                         @Override
@@ -332,7 +380,7 @@ public class menu extends JFrame implements Runnable {
                                     data.addFocusListener(new FocusListener(){
                                         @Override
                                         public void focusGained(FocusEvent fe) {
-                                            data.setCaretPosition(0);System.out.println("focou d.");
+                                            data.setCaretPosition(0);
                                         }
 
                                         @Override

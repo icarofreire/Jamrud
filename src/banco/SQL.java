@@ -74,6 +74,8 @@ public class SQL {
             j1 = "(" + j1 + ")";
             j2 = "(" + j2 + ")";
             SQL = "insert into " + nome_da_tabela.toUpperCase() + " " + j1 + " values " + j2;
+        }else{
+            System.err.println("[ERRO]: Array de Colunas e Valores com tamanhos diferentes;");
         }
         return SQL;
     }

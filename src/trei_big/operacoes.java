@@ -109,4 +109,22 @@ public class operacoes {
         return false;
     }
     
+    
+    public static String serializar_string(String[] alvo)
+    {
+        String token = "|::|";
+        String str_serializada = "";
+        for (int i = 0; i < alvo.length-1; i++) {
+            String alvo1 = alvo[i];
+            str_serializada += alvo1 + token;
+        }
+        str_serializada += alvo[alvo.length-1];
+        return str_serializada;
+    }
+    
+    public static String[] deserializar_string(String str_serializada)
+    {
+        return str_serializada.split("\\|\\:\\:\\|");
+    }
+    
 }
