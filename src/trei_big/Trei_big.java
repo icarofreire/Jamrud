@@ -8,9 +8,16 @@ package trei_big;
 import banco.SQL;
 import banco.banco;
 import elementos.popup;
+import elementos.prefixos;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.GridLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.Vector;
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -68,7 +75,7 @@ public class Trei_big {
      */
     public static void main(String[] args) throws IOException, ClassNotFoundException {
           
-        menu();
+//        menu();
 //        menu_elementos();
 //        new painel_definir_local_salvar();
 //        new sobre();  
@@ -107,10 +114,139 @@ public class Trei_big {
 //        
 //        c.add(new JLabel("Button 1frf fasduyf fasgfg"), new JTextField(20));
 //        
-//        new popup("teste", c.getPainel_externo() );
+        Vector<Vector<String>> dd = banco.obter_dados_da_tabela(SQL.nome_tabela_formulario.toUpperCase());
+        JPanel pi = (JPanel)operacoes_painel.deserializar_obj(dd.lastElement().get(2));
+        new popup("teste", pi );
 
+        operacoes_painel.exibir_names_em_painel(pi);
+        
+        for (int i = 0; i < prefixos.prefixos_paineis.length; i++) {
+            String prefix = prefixos.prefixos_paineis[i];
+            Vector<Component> comps_p = operacoes_painel.pegar_todos_componentes_em_painel_com_prefixo(pi, prefix);
+            if( comps_p != null )
+            {
+                for (int j = 0; j < comps_p.size(); j++)
+                {
+                    final JPanel painel = (JPanel) comps_p.get(j);
+                    System.out.println("name ->: " + painel.getName() );
+                    
+                    setEnabled_recursivo(painel, false, painel);
+                    JPanel p_int = (JPanel) operacoes_painel.pegar_componente_em_painel(painel, prefixos.prefixo_painel_interno);
+                    if(p_int != null)
+                    {
+//                        Component[] components = p_int.getComponents();
+//                        for (int c=0; c < components.length; c++) {
+//                            components[c].setEnabled(false);
+//                            components[c].addMouseListener(new MouseListener(){
+//
+//                                @Override
+//                                public void mouseClicked(MouseEvent me) {
+//                                    painel.setBorder(BorderFactory.createLineBorder(Color.RED));
+//                                }
+//
+//                                @Override
+//                                public void mousePressed(MouseEvent me) {
+////                                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//                                }
+//
+//                                @Override
+//                                public void mouseReleased(MouseEvent me) {
+////                                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//                                }
+//
+//                                @Override
+//                                public void mouseEntered(MouseEvent me) {
+////                                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//                                }
+//
+//                                @Override
+//                                public void mouseExited(MouseEvent me) {
+////                                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//                                }
+//                            });
+//                        }//fim for
+//                    }
+                    
+                    painel.addMouseListener(new MouseListener(){
+
+                        @Override
+                        public void mouseClicked(MouseEvent me) {
+                            painel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+                            System.out.println("["+ painel.getLocation().x + ", " + painel.getLocation().y+"]");
+                        }
+
+                        @Override
+                        public void mousePressed(MouseEvent me) {
+//                            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                        }
+
+                        @Override
+                        public void mouseReleased(MouseEvent me) {
+//                             System.out.println("R:\nx: "+ painel.getLocation().x+"\ny: " + painel.getLocation().y);
+                        }
+
+                        @Override
+                        public void mouseEntered(MouseEvent me) {
+//                            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                        }
+
+                        @Override
+                        public void mouseExited(MouseEvent me) {
+                             System.out.println("P: ["+ painel.getLocation().x + ", " + painel.getLocation().y+"]");
+                            int xm = me.getPoint().x;
+                            int ym = me.getPoint().y;
+                            
+                            int xp = painel.getLocation().x;
+                            int yp = painel.getLocation().y;
+//                            if( (xm > xp) )
+                            
+//                            painel.setBorder(BorderFactory.createEmptyBorder());
+                        }
+                    });
+                    
+                }
+                            
+                }
+            }
+            
+        }
         
         
+    }
+    
+    /* habilita ou desabilita todos os componentes filhos de um componente pai recirsivamente; */
+    public static void setEnabled_recursivo(Component component, boolean enabled, final JPanel painel) {
+        component.setEnabled(enabled);
+        if (component instanceof Container) {
+            for (Component child : ((Container) component).getComponents()) {
+                setEnabled_recursivo(child, enabled, painel);
+                            //---
+                           child.addMouseListener(new MouseListener(){
+                                @Override
+                                public void mouseClicked(MouseEvent me) {
+                                    painel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+                                }
+
+                                @Override
+                                public void mousePressed(MouseEvent me) {
+                                }
+
+                                @Override
+                                public void mouseReleased(MouseEvent me) {
+                                }
+
+                                @Override
+                                public void mouseEntered(MouseEvent me) {
+                                }
+
+                                @Override
+                                public void mouseExited(MouseEvent me) {
+//                                    painel.setBorder(BorderFactory.createEmptyBorder());
+                                }
+                            });
+                        //---
+            }
+        }
     }
     
 }
