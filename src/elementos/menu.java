@@ -48,6 +48,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import tabela_listagem.exibir_listagem;
 
 
@@ -167,14 +169,12 @@ public class menu extends JFrame {
         JPanel p_botoes = operacoes_painel.add_componente_em_painel(botao_criar_formulario, botao_fechar, 2);
         painel_direito.add(p_botoes, pos_paineis_internos.nextRow().expandW());
         
-        lista.addMouseListener(new MouseListener(){
-             @Override
-             public void mouseClicked(MouseEvent me) {
-                 
-                 JList theList = (JList) me.getSource();
-                 int index = theList.locationToIndex(me.getPoint());
-                 Object o = theList.getModel().getElementAt(index);
-                 String titulo = o.toString();
+        lista.addListSelectionListener(new ListSelectionListener(){
+            @Override
+            public void valueChanged(ListSelectionEvent lse)
+            {
+                 int index = lista.getSelectedIndex();
+                 String titulo = lista.getSelectedValue().toString();
                  painel_cima.setBorder(BorderFactory.createTitledBorder("Componente: " + titulo));
                  
 //                 paineis_componentes 
@@ -236,23 +236,7 @@ public class menu extends JFrame {
                  }
                  
                  
-             }// fim mouseClicked(MouseEvent me);
-
-             @Override
-             public void mousePressed(MouseEvent me) {
-             }
-
-             @Override
-             public void mouseReleased(MouseEvent me) {
-             }
-
-             @Override
-             public void mouseEntered(MouseEvent me) {
-             }
-
-             @Override
-             public void mouseExited(MouseEvent me) {
-             }
+             }// fim public void valueChanged(ListSelectionEvent lse);
         });
         
         botao_criar_formulario.addActionListener(new ActionListener() {

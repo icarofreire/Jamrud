@@ -50,6 +50,8 @@ import javax.swing.JTextField;
 import javax.swing.ListModel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import tabela_listagem.exibir_listagem;
 
 
@@ -162,16 +164,12 @@ public class menu extends JFrame implements Runnable {
         
         painel_esquerdo.add(painel_direito, pos.nextCol().expandir());
         
-        
-        lista.addMouseListener(new MouseListener(){
-
-             @Override
-             public void mouseClicked(MouseEvent me) {
-                 
-                 JList theList = (JList) me.getSource();
-                 int index = theList.locationToIndex(me.getPoint());
-                 Object o = theList.getModel().getElementAt(index);
-                 String titulo = o.toString();
+        lista.addListSelectionListener(new ListSelectionListener(){
+            @Override
+            public void valueChanged(ListSelectionEvent lse)
+            {
+                 int index = lista.getSelectedIndex();
+                 String titulo = lista.getSelectedValue().toString();
                  painel_direito.setBorder(BorderFactory.createTitledBorder(titulo));
                  
                  
@@ -203,9 +201,17 @@ public class menu extends JFrame implements Runnable {
                  else if( menu_lateral.se_chave(MenuLateral.criar_formulario, index) )
                  {
                         JPanel painel_criar_formulario = new JPanel();
-                        painel_criar_formulario.add( new JLabel("Criar formulário") );
+                        JButton botao_criar_formulario = new JButton("Criar formulário para cadastro", new ImageIcon("icones/construir-32.png") );
+                        painel_criar_formulario.add( botao_criar_formulario );
                         painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_criar_formulario, "scroll_painel_temas", pos);
-                        elementos.menu m = new elementos.menu("Criar um formulário");                        
+                        
+                        botao_criar_formulario.addActionListener(new ActionListener(){
+                                @Override
+                                public void actionPerformed(ActionEvent ae) {
+                                    elementos.menu m = new elementos.menu("Criar um formulário");                        
+                                }
+                        });
+                        
                  }
                  else if( menu_lateral.se_chave(MenuLateral.historico, index) )
                  {
@@ -231,30 +237,14 @@ public class menu extends JFrame implements Runnable {
                         painel_formulario.add( new JLabel("Sem formulário cadastrado.") );
                         painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_formulario, "scroll_painel_cadastrar", pos);
                  }
-                 
-             }// fim mouseClicked(MouseEvent me);
-
-             @Override
-             public void mousePressed(MouseEvent me) {
-             }
-
-             @Override
-             public void mouseReleased(MouseEvent me) {
-             }
-
-             @Override
-             public void mouseEntered(MouseEvent me) {
-             }
-
-             @Override
-             public void mouseExited(MouseEvent me) {
-             }
+                
+            }// fim public void valueChanged(ListSelectionEvent lse);
         });
         
         return painel_esquerdo;
     }
 
-     private boolean gerar_painel_formularios_cadastrados(int index)
+     private boolean gerar_painel_formularios_cadastrados(final int index)
      {
         boolean f = false; 
         if( (menu_lateral.formularios != null) && (!menu_lateral.formularios.isEmpty()) )
@@ -292,49 +282,24 @@ public class menu extends JFrame implements Runnable {
                                     System.out.println("ENVIAR");
                                     
                                     dados_form.apagar_dados();
+                                    dados_form.zerar_numero_painel_radios();
+                                    dados_form.quantos_paineis_radios(painel_formulario);
                                     dados_form.buscar_componentes_recursivo(painel_formulario);
                                     
-                                    String[] titulos = dados_form.getTitulos().toArray(new String[]{});
-                                    String[] dados = dados_form.getDados().toArray(new String[]{});
-                                    
-                                    String sql_inserir = SQL.montar_sql_insert(nome_tabela_cadastrar, titulos, dados);
-                                    
-                                   
-//                                    System.out.println("dados len:\n" + dados.length );
-                                    
-                                    int ss = 0;
-                                    for (int j = 0; j < dados.length; j++) {
-                                        String dado = dados[j];
-                                        if( dado.indexOf(obter_dados_formulario.sufixo_detect_campo_radio) != -1 )
-                                        {
-                                            ss++;
-                                        }                                         
+                                    if( dados_form.verifica_se_radios_selecionados() )
+                                    {
+                                        String[] titulos = dados_form.getTitulos().toArray(new String[]{});
+                                        String[] dados = dados_form.getDados().toArray(new String[]{});
+                                        String sql_inserir = SQL.montar_sql_insert(nome_tabela_cadastrar, titulos, dados);
+                                        if( banco.executar_query(sql_inserir) ){
+                                            aviso.mensagem_sucesso("Informações inseridas com sucesso!");
+                                            lista.setSelectedIndex(index);
+                                        }
                                     }
-                                    
-                                    if( ss == 0 ){
+                                    else{
                                         aviso.mensagem_atencao("Campo de opções vazio", "Selecione uma opção");
                                     }
                                     
-                                    for (int j = 0; j < titulos.length; j++) {
-                                        String dado = titulos[j];
-                                         System.out.println("titulos ->:" + dado );
-                                    }
-                                    for (int j = 0; j < dados.length; j++) {
-                                        String dado = dados[j];
-                                        if( dado.indexOf(obter_dados_formulario.sufixo_detect_campo_radio) != -1 )
-                                        {
-//                                            aviso.mensagem_atencao("Campo de opções vazio", "Selecione uma opção");
-//                                            break;
-                                        }
-                                         System.out.println("dados ->:" + dado + " =="+ dado.indexOf(obter_dados_formulario.sufixo_detect_campo_radio) );
-                                    }
-                                    
-                                    System.out.println("SQL:\n" + sql_inserir );
-                                    
-//                                    if( banco.executar_query(sql_inserir) ){
-//                                        aviso.mensagem_sucesso("Informações cadastradas com sucesso!");
-//                                    }
-//                                    System.out.println("cadastrar em: " + nome_tabela_cadastrar );
                                 }
                             });
                         }
