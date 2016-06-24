@@ -30,7 +30,7 @@ import menu_modulos.*;
  * @author icaro
  */
 public class Trei_big {
-    
+    private static int cy = -1;
     private static String titulo = "Sistema de Cadastro";
     
     public static void menu(){
@@ -171,8 +171,8 @@ public class Trei_big {
 
                         @Override
                         public void mouseClicked(MouseEvent me) {
-                            painel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
-                            System.out.println("["+ painel.getLocation().x + ", " + painel.getLocation().y+"]");
+//                            painel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+//                            System.out.println("["+ painel.getLocation().x + ", " + painel.getLocation().y+"]");
                         }
 
                         @Override
@@ -192,7 +192,7 @@ public class Trei_big {
 
                         @Override
                         public void mouseExited(MouseEvent me) {
-                             System.out.println("P: ["+ painel.getLocation().x + ", " + painel.getLocation().y+"]");
+//                             System.out.println("P: ["+ painel.getLocation().x + ", " + painel.getLocation().y+"]");
                             int xm = me.getPoint().x;
                             int ym = me.getPoint().y;
                             
@@ -219,12 +219,18 @@ public class Trei_big {
         component.setEnabled(enabled);
         if (component instanceof Container) {
             for (Component child : ((Container) component).getComponents()) {
+                
                 setEnabled_recursivo(child, enabled, painel);
+                buscar_componentes_recursivo(child);
                             //---
                            child.addMouseListener(new MouseListener(){
                                 @Override
                                 public void mouseClicked(MouseEvent me) {
+                                    if( me.getY() != cy ){
                                     painel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+                                    cy = me.getY();
+                                    System.out.println("["+ painel.getLocation().x + ", " + cy+"]");
+                                    }
                                 }
 
                                 @Override
@@ -245,6 +251,17 @@ public class Trei_big {
                                 }
                             });
                         //---
+            }
+        }
+    }
+    
+    public static void buscar_componentes_recursivo(Component component) {
+        if (component instanceof Container) {
+            for (Component child : ((Container) component).getComponents()) {
+                buscar_componentes_recursivo(child);
+                /* \/ Pega o nome da classe do componente. Ex: JLabel, JTextField, JTextArea, JViewport; \/ */
+                String nome_classe = child.getClass().getSimpleName();
+                System.out.println("Nome classe: " + nome_classe);
             }
         }
     }
