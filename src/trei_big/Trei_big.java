@@ -32,6 +32,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import menu_modulos.*;
+import paineis.painel_escrever_lista;
 
 /**
  *
@@ -76,6 +77,23 @@ public class Trei_big {
         });
     }
     
+    public static void escrever_lista(){
+        final String[] lista = new String[]{"fabn","ve","vtry","w3","x45","wcar","yjt"};
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception unused) {
+            // Nothing can be done, so just ignore it.
+        }
+        
+        //... Start up GUI.
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+               painel_escrever_lista es = new painel_escrever_lista(lista);
+                System.out.println("->" + es.getItens());
+            }
+        });
+    }
+    
         
     
     /**
@@ -83,7 +101,25 @@ public class Trei_big {
      */
     public static void main(String[] args) throws IOException, ClassNotFoundException {
           
-        menu();
+//        menu();
+//        escrever_lista();
+        
+        String[] lista = new String[]{"fabn","ve","vtry","w3","x45","wcar","yjt"};
+        painel_escrever_lista es = new painel_escrever_lista(lista);
+        
+        System.out.println("->" + es.getItens().size());
+        System.out.println("->" + es.itens.size());
+        
+//        painel_escrever_lista es = new painel_escrever_lista();
+//               
+//               String[] itens = es.getItens();
+//               if( itens != null ){
+//                for (int i = 0; i < itens.length; i++) {
+//                     String iten = itens[i];
+//                     System.out.println(iten);
+//                 }
+//               }
+        
 //        menu_elementos();
 //        new painel_definir_local_salvar();
 //        new sobre();  
