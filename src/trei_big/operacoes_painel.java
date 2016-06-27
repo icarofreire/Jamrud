@@ -306,7 +306,7 @@ public class operacoes_painel {
             dados_da_tabela.add( linha.toArray(new Object[]{}) );
         }       
                 
-       return new exibir_listagem().obj("", colunas, dados_da_tabela);
+       return new exibir_listagem().obj("", colunas, dados_da_tabela, nome_da_tabela);
     }
         
 }

@@ -104,41 +104,9 @@ public class Trei_big {
         menu();
 //        escrever_lista();
         
-//        String[] lista = new String[]{"fabn","ve","vtry","w3","x45","wcar","yjt"};
-//        Vector<String> itens = new Vector<String>();
-//        painel_escrever_lista es = new painel_escrever_lista(itens);
-////        es.gui();
-//        System.out.println("->" + es.getItens().size());
-//        System.out.println("->" + es.itens.size());
-//        System.out.println("->" + itens.size());
-        
 
-        
-//        menu_elementos();
-//        new painel_definir_local_salvar();
-//        new sobre();  
-        
-//        banco.conectar();
-//        String nome_tabela = "cadastro_1";
-//        String arq = "/home/icaro/Imagens/CADASTRO_1-hnq9f.del";
-//        banco.executar_query("CALL SYSCS_UTIL.SYSCS_IMPORT_TABLE(null,'"+ nome_tabela.toUpperCase() +"','"+ arq +"',';','%',null,0)");
-//        banco.executar_query( "SHOW COLUMNS FROM "+ SQL.nome_tabela_local_arquivos.toUpperCase() +"" );
-        
-//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_local_arquivos.toUpperCase(), 1) );
-//        banco.exibir_tabela( SQL.nome_tabela_local_arquivos.toUpperCase() );
-        
-//        System.out.println( SQL.sql_tabela + "\n***" );
-//        System.out.println( SQL.montar_sql_criar_tabela(new String[]{"nome","endereço","telefone","data","observações"}, "X_TESTE_Y") );
-//         System.out.println( SQL.sql_tabela_formulario );
-        
-        
-//        banco.executar_query( "DROP TABLE CADASTRO_1" );
-//        banco.executar_query( "DROP TABLE EXX" );
-//        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 2202) );
-
-
+//        banco.excluir_todas_as_tabelas_criadas();
 //        banco.executar_query( "DELETE FROM " + SQL.nome_tabela_formulario.toUpperCase() );
-//        banco.exibir_tabela( SQL.nome_tabela_formulario.toUpperCase() );
 //        banco.exibir_tabelas();
         
 

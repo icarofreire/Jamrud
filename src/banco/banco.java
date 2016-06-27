@@ -173,24 +173,27 @@ public class banco {
                 //print Column Names
                 nome_colunas_consulta.add( rsmd.getColumnLabel(i) );
             }
-
-            while(results.next())
-            {
-                int id = results.getInt(1);                
-                Vector<String> v = new Vector<String>();
-                for (int i=1; i<=numberCols; i++){
-                    String dado = results.getString(i);
-                    v.add(dado);
+            
+                while(results.next())
+                {
+                    int id = results.getInt(1);                
+                    Vector<String> v = new Vector<String>();
+                    for (int i=1; i<=numberCols; i++){
+                        String dado = results.getString(i);
+                        v.add(dado);
+                    }
+                    dados.add(v);                
                 }
-                dados.add(v);
-                
-            }
-            results.close();
-            stmt.close();
+                results.close();
+                stmt.close();
         }
         catch (SQLException sqlExcept)
         {
-            sqlExcept.printStackTrace();
+            if( sqlExcept.getSQLState().equalsIgnoreCase("XCL16") ) {
+                System.err.println(">> NULO--");
+            }else{
+                sqlExcept.printStackTrace();
+            }
         }
         return dados;
     }
@@ -335,6 +338,55 @@ public class banco {
             }
         }
         System.out.println("------------------------------------");
+    }
+    
+    public static void excluir_todas_as_tabelas_criadas()
+    {
+        Vector<String> tabelas_padrao_JavaDB = new Vector<String>();
+        tabelas_padrao_JavaDB.add( "SYSALIASES" );
+        tabelas_padrao_JavaDB.add( "SYSCHECKS" );
+        tabelas_padrao_JavaDB.add( "SYSCOLPERMS" );
+        tabelas_padrao_JavaDB.add( "SYSCOLUMNS" );
+        tabelas_padrao_JavaDB.add( "SYSCONGLOMERATES" );
+        tabelas_padrao_JavaDB.add( "SYSCONSTRAINTS" );
+        tabelas_padrao_JavaDB.add( "SYSDEPENDS" );
+        tabelas_padrao_JavaDB.add( "SYSFILES" );
+        tabelas_padrao_JavaDB.add( "SYSFOREIGNKEYS" );
+        tabelas_padrao_JavaDB.add( "SYSKEYS" );
+        tabelas_padrao_JavaDB.add( "SYSPERMS" );
+        tabelas_padrao_JavaDB.add( "SYSROLES" );
+        tabelas_padrao_JavaDB.add( "SYSROUTINEPERMS" );
+        tabelas_padrao_JavaDB.add( "SYSSCHEMAS" );
+        tabelas_padrao_JavaDB.add( "SYSSEQUENCES" );
+        tabelas_padrao_JavaDB.add( "SYSSTATEMENTS" );
+        tabelas_padrao_JavaDB.add( "SYSSTATISTICS" );
+        tabelas_padrao_JavaDB.add( "SYSTABLEPERMS" );
+        tabelas_padrao_JavaDB.add( "SYSTABLES" );
+        tabelas_padrao_JavaDB.add( "SYSTRIGGERS" );
+        tabelas_padrao_JavaDB.add( "SYSUSERS" );
+        tabelas_padrao_JavaDB.add( "SYSVIEWS" );
+        tabelas_padrao_JavaDB.add( "SYSDUMMY1" );
+        tabelas_padrao_JavaDB.add( "ADDRESS" );
+        tabelas_padrao_JavaDB.add( "FORMULARIOS_CADASTROS" );
+        //---
+        
+        conectar_banco();
+        Statement statement = null;
+        try {
+            statement = conn.createStatement();
+            ResultSet results = conn.getMetaData().getTables(null, null, null, null);
+            while(results.next()) {
+                if( tabelas_padrao_JavaDB.contains(results.getString("TABLE_NAME")) == false )
+                {
+                    banco.executar_query( "DROP TABLE " + results.getString("TABLE_NAME") );
+                    System.out.println("Excluida tabela: " + results.getString("TABLE_NAME") );
+                }
+            }
+            results.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
     }
     
 }

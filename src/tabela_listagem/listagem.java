@@ -47,6 +47,8 @@ public class listagem extends JPanel {
     private ArrayList<Object[]> dados_tabela;
     private String titulo_listagem;
     
+    private String nome_da_tabela;
+    
     //... Hash do ID da linha da tabela, que carrega como valor o indice desta linha na tabela;
     private HashMap<Integer, Integer> map_IDlinha_indice = new HashMap<Integer, Integer>();
     
@@ -106,11 +108,12 @@ public class listagem extends JPanel {
     }
     
     //============================================================== construtor
-    public listagem(String titulo_listagem, String[] nomes_colunas, ArrayList<Object[]> dados_da_tabela) {
+    public listagem(String titulo_listagem, String[] nomes_colunas, ArrayList<Object[]> dados_da_tabela, String nome_da_tabela) {
         
         this.colunas = nomes_colunas;
         this.dados_tabela = dados_da_tabela;
         this.titulo_listagem = titulo_listagem;
+        this.nome_da_tabela = nome_da_tabela;
         
         editar.setEnabled(false);
         deletar.setEnabled(false);
@@ -229,7 +232,7 @@ public class listagem extends JPanel {
                         int ID__ = Integer.parseInt(ID.toString());
 //                        System.out.println("Deletar registro: [" + ID__ + "]" );
 
-                        if(banco.executar_query(SQL.montar_sql_deletar_linha(SQL.nome_tabela, ID__)))
+                        if(banco.executar_query(SQL.montar_sql_deletar_linha(nome_da_tabela.toUpperCase(), ID__)))
                         {
                             model.removeRow(table.getSelectedRow());
                             aviso.mensagem_ok("Registro deletado com sucesso!");

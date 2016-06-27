@@ -168,75 +168,75 @@ public class menu extends JFrame implements Runnable {
             @Override
             public void valueChanged(ListSelectionEvent lse)
             {
-                 int index = lista.getSelectedIndex();
-                 String titulo = lista.getSelectedValue().toString();
-                 painel_direito.setBorder(BorderFactory.createTitledBorder(titulo));
+                 JList source = (JList)lse.getSource();
+                 int index = source.getSelectedIndex();
+                 Object valor_selecionado = source.getSelectedValue();
                  
-//                 if( menu_lateral.se_chave(MenuLateral.pesquisar_editar, index) )
-//                 {                        
-//                        JPanel pl = operacoes_painel.obter_dados_banco_em_painel_listagem(SQL.nome_tabela);
-//                        painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, pl, "scroll_pl", pos);
-//                 }
-//                 else 
-                 if( menu_lateral.se_chave("Lixeira", index) )
+                 if( (!source.isSelectionEmpty()) )
                  {
-                        operacoes_painel.remover_componentes_painel(painel_direito);
-                        painel_direito.add(l_lixeira);
-                 }
-                 else if( menu_lateral.se_chave(MenuLateral.backup_banco, index) )
-                 {
-                        JPanel painel_backup = new painel_backup().painel_p_backup();
-                        painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_backup, "scroll_painel_backup", pos);
-                 }
-                 else if( menu_lateral.se_chave(MenuLateral.temas, index) )
-                 {
-                        JPanel painel_temas = new painel_temas().painel_p_temas();
-                        painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_temas, "scroll_painel_temas", pos);
-                 }
-                 else if( menu_lateral.se_chave(MenuLateral.criar_formulario, index) )
-                 {
-                        JPanel painel_criar_formulario = new JPanel();
-                        JButton botao_criar_formulario = new JButton("Criar formulário para cadastro", new ImageIcon("icones/construir-32.png") );
-                        painel_criar_formulario.add( botao_criar_formulario );
-                        painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_criar_formulario, "scroll_painel_temas", pos);
-                        
-                        botao_criar_formulario.addActionListener(new ActionListener(){
-                                @Override
-                                public void actionPerformed(ActionEvent ae) {
-                                    elementos.menu m = new elementos.menu("Criar um formulário");                        
-                                }
-                        });
-                        
-                 }
-//                 else if( menu_lateral.se_chave(MenuLateral.historico, index) )
-//                 {
-//                        JPanel painel_historico = new painel_historico().painel_p_historico();
-//                        painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_historico, "scroll_painel_cadastrar", pos);
-//                 }
-                 else if( menu_lateral.se_chave(MenuLateral.gerar_planilha, index) )
-                 {
-                        JPanel painel_formulario = new JPanel();
-                        painel_formulario.add( new JLabel("Gerar planilha (Em construção)") );
-                        painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_formulario, "scroll_painel_cadastrar", pos);
-                 }
-                 else if( gerar_painel_formularios_cadastrados(index) )
-                 {
-                        /* Aqui são criados as GUI's dos formulários criados e registrados no banco. */
-                 }
-                 else if( menu_lateral.se_chave(titulo, index) )
-                 {
-                        titulo = titulo.substring(titulo.indexOf(":")+1).trim();
-                        if( banco.se_tabela_existe(titulo) )
-                        {
-                            JPanel pl = operacoes_painel.obter_dados_banco_em_painel_listagem(titulo);
-                            painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, pl, "scroll_pl", pos);
-                        }
-                 }
-                 else
-                 {
-                        JPanel painel_formulario = new JPanel();
-                        painel_formulario.add( new JLabel("Sem formulário cadastrado.") );
-                        painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_formulario, "scroll_painel_cadastrar", pos);
+                       String titulo = valor_selecionado.toString();
+                       painel_direito.setBorder(BorderFactory.createTitledBorder(titulo));
+
+                       if( menu_lateral.se_chave("Lixeira", index) )
+                       {
+                              operacoes_painel.remover_componentes_painel(painel_direito);
+                              painel_direito.add(l_lixeira);
+                       }
+                       else if( menu_lateral.se_chave(MenuLateral.backup_banco, index) )
+                       {
+                              JPanel painel_backup = new painel_backup().painel_p_backup();
+                              painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_backup, "scroll_painel_backup", pos);
+                       }
+                       else if( menu_lateral.se_chave(MenuLateral.temas, index) )
+                       {
+                              JPanel painel_temas = new painel_temas().painel_p_temas();
+                              painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_temas, "scroll_painel_temas", pos);
+                       }
+                       else if( menu_lateral.se_chave(MenuLateral.criar_formulario, index) )
+                       {
+                              JPanel painel_criar_formulario = new JPanel();
+                              JButton botao_criar_formulario = new JButton("Criar formulário para cadastro", new ImageIcon("icones/construir-32.png") );
+                              painel_criar_formulario.add( botao_criar_formulario );
+                              painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_criar_formulario, "scroll_painel_temas", pos);
+
+                              botao_criar_formulario.addActionListener(new ActionListener(){
+                                      @Override
+                                      public void actionPerformed(ActionEvent ae) {
+                                          elementos.menu m = new elementos.menu("Criar um formulário");                        
+                                      }
+                              });
+
+                       }
+      //                 else if( menu_lateral.se_chave(MenuLateral.historico, index) )
+      //                 {
+      //                        JPanel painel_historico = new painel_historico().painel_p_historico();
+      //                        painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_historico, "scroll_painel_cadastrar", pos);
+      //                 }
+                       else if( menu_lateral.se_chave(MenuLateral.gerar_planilha, index) )
+                       {
+                              JPanel painel_formulario = new JPanel();
+                              painel_formulario.add( new JLabel("Gerar planilha (Em construção)") );
+                              painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_formulario, "scroll_painel_cadastrar", pos);
+                       }
+                       else if( gerar_painel_formularios_cadastrados(index) )
+                       {
+                              /* Aqui são criados as GUI's dos formulários criados e registrados no banco. */
+                       }
+                       else if( menu_lateral.se_chave(titulo, index) )
+                       {
+                              titulo = titulo.substring(titulo.indexOf(":")+1).trim();
+                              if( banco.se_tabela_existe(titulo) )
+                              {
+                                  JPanel pl = operacoes_painel.obter_dados_banco_em_painel_listagem(titulo);
+                                  painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, pl, "scroll_pl", pos);
+                              }
+                       }
+                       else
+                       {
+                              JPanel painel_formulario = new JPanel();
+                              painel_formulario.add( new JLabel("Sem formulário cadastrado.") );
+                              painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_formulario, "scroll_painel_cadastrar", pos);
+                       }
                  }
                 
             }// fim public void valueChanged(ListSelectionEvent lse);
@@ -267,7 +267,7 @@ public class menu extends JFrame implements Runnable {
                     if( menu_lateral.se_chave(nome_formulario, index) )
                     {
                         final JPanel painel_formulario = (JPanel) operacoes_painel.deserializar_obj( hash );
-                        operacoes_painel.exibir_names_em_painel(painel_formulario);
+//                        operacoes_painel.exibir_names_em_painel(painel_formulario);
                         
                         JPanel p_botao = (JPanel) operacoes_painel.pegar_componente_em_painel(painel_formulario, prefixos.prefixo_painel_interno_para_botao);
                         JButton btn_enviar = (JButton) operacoes_painel.pegar_componente_em_painel(p_botao, prefixos.prefixo_botao_enviar);

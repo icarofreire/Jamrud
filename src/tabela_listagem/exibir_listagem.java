@@ -18,7 +18,7 @@ public class exibir_listagem {
     
     public JPanel p1;
     
-    exibir_listagem(final String titulo_listagem, final String[] nomes_colunas, final ArrayList<Object[]> dados_da_tabela)
+    exibir_listagem(final String titulo_listagem, final String[] nomes_colunas, final ArrayList<Object[]> dados_da_tabela, final String nome_da_tabela)
     {
         //... Set Look and Feel.
         try {
@@ -30,7 +30,7 @@ public class exibir_listagem {
         //... Start up GUI.
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                listagem window = new listagem(titulo_listagem, nomes_colunas, dados_da_tabela);
+                listagem window = new listagem(titulo_listagem, nomes_colunas, dados_da_tabela, nome_da_tabela);
                 window.setVisible(true);
             }
         });
@@ -38,8 +38,8 @@ public class exibir_listagem {
     
     public exibir_listagem(){};
     
-    public JPanel obj(final String titulo_listagem, final String[] nomes_colunas, final ArrayList<Object[]> dados_da_tabela){
-        listagem window = new listagem(titulo_listagem, nomes_colunas, dados_da_tabela);
+    public JPanel obj(final String titulo_listagem, final String[] nomes_colunas, final ArrayList<Object[]> dados_da_tabela, final String nome_da_tabela){
+        listagem window = new listagem(titulo_listagem, nomes_colunas, dados_da_tabela, nome_da_tabela);
         p1 = window.replaceDialog;
         return p1;
     }

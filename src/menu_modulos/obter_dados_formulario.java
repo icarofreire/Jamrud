@@ -69,9 +69,11 @@ public class obter_dados_formulario {
     public Vector<String> getDados() {
         
         String dados_checkbos_serializados = serializar_dados_checkbox();
-        dados.setElementAt(dados_checkbos_serializados, 
-                dados.indexOf(token_separador_dados_checkbox)
-        );
+        if( dados.indexOf(token_separador_dados_checkbox) != -1 ){
+            dados.setElementAt(dados_checkbos_serializados, 
+                    dados.indexOf(token_separador_dados_checkbox)
+            );
+        }
         
         for (int i = 0; i < dados.size(); i++) {
             String get = dados.get(i);
