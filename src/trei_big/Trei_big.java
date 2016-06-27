@@ -43,7 +43,7 @@ public class Trei_big {
     private static String titulo = "Sistema de Cadastro";
     
     public static void menu(){
-        banco.criar_tabela_exemplo();
+        banco.criar_tabela_para_os_formularios();
 //        banco.executar_query(SQL.sql_tabela_local_arquivos);
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

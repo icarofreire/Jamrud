@@ -34,38 +34,15 @@ public class banco {
     
     private static String sql_tabela = SQL.sql_tabela;
     public static Vector<String> nome_colunas_consulta;
-
-    public static void iniciar()
-    {
-        criar_tabela_exemplo();
-        
-        String[] colunas = new String[]{"NOME", "ENDERECO", "TELEFONE", "DATA", "OBSERVACOES"};
-        String[] valores = new String[]{"NOME-1", "ENDERECO-1", "TELEFONE-1", "DATA-1", "OBSERVACOES-1"};
-        
-        insertRestaurants(colunas, valores);
-        
-//        Vector<Vector<String>> linhas = selectRestaurants();
-//        for (Vector<String> linha : linhas){
-//            for (String dado : linha){
-//                System.out.print( dado + "\t\t");
-//            }
-//            System.out.println();
-//        }
-            
-        
-        shutdown();
-
-        
-    }
     
-    public static void criar_tabela_exemplo()
+    public static void criar_tabela_para_os_formularios()
     {
         try
         {
             Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
             //Get a connection
             conn = DriverManager.getConnection(dbURL);
-            criar_tabela(sql_tabela);
+            criar_tabela(SQL.sql_tabela_formulario);
         }
         catch (Exception except)
         {
