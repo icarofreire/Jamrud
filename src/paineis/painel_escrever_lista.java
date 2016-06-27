@@ -60,10 +60,14 @@ public class painel_escrever_lista extends JDialog {
     private JList lista = new JList(model);
     private JScrollPane scroll = new JScrollPane(lista);
     
-    public Vector<String> itens = new Vector<String>();
+    public static Vector<String> itens;// = new Vector<String>();
     
     public painel_escrever_lista() {
         gui();
+    }
+    
+    public painel_escrever_lista(Vector<String> itens) {
+        this.itens = itens;gui();
     }
     
     /*\/ construtor criado para editar uma lista; inserir a lista como parametro. */
@@ -186,6 +190,7 @@ public class painel_escrever_lista extends JDialog {
                     btn_del.setEnabled(false);
                     btn_del_tudo.setEnabled(false);
                     alterar_titulo_lista();
+                    System.out.println(model.size()+"<<");
                 }
             }
         });
@@ -201,14 +206,15 @@ public class painel_escrever_lista extends JDialog {
                 {
                     for (int i = 0; i < model.size(); i++) {
                         String item = (String) model.getElementAt(i);
-                        itens.add(item);
+                        itens.add(item);System.out.println(item+"<-");
                     }
 
                     for (int i = 0; i < itens.size(); i++) {
-                         String iten = itens.get(i);System.out.println(iten);
+                         String iten = itens.get(i);
+                         System.out.println(iten);
                      }
+//                    dispose();
                     System.out.println("tt:" + itens.size());
-                    dispose();
                 }else{
                     aviso.mensagem_atencao("Adicione itens na sua lista.", "Lista vazia");
                 }

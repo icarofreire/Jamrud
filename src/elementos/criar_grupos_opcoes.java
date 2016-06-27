@@ -373,6 +373,10 @@ public class criar_grupos_opcoes {
                             }
                             
                             operacoes_painel.add_componente_painel_baixo_e_add_botao_exluir(painel_a_inserir, painel_baixo, pos_painel_baixo, prefixos.prefixo_painel_opcoes, campo_para_titulo_componente.getText().trim());
+
+                            painel_componentes_add.removeAll();
+                            scroll_painel_componentes_add.setVisible(false);
+                            operacoes_painel.atualizar_painel(painel);
                             
                             nomes_radios.clear();
                             campo_para_titulo_componente.setText(null);

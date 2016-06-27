@@ -88,8 +88,8 @@ public class Trei_big {
         //... Start up GUI.
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-               painel_escrever_lista es = new painel_escrever_lista(lista);
-                System.out.println("->" + es.getItens());
+//               painel_escrever_lista es = new painel_escrever_lista(lista);
+//                System.out.println("->" + es.getItens());
             }
         });
     }
@@ -101,24 +101,18 @@ public class Trei_big {
      */
     public static void main(String[] args) throws IOException, ClassNotFoundException {
           
-//        menu();
+        menu();
 //        escrever_lista();
         
-        String[] lista = new String[]{"fabn","ve","vtry","w3","x45","wcar","yjt"};
-        painel_escrever_lista es = new painel_escrever_lista(lista);
+//        String[] lista = new String[]{"fabn","ve","vtry","w3","x45","wcar","yjt"};
+//        Vector<String> itens = new Vector<String>();
+//        painel_escrever_lista es = new painel_escrever_lista(itens);
+////        es.gui();
+//        System.out.println("->" + es.getItens().size());
+//        System.out.println("->" + es.itens.size());
+//        System.out.println("->" + itens.size());
         
-        System.out.println("->" + es.getItens().size());
-        System.out.println("->" + es.itens.size());
-        
-//        painel_escrever_lista es = new painel_escrever_lista();
-//               
-//               String[] itens = es.getItens();
-//               if( itens != null ){
-//                for (int i = 0; i < itens.length; i++) {
-//                     String iten = itens[i];
-//                     System.out.println(iten);
-//                 }
-//               }
+
         
 //        menu_elementos();
 //        new painel_definir_local_salvar();
@@ -138,7 +132,7 @@ public class Trei_big {
 //         System.out.println( SQL.sql_tabela_formulario );
         
         
-//        banco.executar_query( "DROP TABLE BILLY" );
+//        banco.executar_query( "DROP TABLE CADASTRO_1" );
 //        banco.executar_query( "DROP TABLE EXX" );
 //        banco.executar_query( SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), 2202) );
 
@@ -147,14 +141,7 @@ public class Trei_big {
 //        banco.exibir_tabela( SQL.nome_tabela_formulario.toUpperCase() );
 //        banco.exibir_tabelas();
         
-//        String ser = operacoes.serializar_string(new String[] { "AB", "CD", "EF" } );
-//        System.out.println( ser );
-//        String[] gg = operacoes.deserializar_string(ser);
-//        
-//        for (int i = 0; i < gg.length; i++) {
-//            String gg1 = gg[i];
-//            System.out.println(gg1);
-//        }
+
         
     }
 

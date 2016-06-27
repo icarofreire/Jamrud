@@ -24,11 +24,11 @@ import javax.swing.JList;
 public class MenuLateral {
     
     /* \/\/ Titulo para os modulos no menu; \/\/ */
-    public static String form_cadastrar = "Cadastrar";
-    public static String pesquisar_editar = "Pesquisar/Editar";
+//    public static String form_cadastrar = "Cadastrar";
+//    public static String pesquisar_editar = "Pesquisar/Editar";
     public static String backup_banco = "Backup";
     public static String temas = "Temas";
-    public static String historico = "Historico";
+//    public static String historico = "Historico";
     public static String criar_formulario = "Criar formulário";
     public static String gerar_planilha = "Gerar planilha";
     
@@ -42,7 +42,7 @@ public class MenuLateral {
     public JList lista() {
         
         /* \/ A ordem em que forem adicionados será a ordem em que aparecerá no menu. \/ */
-        nomes.add(form_cadastrar); /* => */ icones.add("icones/cadastrar.png");
+//        nomes.add(form_cadastrar); /* => */ icones.add("icones/cadastrar.png");
         
         /* \/ Criar links no menu para os formulários cadastrados no banco; \/ */
         formularios = banco.obter_dados_da_tabela(SQL.nome_tabela_formulario);
@@ -81,12 +81,12 @@ public class MenuLateral {
         }
         
         
-        nomes.add(pesquisar_editar); /* => */ icones.add("icones/pesquisar_e_editar.png");
+//        nomes.add(pesquisar_editar); /* => */ icones.add("icones/pesquisar_e_editar.png");
         nomes.add(gerar_planilha); /* => */ icones.add("icones/planilha.png");
         //        nomes.add("Lixeira"); /* => */ icones.add("icones/lixo2.png");
 //                nomes.add(backup_banco); /* => */ icones.add("icones/1460597575_document-save.png");
         nomes.add(criar_formulario); /* => */ icones.add("icones/criar.png");
-        nomes.add(historico); /* => */ icones.add("icones/historico.png");
+//        nomes.add(historico); /* => */ icones.add("icones/historico.png");
         nomes.add(temas); /* => */ icones.add("icones/aparencia1.png");
 
         

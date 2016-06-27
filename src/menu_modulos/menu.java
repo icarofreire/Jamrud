@@ -172,18 +172,13 @@ public class menu extends JFrame implements Runnable {
                  String titulo = lista.getSelectedValue().toString();
                  painel_direito.setBorder(BorderFactory.createTitledBorder(titulo));
                  
-                 
-                 if( menu_lateral.se_chave(MenuLateral.form_cadastrar, index) )
-                 {
-                         JPanel painel_cadastrar = new painel_cadastro().painel_p_cadastrar();
-                         painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_cadastrar, "scroll_painel_cadastrar", pos);
-                 }
-                 else if( menu_lateral.se_chave(MenuLateral.pesquisar_editar, index) )
-                 {                        
-                        JPanel pl = operacoes_painel.obter_dados_banco_em_painel_listagem(SQL.nome_tabela);
-                        painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, pl, "scroll_pl", pos);
-                 }
-                 else if( menu_lateral.se_chave("Lixeira", index) )
+//                 if( menu_lateral.se_chave(MenuLateral.pesquisar_editar, index) )
+//                 {                        
+//                        JPanel pl = operacoes_painel.obter_dados_banco_em_painel_listagem(SQL.nome_tabela);
+//                        painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, pl, "scroll_pl", pos);
+//                 }
+//                 else 
+                 if( menu_lateral.se_chave("Lixeira", index) )
                  {
                         operacoes_painel.remover_componentes_painel(painel_direito);
                         painel_direito.add(l_lixeira);
@@ -213,10 +208,16 @@ public class menu extends JFrame implements Runnable {
                         });
                         
                  }
-                 else if( menu_lateral.se_chave(MenuLateral.historico, index) )
+//                 else if( menu_lateral.se_chave(MenuLateral.historico, index) )
+//                 {
+//                        JPanel painel_historico = new painel_historico().painel_p_historico();
+//                        painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_historico, "scroll_painel_cadastrar", pos);
+//                 }
+                 else if( menu_lateral.se_chave(MenuLateral.gerar_planilha, index) )
                  {
-                        JPanel painel_historico = new painel_historico().painel_p_historico();
-                        painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_historico, "scroll_painel_cadastrar", pos);
+                        JPanel painel_formulario = new JPanel();
+                        painel_formulario.add( new JLabel("Gerar planilha (Em construção)") );
+                        painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_formulario, "scroll_painel_cadastrar", pos);
                  }
                  else if( gerar_painel_formularios_cadastrados(index) )
                  {
