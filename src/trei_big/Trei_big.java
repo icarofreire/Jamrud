@@ -106,7 +106,7 @@ public class Trei_big {
         
 
 //        banco.excluir_todas_as_tabelas_criadas();
-//        banco.executar_query( "DELETE FROM " + SQL.nome_tabela_formulario.toUpperCase() );
+//        banco.excluir_formularios_criados();
 //        banco.exibir_tabelas();
         
 

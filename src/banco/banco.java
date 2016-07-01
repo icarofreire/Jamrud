@@ -389,4 +389,9 @@ public class banco {
         
     }
     
+    public static void excluir_formularios_criados()
+    {
+        banco.executar_query( "DELETE FROM " + SQL.nome_tabela_formulario.toUpperCase() );
+    }
+    
 }

@@ -62,9 +62,9 @@ public class SQL {
         return SQL;
     }
     
-    public static String montar_sql_modificar(String campo, String valor_campo, int id)
+    public static String montar_sql_modificar(String nome_da_tabela, String campo, String valor_campo, int id)
     {
-        String SQL = "update "+ nome_tabela +" set "+ campo +" = '"+ valor_campo +"' where id = " + id;
+        String SQL = "update "+ nome_da_tabela +" set "+ campo +" = '"+ valor_campo +"' where id = " + id;
         return SQL;
     }
     

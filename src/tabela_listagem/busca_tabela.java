@@ -103,18 +103,21 @@ public class busca_tabela {// realizar uma busca na tabela de listagem;
         return result;
     }
     
-    public boolean atualizar_registros(DefaultTableModel model)
+    public boolean atualizar_registros(String nome_da_tabela, DefaultTableModel model)
     {
         boolean flag = false;
-        for(int i=0; i<model.getRowCount(); i++)
+        if( model != null )
         {
-                Object[] linha = obter_linha_tabela_normal(model, i);
-                int ID = operacoes_painel.obj_to_int(linha[0]);
-                      
-                for(int j=1; j<model.getColumnCount(); j++){
-                        String sql = SQL.montar_sql_modificar(model.getColumnName(j), linha[j].toString(), ID);
-                        flag = banco.executar_query(sql);
-                }
+            for(int i=0; i<model.getRowCount(); i++)
+            {
+                    Object[] linha = obter_linha_tabela_normal(model, i);
+                    int ID = operacoes_painel.obj_to_int(linha[0]);
+
+                    for(int j=1; j<model.getColumnCount(); j++){
+                            String sql = SQL.montar_sql_modificar(nome_da_tabela, model.getColumnName(j), linha[j].toString(), ID);
+                            flag = banco.executar_query(sql);
+                    }
+            }
         }
         return flag;
     }

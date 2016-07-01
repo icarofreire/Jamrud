@@ -39,7 +39,7 @@ public class popup extends JDialog {
         painel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         JComponent comp = (JComponent) operacoes_painel.deserializar_obj(painel_serializado);
         painel.add( comp, pos.expandir());
-        painel.add(botao_fechar, pos.nextRow().expandW());
+        painel.add(operacoes_painel.add_botao_em_painel(botao_fechar), pos.nextRow().expandW());
         
         
         botao_fechar.addActionListener(new ActionListener() {
@@ -64,7 +64,32 @@ public class popup extends JDialog {
         painel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         JComponent comp = (JComponent) form;
         painel.add( comp, pos.expandir());
-        painel.add(botao_fechar, pos.nextRow().expandW());
+        painel.add(operacoes_painel.add_botao_em_painel(botao_fechar), pos.nextRow().expandW());
+        
+        
+        botao_fechar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                dispose();
+            }
+        });
+        
+        super.setContentPane( operacoes_painel.painel_com_scroll_sem_borda(painel) );
+        super.pack();
+        super.setTitle(titulo_janela);
+        super.setSize(new Dimension(largura, altura));
+        super.setVisible(true);
+        super.setLocationRelativeTo(null);
+        
+    }
+    
+    public popup(String nome_formulario, Object form, int largura, int altura) {
+      
+        this.titulo_janela = nome_formulario;
+        painel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        JComponent comp = (JComponent) form;
+        painel.add( comp, pos.expandir());
+        painel.add(operacoes_painel.add_botao_em_painel(botao_fechar), pos.nextRow().expandW());
         
         
         botao_fechar.addActionListener(new ActionListener() {

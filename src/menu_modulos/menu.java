@@ -177,7 +177,21 @@ public class menu extends JFrame implements Runnable {
                        String titulo = valor_selecionado.toString();
                        painel_direito.setBorder(BorderFactory.createTitledBorder(titulo));
 
-                       if( menu_lateral.se_chave("Lixeira", index) )
+                       if( menu_lateral.se_chave(MenuLateral.form_cadastrar, index) )
+                       {
+                              JPanel painel_temas = new painel_selecionar_formulario().painel_selecionar_forms();
+                              JPanel p_intermediario = new JPanel();
+                              p_intermediario.add(painel_temas);
+                              painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, p_intermediario, "scroll_painel_temas", pos);
+                       }
+                       else if( menu_lateral.se_chave(MenuLateral.pesquisar_editar, index) )
+                       {
+                              JPanel pl = new painel_selecionar_tabela().painel_selecionar_tabela_forms();
+                              JPanel p_intermediario = new JPanel();
+                              p_intermediario.add(pl);
+                              painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, p_intermediario, "scroll_pl", pos);
+                       }
+                       else if( menu_lateral.se_chave("Lixeira", index) )
                        {
                               operacoes_painel.remover_componentes_painel(painel_direito);
                               painel_direito.add(l_lixeira);
@@ -224,11 +238,13 @@ public class menu extends JFrame implements Runnable {
                        }
                        else if( menu_lateral.se_chave(titulo, index) )
                        {
-                              titulo = titulo.substring(titulo.indexOf(":")+1).trim();
+                              System.out.println("titulo:"+titulo);
+                              titulo = titulo.substring(titulo.indexOf(":")+1);
                               if( banco.se_tabela_existe(titulo) )
                               {
                                   JPanel pl = operacoes_painel.obter_dados_banco_em_painel_listagem(titulo);
                                   painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, pl, "scroll_pl", pos);
+                                  System.out.println("exibir tabela:"+titulo);
                               }
                        }
                        else
@@ -371,25 +387,25 @@ public class menu extends JFrame implements Runnable {
 
     @Override
     public void run() {
-        while(true)
-        {
-            try {
-                    Thread.sleep(um_segundo * 2);
-                    menu_modulos.MenuLateral mm = new menu_modulos.MenuLateral();
-                    
-                    JList nl = mm.lista();
-                    ListModel lm = nl.getModel();
-                    if( lm.getSize() > this.lista.getModel().getSize() )
-                    {
-                        lista.setModel( lm );
-                        lista.setCellRenderer(new MenuLateralRenderer_2(mm.getMap()));
-                        lista = nl;
-                        menu_lateral = mm;
-                    }
-            } catch (InterruptedException ex) {
-                   break;
-            }
-        }
+//        while(true)
+//        {
+//            try {
+//                    Thread.sleep(um_segundo * 2);
+//                    menu_modulos.MenuLateral mm = new menu_modulos.MenuLateral();
+//                    
+//                    JList nl = mm.lista();
+//                    ListModel lm = nl.getModel();
+//                    if( lm.getSize() > this.lista.getModel().getSize() )
+//                    {
+//                        lista.setModel( lm );
+//                        lista.setCellRenderer(new MenuLateralRenderer_2(mm.getMap()));
+//                        lista = nl;
+//                        menu_lateral = mm;
+//                    }
+//            } catch (InterruptedException ex) {
+//                   break;
+//            }
+//        }
     }
     
 }

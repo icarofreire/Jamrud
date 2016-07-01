@@ -251,9 +251,10 @@ public class listagem extends JPanel {
             public void actionPerformed(ActionEvent ae) {
                     editar.setEnabled(false);
                     
-//                  System.out.println("Editar registros.");
-                  
-                  if( busca.atualizar_registros(model) && busca.atualizar_registros(linhas_resultado_busca) ){
+                  System.out.println("Editar registros em:" + nome_da_tabela);
+                  System.out.println("model: "+model);
+                  System.out.println("linhas_resultado_busca: "+linhas_resultado_busca);
+                  if( busca.atualizar_registros(nome_da_tabela, model) && busca.atualizar_registros(nome_da_tabela, linhas_resultado_busca) ){
                         aviso.mensagem_sucesso("Registros atualizados com sucesso!");
                   }
                   
