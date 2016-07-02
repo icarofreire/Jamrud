@@ -49,7 +49,7 @@ public class painel_selecionar_formulario {
     private GBHelper pos_painel_interno = new GBHelper();
     
     private JLabel lcmp1 = new JLabel("Escolha o formulário que deseja utilizar:");
-    private JComboBox temas = new JComboBox();
+    private JComboBox select = new JComboBox();
     private JButton aplicar = new JButton("Exibir", new ImageIcon("icones/aplicar-32.png"));
     
     private DefaultComboBoxModel model = new DefaultComboBoxModel();
@@ -59,7 +59,7 @@ public class painel_selecionar_formulario {
         
         painel_interno.setName("painel_interno_para_selecionar_formularios");
         painel_interno.add(lcmp1, pos_painel_interno.expandW());
-        painel_interno.add(temas, pos_painel_interno.nextRow().expandW());
+        painel_interno.add(select, pos_painel_interno.nextRow().expandW());
         painel_interno.add(new Gap(GAP) , pos_painel_interno.nextCol());  // Add a gap below
         painel_interno.add(aplicar, pos_painel_interno.nextCol().expandW());
         painel_interno.add(new Gap(GAP) , pos_painel_interno.nextRow());  // Add a gap below
@@ -77,19 +77,19 @@ public class painel_selecionar_formulario {
             model.addElement(form.get(1).replaceAll("_", " "));
         }
         
-        temas.setModel(model);
+        select.setModel(model);
         
         
         aplicar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 
-                int ind = temas.getSelectedIndex();                
+                int ind = select.getSelectedIndex();                
                 if( ind > 0 )
                 {
                     System.out.println("selecionado: " + ind );
                     try{
-                            String form = temas.getSelectedItem().toString().replaceAll(" ", "_");
+                            String form = select.getSelectedItem().toString().replaceAll(" ", "_");
                             if( nome_hash_form.containsKey(form) )
                             {
                                 operacoes_painel.remover_componente_em_painel(painel, "formulario_deserializado_do_banco");
@@ -149,7 +149,7 @@ public class painel_selecionar_formulario {
                                             
                                             operacoes_painel.remover_componente_em_painel(painel, "formulario_deserializado_do_banco");
                                             operacoes_painel.atualizar_painel(painel);
-                                            temas.setSelectedIndex(0);
+                                            select.setSelectedIndex(0);
                                         }
                                     }
                                     else{

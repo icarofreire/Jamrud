@@ -216,16 +216,12 @@ public class menu extends JFrame {
                               });
 
                        }
-      //                 else if( menu_lateral.se_chave(MenuLateral.historico, index) )
-      //                 {
-      //                        JPanel painel_historico = new painel_historico().painel_p_historico();
-      //                        painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_historico, "scroll_painel_cadastrar", pos);
-      //                 }
                        else if( menu_lateral.se_chave(MenuLateral.gerar_planilha, index) )
                        {
-                              JPanel painel_formulario = new JPanel();
-                              painel_formulario.add( new JLabel("Gerar planilha (Em construção)") );
-                              painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_formulario, "scroll_painel_cadastrar", pos);
+                              JPanel painel_formulario = new painel_criar_planilha_excel().painel_criar_planilha();
+                              JPanel p_intermediario = new JPanel();
+                              p_intermediario.add(painel_formulario);
+                              painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, p_intermediario, "scroll_painel_cadastrar", pos);
                        }
                        else
                        {

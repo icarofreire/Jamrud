@@ -48,7 +48,7 @@ public class painel_selecionar_tabela {
     private GBHelper pos_painel_interno = new GBHelper();
     
     private JLabel lcmp1 = new JLabel("Escolha a tabela que deseja utilizar:");
-    private JComboBox temas = new JComboBox();
+    private JComboBox select = new JComboBox();
     private JButton exibir = new JButton("Exibir", new ImageIcon("icones/exibir-popup-32.png"));
     private JButton exibir_abaixo = new JButton("Exibir abaixo", new ImageIcon("icones/aplicar-32.png"));
     
@@ -59,7 +59,7 @@ public class painel_selecionar_tabela {
         
         painel_interno.setName("painel_interno_para_selecionar_formularios");
         painel_interno.add(lcmp1, pos_painel_interno.expandW());
-        painel_interno.add(temas, pos_painel_interno.nextRow().expandW());
+        painel_interno.add(select, pos_painel_interno.nextRow().expandW());
         painel_interno.add(new Gap(GAP) , pos_painel_interno.nextCol());  // Add a gap below
         painel_interno.add(exibir, pos_painel_interno.nextCol().expandW());
         painel_interno.add(exibir_abaixo, pos_painel_interno.nextCol().expandW());
@@ -78,19 +78,19 @@ public class painel_selecionar_tabela {
             model.addElement(form.get(1).replaceAll("_", " "));
         }
         
-        temas.setModel(model);
+        select.setModel(model);
         
         
         exibir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 
-                int ind = temas.getSelectedIndex();                
+                int ind = select.getSelectedIndex();                
                 if( ind > 0 )
                 {
 //                    System.out.println("selecionado: " + ind );
                     try{
-                            String form = temas.getSelectedItem().toString().replaceAll(" ", "_");
+                            String form = select.getSelectedItem().toString().replaceAll(" ", "_");
                             if( nome_hash_form.containsKey(form) )
                             {
                                 operacoes_painel.remover_componente_em_painel(painel, "tabela_de_dados_do_formulario");
@@ -116,12 +116,12 @@ public class painel_selecionar_tabela {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 
-                int ind = temas.getSelectedIndex();                
+                int ind = select.getSelectedIndex();                
                 if( ind > 0 )
                 {
 //                    System.out.println("selecionado: " + ind );
                     try{
-                            String form = temas.getSelectedItem().toString().replaceAll(" ", "_");
+                            String form = select.getSelectedItem().toString().replaceAll(" ", "_");
                             if( nome_hash_form.containsKey(form) )
                             {
                                 operacoes_painel.remover_componente_em_painel(painel, "tabela_de_dados_do_formulario");
