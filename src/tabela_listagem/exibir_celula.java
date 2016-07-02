@@ -37,7 +37,7 @@ public class exibir_celula extends JDialog {
     private int largura = 500;
     private int altura = 200;
 
-    public void exibir_valor_celula(String titulo_janela, String texto) {
+    public exibir_celula(String titulo_janela, String texto) {
       
         campo_valor.setText(texto);
         campo_valor.setEditable(false);

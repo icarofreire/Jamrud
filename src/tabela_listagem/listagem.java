@@ -54,7 +54,7 @@ public class listagem extends JPanel {
     
     //... classes
 //    private estado_editar estado = new estado_editar();
-    private exibir_celula popup = new exibir_celula();
+//    private exibir_celula popup = new exibir_celula();
     private busca_tabela busca = new busca_tabela();
     
     //... models da tabela
@@ -184,7 +184,7 @@ public class listagem extends JPanel {
                     int linha = table.rowAtPoint(me.getPoint());
                     int coluna = table.columnAtPoint(me.getPoint());
                     
-                    popup.exibir_valor_celula(
+                    new exibir_celula(
                             table.getColumnName(coluna) + ": " + table.getValueAt(linha, 0), 
                             table.getValueAt(linha, coluna).toString()
                     );
