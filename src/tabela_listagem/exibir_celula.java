@@ -22,6 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import trei_big.operacoes_painel;
 
 /**
  *
@@ -32,7 +33,7 @@ public class exibir_celula extends JDialog {
     private JPanel painel = new JPanel(new GridBagLayout());
     private GBHelper pos = new GBHelper();
     private JTextArea campo_valor = new JTextArea();
-    private JButton botao_fechar = new JButton("Fechar");
+    private JButton botao_fechar = new JButton("Fechar", new ImageIcon("icones/erro-24.png"));
     private int largura = 500;
     private int altura = 200;
 
@@ -50,7 +51,7 @@ public class exibir_celula extends JDialog {
         painel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         
         painel.add(scroll_observacoes, pos.expandir());
-        painel.add(botao_fechar, pos.nextRow().expandW());
+        painel.add(operacoes_painel.add_botao_em_painel(botao_fechar), pos.nextRow().expandW());
         
         
         botao_fechar.addActionListener(new ActionListener() {

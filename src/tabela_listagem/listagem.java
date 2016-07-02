@@ -251,11 +251,21 @@ public class listagem extends JPanel {
             public void actionPerformed(ActionEvent ae) {
                     editar.setEnabled(false);
                     
-                  System.out.println("Editar registros em:" + nome_da_tabela);
-                  System.out.println("model: "+model);
-                  System.out.println("linhas_resultado_busca: "+linhas_resultado_busca);
-                  if( busca.atualizar_registros(nome_da_tabela, model) && busca.atualizar_registros(nome_da_tabela, linhas_resultado_busca) ){
-                        aviso.mensagem_sucesso("Registros atualizados com sucesso!");
+//                  System.out.println("Editar registros em:" + nome_da_tabela);
+//                  System.out.println("model: "+model);
+//                  System.out.println("linhas_resultado_busca: "+linhas_resultado_busca);
+                  
+                  boolean fs1 = false;
+                  boolean fs2 = false;
+                  
+                  if( busca.atualizar_registros(nome_da_tabela, model) ){
+                      fs1 = true;
+                  }
+                  if( busca.atualizar_registros(nome_da_tabela, linhas_resultado_busca) ){
+                      fs2 = true;  
+                  }
+                  if( fs1 || fs2 ){
+                      aviso.mensagem_sucesso("Registros atualizados com sucesso!");
                   }
                   
             }
@@ -352,7 +362,11 @@ public class listagem extends JPanel {
         painel_principal.add(new Gap(GAP) , pos.nextRow());
         painel_principal.add(new Gap(GAP) , pos.nextRow());
         
-        painel_principal.add(TableExample(), pos.width(this.n_colunas_tabela+1).expandir());
+        if( this.n_colunas_tabela <= 3 ){
+            painel_principal.add(TableExample(), pos.width(5).expandir());
+        }else{
+            painel_principal.add(TableExample(), pos.width(this.n_colunas_tabela+1).expandir());
+        }
         
         painel_principal.add(new Gap(GAP) , pos.nextRow());
         painel_principal.add(new Gap(GAP) , pos.nextRow());

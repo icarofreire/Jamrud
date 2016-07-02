@@ -96,7 +96,7 @@ public class painel_selecionar_formulario {
                                 String hash = nome_hash_form.get(form);
                                 JPanel painel_formulario = (JPanel) operacoes_painel.deserializar_obj( hash );
                                 painel_formulario.setName("formulario_deserializado_do_banco");
-                                painel_formulario.setBorder(BorderFactory.createTitledBorder(form.replaceAll("_", " ")));
+//                                painel_formulario.setBorder(BorderFactory.createTitledBorder(form.replaceAll("_", " ")));
                                 painel.add(painel_formulario , pos.nextRow());
                                 operacoes_painel.atualizar_painel(painel);
                                 eventos_botao_enviar_e_data_hora(form, painel_formulario);                                
@@ -146,6 +146,10 @@ public class painel_selecionar_formulario {
                                         String sql_inserir = SQL.montar_sql_insert(nome_tabela_cadastrar, titulos, dados);
                                         if( banco.executar_query(sql_inserir) ){
                                             aviso.mensagem_sucesso("Informações inseridas com sucesso!");
+                                            
+                                            operacoes_painel.remover_componente_em_painel(painel, "formulario_deserializado_do_banco");
+                                            operacoes_painel.atualizar_painel(painel);
+                                            temas.setSelectedIndex(0);
                                         }
                                     }
                                     else{

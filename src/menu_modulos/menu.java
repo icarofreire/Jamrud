@@ -191,16 +191,11 @@ public class menu extends JFrame {
                               p_intermediario.add(pl);
                               painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, p_intermediario, "scroll_pl", pos);
                        }
-                       else if( menu_lateral.se_chave("Lixeira", index) )
-                       {
-                              operacoes_painel.remover_componentes_painel(painel_direito);
-                              painel_direito.add(l_lixeira);
-                       }
-                       else if( menu_lateral.se_chave(MenuLateral.backup_banco, index) )
-                       {
-                              JPanel painel_backup = new painel_backup().painel_p_backup();
-                              painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_backup, "scroll_painel_backup", pos);
-                       }
+//                       else if( menu_lateral.se_chave(MenuLateral.backup_banco, index) )
+//                       {
+//                              JPanel painel_backup = new painel_backup().painel_p_backup();
+//                              painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_backup, "scroll_painel_backup", pos);
+//                       }
                        else if( menu_lateral.se_chave(MenuLateral.temas, index) )
                        {
                               JPanel painel_temas = new painel_temas().painel_p_temas();
@@ -232,21 +227,6 @@ public class menu extends JFrame {
                               painel_formulario.add( new JLabel("Gerar planilha (Em construção)") );
                               painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_formulario, "scroll_painel_cadastrar", pos);
                        }
-                       else if( gerar_painel_formularios_cadastrados(index) )
-                       {
-                              /* Aqui são criados as GUI's dos formulários criados e registrados no banco. */
-                       }
-                       else if( menu_lateral.se_chave(titulo, index) )
-                       {
-                              System.out.println("titulo:"+titulo);
-                              titulo = titulo.substring(titulo.indexOf(":")+1);
-                              if( banco.se_tabela_existe(titulo) )
-                              {
-                                  JPanel pl = operacoes_painel.obter_dados_banco_em_painel_listagem(titulo);
-                                  painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, pl, "scroll_pl", pos);
-                                  System.out.println("exibir tabela:"+titulo);
-                              }
-                       }
                        else
                        {
                               JPanel painel_formulario = new JPanel();
@@ -260,130 +240,6 @@ public class menu extends JFrame {
         
         return painel_esquerdo;
     }
-
-     private boolean gerar_painel_formularios_cadastrados(final int index)
-     {
-        boolean f = false; 
-        if( (menu_lateral.formularios != null) && (!menu_lateral.formularios.isEmpty()) )
-        {
-            for(int i=0; i<menu_lateral.formularios.size(); i++){
-                Vector<String> linha = menu_lateral.formularios.get(i);
-                if( !linha.lastElement().isEmpty() )
-                {
-                    String nome_formulario = linha.get(1);
-                    final String nome_tabela_cadastrar = nome_formulario;
-                    
-                    String token_procurar = "_";
-                    String token_substituir = " ";
-                    if( nome_formulario.indexOf(token_procurar) != -1 ){
-                        nome_formulario = nome_formulario.replaceAll(token_procurar, token_substituir);
-                    }
-                    
-                    String hash = linha.get(2);
-                    if( menu_lateral.se_chave(nome_formulario, index) )
-                    {
-                        final JPanel painel_formulario = (JPanel) operacoes_painel.deserializar_obj( hash );
-//                        operacoes_painel.exibir_names_em_painel(painel_formulario);
-                        
-                        JPanel p_botao = (JPanel) operacoes_painel.pegar_componente_em_painel(painel_formulario, prefixos.prefixo_painel_interno_para_botao);
-                        JButton btn_enviar = (JButton) operacoes_painel.pegar_componente_em_painel(p_botao, prefixos.prefixo_botao_enviar);
-                        
-                        final obter_dados_formulario dados_form = new obter_dados_formulario();
-                        
-                        // \/\/ >> aqui o evento do click no botao ENVIAR em cada formulário; << \/\/
-                        if( btn_enviar != null )
-                        {
-                            btn_enviar.addActionListener(new ActionListener(){
-                                @Override
-                                public void actionPerformed(ActionEvent ae) {
-                                    System.out.println("ENVIAR");
-                                    
-                                    dados_form.apagar_dados();
-                                    dados_form.zerar_numero_painel_radios();
-                                    dados_form.quantos_paineis_radios(painel_formulario);
-                                    dados_form.buscar_componentes_recursivo(painel_formulario);
-                                    
-                                    if( dados_form.verifica_se_radios_selecionados() )
-                                    {
-                                        String[] titulos = dados_form.getTitulos().toArray(new String[]{});
-                                        String[] dados = dados_form.getDados().toArray(new String[]{});
-                                        String sql_inserir = SQL.montar_sql_insert(nome_tabela_cadastrar, titulos, dados);
-                                        if( banco.executar_query(sql_inserir) ){
-                                            aviso.mensagem_sucesso("Informações inseridas com sucesso!");
-                                            lista.setSelectedIndex(index);
-                                        }
-                                    }
-                                    else{
-                                        aviso.mensagem_atencao("Campo de opções vazio", "Selecione uma opção");
-                                    }
-                                    
-                                }
-                            });
-                        }
-                        // /\/\ >> aqui o evento do click no botao ENVIAR em cada formulário; << /\/\
-                        
-
-                        // \/\/ >> aqui os eventos dos campos de data e hora; << \/\/
-                        Vector<Component> paineis_campo_hora = operacoes_painel.pegar_todos_componentes_em_painel_com_prefixo(painel_formulario, prefixos.prefixo_painel_criar_campo_hora);
-                        if( paineis_campo_hora != null )
-                        {
-                            for (int j = 0; j < paineis_campo_hora.size(); j++) {
-                                JPanel p_hora = (JPanel) paineis_campo_hora.get(j);
-                                JPanel p_int = (JPanel) operacoes_painel.pegar_componente_em_painel(p_hora, prefixos.prefixo_painel_interno);
-                                if( p_int != null )
-                                {
-                                    final JTextField hora = (JTextField) operacoes_painel.pegar_componente_em_painel(p_int, prefixos.prefixo_campo_hora);
-
-                                    hora.addFocusListener(new FocusListener(){
-                                        @Override
-                                        public void focusGained(FocusEvent fe) {
-                                            hora.setCaretPosition(0);
-                                        }
-
-                                        @Override
-                                        public void focusLost(FocusEvent fe) {}
-                                    });
-                                }
-                            }
-                        }
-                        
-                        //***
-                        
-                        Vector<Component> paineis_campo_data = operacoes_painel.pegar_todos_componentes_em_painel_com_prefixo(painel_formulario, prefixos.prefixo_painel_criar_campo_data);
-                        if( paineis_campo_data != null )
-                        {
-                            for (int j = 0; j < paineis_campo_data.size(); j++) {
-                                JPanel p_data = (JPanel) paineis_campo_data.get(j);
-                                JPanel p_int = (JPanel) operacoes_painel.pegar_componente_em_painel(p_data, prefixos.prefixo_painel_interno);
-                                if( p_int != null )
-                                {
-                                    final JTextField data = (JTextField) operacoes_painel.pegar_componente_em_painel(p_int, prefixos.prefixo_campo_data);
-
-                                    data.addFocusListener(new FocusListener(){
-                                        @Override
-                                        public void focusGained(FocusEvent fe) {
-                                            data.setCaretPosition(0);
-                                        }
-
-                                        @Override
-                                        public void focusLost(FocusEvent fe) {}
-                                    });
-                                }
-                            }
-                        }
-                        // /\/\ >> aqui os eventos dos campos de data e hora; << /\/\
-                                
-                        JPanel painel_centralizar = new JPanel(new FlowLayout(FlowLayout.CENTER));
-                        painel_centralizar.setName( operacoes.gerar_name_para_componente(prefixos.prefixo_painel_centralizar) );
-                        painel_centralizar.add(painel_formulario);
-                        painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_centralizar, "scroll_painel_cadastrar", pos);
-                        f = true;
-                    }
-                }
-            }
-        }
-        return f;
-     }
     
 }
 
