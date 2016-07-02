@@ -268,27 +268,32 @@ public class menu extends JFrame {
                                 }
                                 if( (titulos_aceitos == titulos.length) )
                                 {
-                                    if( titulos_aceitos > 0 ){
-                                        /* \/\/ COMENTADO APENAS PARA FINS DE TESTE;
-                                        PARA NÃO CRIAR TABELAS GERADAS PELOS TESTES. \/\/ */
+                                    if( !banco.se_tabela_criada_ja_existe(nome) )
+                                    {
+                                        if( titulos_aceitos > 0 ){
+                                            /* \/\/ COMENTADO APENAS PARA FINS DE TESTE;
+                                            PARA NÃO CRIAR TABELAS GERADAS PELOS TESTES. \/\/ */
+
+                                            banco.executar_query( SQL.montar_sql_criar_tabela(titulos, nome) );
+
+                                            /* /\/\ COMENTADO APENAS PARA FINS DE TESTE;
+                                            PARA NÃO CRIAR TABELAS GERADAS PELOS TESTES. /\/\ */
+                                        }
                                         
-                                        banco.executar_query( SQL.montar_sql_criar_tabela(titulos, nome) );
-                                        
-                                        /* /\/\ COMENTADO APENAS PARA FINS DE TESTE;
-                                        PARA NÃO CRIAR TABELAS GERADAS PELOS TESTES. /\/\ */
+                                        JPanel painel_a_serializar = remover_bordas_vermelhas_e_botes_excluir();
+                                        String painel_baixo_serializado = operacoes_painel.serializar_obj( painel_a_serializar );
+
+                                        banco.inserir_hash_formulario_serializado(nome, painel_baixo_serializado);
+
+                                        painel_baixo.removeAll();
+                                        painel_baixo.setBorder(BorderFactory.createTitledBorder("Formulário gerado"));
+                                        operacoes_painel.atualizar_painel(painel_baixo);
+                                        aviso.mensagem_sucesso("Formulário construído com sucesso!");
+                                        dispose();
+                                        operacoes_painel.atualizar_painel(painel_esquerdo);
+                                    }else{
+                                        aviso.mensagem_atencao("Já existe um formulário criado com este nome: '" + nome + "'.\nInsira um nome diferente.");
                                     }
-                                            JPanel painel_a_serializar = remover_bordas_vermelhas_e_botes_excluir();
-                                            String painel_baixo_serializado = operacoes_painel.serializar_obj( painel_a_serializar );
-
-                                            banco.inserir_hash_formulario_serializado(nome, painel_baixo_serializado);
-
-                                            painel_baixo.removeAll();
-                                            painel_baixo.setBorder(BorderFactory.createTitledBorder("Formulário gerado"));
-                                            operacoes_painel.atualizar_painel(painel_baixo);
-                                            aviso.mensagem_sucesso("Formulário construído com sucesso!");
-                                            dispose();
-                                            operacoes_painel.atualizar_painel(painel_esquerdo);
-                                    
                                 }
                             }else{
                                 aviso.mensagem_atencao("Existe titulos iguais em seu formulário,\n"

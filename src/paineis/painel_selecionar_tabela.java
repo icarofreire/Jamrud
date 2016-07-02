@@ -19,6 +19,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.HashMap;
 import java.util.Vector;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -28,6 +29,7 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 import menu_modulos.obter_dados_formulario;
 import trei_big.aviso;
 import trei_big.operacoes_painel;
@@ -86,7 +88,7 @@ public class painel_selecionar_tabela {
                 int ind = temas.getSelectedIndex();                
                 if( ind > 0 )
                 {
-                    System.out.println("selecionado: " + ind );
+//                    System.out.println("selecionado: " + ind );
                     try{
                             String form = temas.getSelectedItem().toString().replaceAll(" ", "_");
                             if( nome_hash_form.containsKey(form) )
@@ -117,7 +119,7 @@ public class painel_selecionar_tabela {
                 int ind = temas.getSelectedIndex();                
                 if( ind > 0 )
                 {
-                    System.out.println("selecionado: " + ind );
+//                    System.out.println("selecionado: " + ind );
                     try{
                             String form = temas.getSelectedItem().toString().replaceAll(" ", "_");
                             if( nome_hash_form.containsKey(form) )
@@ -125,7 +127,7 @@ public class painel_selecionar_tabela {
                                 operacoes_painel.remover_componente_em_painel(painel, "tabela_de_dados_do_formulario");
                                 JPanel pl = operacoes_painel.obter_dados_banco_em_painel_listagem(form);
                                 pl.setName("tabela_de_dados_do_formulario");
-                                
+                                pl.setBorder(BorderFactory.createTitledBorder(form.replaceAll("_", " ")));
                                 painel.add(pl , pos.nextRow());
                                 operacoes_painel.atualizar_painel(painel);
                             }

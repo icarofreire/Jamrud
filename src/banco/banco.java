@@ -389,6 +389,57 @@ public class banco {
         
     }
     
+    public static boolean se_tabela_criada_ja_existe(String nome_da_nova_tabela)
+    {
+        boolean f = false;
+        Vector<String> tabelas_padrao_JavaDB = new Vector<String>();
+        tabelas_padrao_JavaDB.add( "SYSALIASES" );
+        tabelas_padrao_JavaDB.add( "SYSCHECKS" );
+        tabelas_padrao_JavaDB.add( "SYSCOLPERMS" );
+        tabelas_padrao_JavaDB.add( "SYSCOLUMNS" );
+        tabelas_padrao_JavaDB.add( "SYSCONGLOMERATES" );
+        tabelas_padrao_JavaDB.add( "SYSCONSTRAINTS" );
+        tabelas_padrao_JavaDB.add( "SYSDEPENDS" );
+        tabelas_padrao_JavaDB.add( "SYSFILES" );
+        tabelas_padrao_JavaDB.add( "SYSFOREIGNKEYS" );
+        tabelas_padrao_JavaDB.add( "SYSKEYS" );
+        tabelas_padrao_JavaDB.add( "SYSPERMS" );
+        tabelas_padrao_JavaDB.add( "SYSROLES" );
+        tabelas_padrao_JavaDB.add( "SYSROUTINEPERMS" );
+        tabelas_padrao_JavaDB.add( "SYSSCHEMAS" );
+        tabelas_padrao_JavaDB.add( "SYSSEQUENCES" );
+        tabelas_padrao_JavaDB.add( "SYSSTATEMENTS" );
+        tabelas_padrao_JavaDB.add( "SYSSTATISTICS" );
+        tabelas_padrao_JavaDB.add( "SYSTABLEPERMS" );
+        tabelas_padrao_JavaDB.add( "SYSTABLES" );
+        tabelas_padrao_JavaDB.add( "SYSTRIGGERS" );
+        tabelas_padrao_JavaDB.add( "SYSUSERS" );
+        tabelas_padrao_JavaDB.add( "SYSVIEWS" );
+        tabelas_padrao_JavaDB.add( "SYSDUMMY1" );
+        tabelas_padrao_JavaDB.add( "ADDRESS" );
+        tabelas_padrao_JavaDB.add( "FORMULARIOS_CADASTROS" );
+        //---
+        
+        conectar_banco();
+        Statement statement = null;
+        try {
+            statement = conn.createStatement();
+            ResultSet results = conn.getMetaData().getTables(null, null, null, null);
+            while(results.next()) {
+                if( tabelas_padrao_JavaDB.contains(results.getString("TABLE_NAME")) == false )
+                {
+                    if( results.getString("TABLE_NAME").equalsIgnoreCase(nome_da_nova_tabela) ){
+                        f = true; break;
+                    }
+                }
+            }
+            results.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return f;
+    }
+    
     public static void excluir_formularios_criados()
     {
         banco.executar_query( "DELETE FROM " + SQL.nome_tabela_formulario.toUpperCase() );

@@ -20,6 +20,7 @@ import java.awt.event.FocusListener;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -95,6 +96,7 @@ public class painel_selecionar_formulario {
                                 String hash = nome_hash_form.get(form);
                                 JPanel painel_formulario = (JPanel) operacoes_painel.deserializar_obj( hash );
                                 painel_formulario.setName("formulario_deserializado_do_banco");
+                                painel_formulario.setBorder(BorderFactory.createTitledBorder(form.replaceAll("_", " ")));
                                 painel.add(painel_formulario , pos.nextRow());
                                 operacoes_painel.atualizar_painel(painel);
                                 eventos_botao_enviar_e_data_hora(form, painel_formulario);                                

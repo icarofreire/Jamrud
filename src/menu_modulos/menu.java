@@ -59,7 +59,7 @@ import tabela_listagem.exibir_listagem;
  *
  * @author icaro
  */
-public class menu extends JFrame implements Runnable {
+public class menu extends JFrame {
     
     private MenuLateral menu_lateral;
     private GBHelper pos = new GBHelper();
@@ -384,29 +384,6 @@ public class menu extends JFrame implements Runnable {
         }
         return f;
      }
-
-    @Override
-    public void run() {
-//        while(true)
-//        {
-//            try {
-//                    Thread.sleep(um_segundo * 2);
-//                    menu_modulos.MenuLateral mm = new menu_modulos.MenuLateral();
-//                    
-//                    JList nl = mm.lista();
-//                    ListModel lm = nl.getModel();
-//                    if( lm.getSize() > this.lista.getModel().getSize() )
-//                    {
-//                        lista.setModel( lm );
-//                        lista.setCellRenderer(new MenuLateralRenderer_2(mm.getMap()));
-//                        lista = nl;
-//                        menu_lateral = mm;
-//                    }
-//            } catch (InterruptedException ex) {
-//                   break;
-//            }
-//        }
-    }
     
 }
 

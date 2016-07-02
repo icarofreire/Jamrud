@@ -24,7 +24,7 @@ import javax.swing.JList;
 public class MenuLateral {
     
     /* \/\/ Titulo para os modulos no menu; \/\/ */
-    public static String form_cadastrar = "Cadastrar";
+    public static String form_cadastrar = "Formulários";
     public static String pesquisar_editar = "Pesquisar/Editar";
     public static String backup_banco = "Backup";
     public static String temas = "Aparência";

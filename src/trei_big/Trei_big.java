@@ -55,7 +55,6 @@ public class Trei_big {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                menu m = new menu(titulo);
-               Thread t = new Thread(m);t.start();
                m.setVisible(true);
             }
         });
@@ -108,7 +107,6 @@ public class Trei_big {
 //        banco.excluir_todas_as_tabelas_criadas();
 //        banco.excluir_formularios_criados();
 //        banco.exibir_tabelas();
-        
 
         
     }
