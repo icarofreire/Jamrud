@@ -28,7 +28,7 @@ public class MenuLateral {
     public static String pesquisar_editar = "Pesquisar/Editar";
     public static String backup_banco = "Backup";
     public static String temas = "Aparência";
-//    public static String historico = "Historico";
+    public static String historico = "Historico";
     public static String criar_formulario = "Criar formulário";
     public static String gerar_planilha = "Gerar planilha";
     
@@ -86,7 +86,7 @@ public class MenuLateral {
         //        nomes.add("Lixeira"); /* => */ icones.add("icones/lixo2.png");
 //                nomes.add(backup_banco); /* => */ icones.add("icones/1460597575_document-save.png");
         nomes.add(criar_formulario); /* => */ icones.add("icones/criar.png");
-//        nomes.add(historico); /* => */ icones.add("icones/historico.png");
+        nomes.add(historico); /* => */ icones.add("icones/historico.png");
         nomes.add(temas); /* => */ icones.add("icones/aparencia1.png");
 
         

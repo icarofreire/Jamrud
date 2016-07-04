@@ -28,10 +28,14 @@ public class popup extends JDialog {
     
     private JPanel painel = new JPanel(new GridBagLayout());
     private GBHelper pos = new GBHelper();
+    private JTextArea campo_exibir_texto = new JTextArea();
     private JButton botao_fechar = new JButton("Fechar", new ImageIcon("icones/erro-24.png"));
     private int largura = 600;
     private int altura = 600;
     private String titulo_janela;
+
+    public popup() {
+    }
     
     public popup(String nome_formulario, String painel_serializado) {
       
@@ -55,7 +59,6 @@ public class popup extends JDialog {
         super.setSize(new Dimension(largura, altura));
         super.setVisible(true);
         super.setLocationRelativeTo(null);
-        
     }
     
     public popup(String nome_formulario, Object form) {
@@ -80,7 +83,6 @@ public class popup extends JDialog {
         super.setSize(new Dimension(largura, altura));
         super.setVisible(true);
         super.setLocationRelativeTo(null);
-        
     }
     
     public popup(String nome_formulario, Object form, int largura, int altura) {
@@ -105,7 +107,40 @@ public class popup extends JDialog {
         super.setSize(new Dimension(largura, altura));
         super.setVisible(true);
         super.setLocationRelativeTo(null);
+    }
+    
+    public void exibir_texto(String titulo_janela, String texto) {
         
+        this.largura = 500;
+        this.altura = 200;
+    
+        campo_exibir_texto.setText(texto);
+        campo_exibir_texto.setEditable(false);
+        campo_exibir_texto.setColumns(20);
+        campo_exibir_texto.setRows(5);
+        JScrollPane scroll_observacoes = new JScrollPane();
+        scroll_observacoes.setViewportView(campo_exibir_texto);
+        scroll_observacoes.setViewportBorder(null);// <= remover a borda quadrada do scroll dentro do painel;
+        
+        painel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        
+        painel.add(scroll_observacoes, pos.expandir());
+        painel.add(operacoes_painel.add_botao_em_painel(botao_fechar), pos.nextRow().expandW());
+        
+        
+        botao_fechar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                dispose();
+            }
+        });
+        
+        super.setContentPane(painel);
+        super.pack();
+        super.setTitle(titulo_janela);
+        super.setSize(new Dimension(largura, altura));
+        super.setVisible(true);
+        super.setLocationRelativeTo(null);
     }
     
 }

@@ -179,27 +179,29 @@ public class menu extends JFrame {
 
                        if( menu_lateral.se_chave(MenuLateral.form_cadastrar, index) )
                        {
-                              JPanel painel_temas = new painel_selecionar_formulario().painel_selecionar_forms();
+                              JPanel painel_cadastrar = new painel_selecionar_formulario().painel_selecionar_forms();
                               JPanel p_intermediario = new JPanel();
-                              p_intermediario.add(painel_temas);
+                              p_intermediario.add(painel_cadastrar);
                               painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, p_intermediario, "scroll_painel_temas", pos);
                        }
                        else if( menu_lateral.se_chave(MenuLateral.pesquisar_editar, index) )
                        {
-                              JPanel pl = new painel_selecionar_tabela().painel_selecionar_tabela_forms();
+                              JPanel painel_pesquisar_editar = new painel_selecionar_tabela().painel_selecionar_tabela_forms();
                               JPanel p_intermediario = new JPanel();
-                              p_intermediario.add(pl);
+                              p_intermediario.add(painel_pesquisar_editar);
                               painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, p_intermediario, "scroll_pl", pos);
                        }
-//                       else if( menu_lateral.se_chave(MenuLateral.backup_banco, index) )
-//                       {
-//                              JPanel painel_backup = new painel_backup().painel_p_backup();
-//                              painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_backup, "scroll_painel_backup", pos);
-//                       }
+                       else if( menu_lateral.se_chave(MenuLateral.historico, index) )
+                       {
+                              JPanel painel_historico = new painel_historico().painel_p_historico();
+                              painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_historico, "scroll_painel_backup", pos);
+                       }
                        else if( menu_lateral.se_chave(MenuLateral.temas, index) )
                        {
                               JPanel painel_temas = new painel_temas().painel_p_temas();
-                              painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_temas, "scroll_painel_temas", pos);
+                              JPanel p_intermediario = new JPanel();
+                              p_intermediario.add(painel_temas);
+                              painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, p_intermediario, "scroll_painel_temas", pos);
                        }
                        else if( menu_lateral.se_chave(MenuLateral.criar_formulario, index) )
                        {
@@ -218,17 +220,12 @@ public class menu extends JFrame {
                        }
                        else if( menu_lateral.se_chave(MenuLateral.gerar_planilha, index) )
                        {
-                              JPanel painel_formulario = new painel_criar_planilha_excel().painel_criar_planilha();
+                              JPanel painel_planilha = new painel_criar_planilha_excel().painel_criar_planilha();
                               JPanel p_intermediario = new JPanel();
-                              p_intermediario.add(painel_formulario);
+                              p_intermediario.add(painel_planilha);
                               painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, p_intermediario, "scroll_painel_cadastrar", pos);
                        }
-                       else
-                       {
-                              JPanel painel_formulario = new JPanel();
-                              painel_formulario.add( new JLabel("Sem formulário cadastrado.") );
-                              painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_formulario, "scroll_painel_cadastrar", pos);
-                       }
+                       
                  }
                 
             }// fim public void valueChanged(ListSelectionEvent lse);

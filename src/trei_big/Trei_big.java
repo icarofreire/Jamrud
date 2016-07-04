@@ -112,9 +112,7 @@ public class Trei_big {
 //        banco.excluir_todas_as_tabelas_criadas();
 //        banco.excluir_formularios_criados();
 //        banco.exibir_tabelas();
-    
-        
-        
+//    new popup().exibir_texto("exibir texto", "fasnifasinfnasifsb gmsg igngag\nafwnufasi\nbfus\nbasl\n\n\n\n\nbduasb\n\nyudavv\nfh");
         
         
     }

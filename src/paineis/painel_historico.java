@@ -5,8 +5,11 @@
  */
 package paineis;
 
+import elementos.popup;
 import ferramenta_gui.GBHelper;
 import java.awt.GridBagLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Vector;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -33,6 +36,24 @@ public class painel_historico {
         JList list = new JList(nomes);
         JScrollPane scroll = new JScrollPane(list);
         painel.add(scroll, pos.expandir());
+        
+        list.addMouseListener(new MouseAdapter() 
+        {
+            public void mouseClicked(MouseEvent evt) {
+                JList list = (JList)evt.getSource();
+                if (evt.getClickCount() == 2) // <= evento de 2 clicks no mouse;
+                {
+                    int index = list.locationToIndex(evt.getPoint());
+                    Object conteudo_obj = list.getSelectedValue();
+                    if( conteudo_obj != null ){
+                        String conteudo = conteudo_obj.toString();
+                        new popup().exibir_texto("Registro de número: " + (index+1), conteudo);
+                    }
+
+                }
+            }
+        });
+        
         return painel;
     }
     
