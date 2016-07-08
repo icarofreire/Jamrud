@@ -49,7 +49,7 @@ public class SQL {
         if( colunas.length == valores.length )
         {
             for(int i=0; i<colunas.length; i++){
-                j1 += colunas[i];
+                j1 += colunas[i].replaceAll(" ", "_");
                 j2 += "'" + valores[i] + "'";
                 if(i < (colunas.length-1) ){ j1 += ","; j2 += ","; }
             }
@@ -77,9 +77,9 @@ public class SQL {
         "(START WITH 1, INCREMENT BY 1),\n";
         
         for(int i=0; i<colunas.length-1; i++) {
-            sql_tabela += colunas[i].toUpperCase() + " VARCHAR(200),\n";
+            sql_tabela += colunas[i].toUpperCase().replaceAll(" ", "_") + " VARCHAR(200),\n";
         }
-        sql_tabela += colunas[colunas.length-1].toUpperCase() + " VARCHAR(200) )";
+        sql_tabela += colunas[colunas.length-1].toUpperCase().replaceAll(" ", "_") + " VARCHAR(200) )";
         
         return sql_tabela;
     }

@@ -104,15 +104,15 @@ public class Trei_big {
      */
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
           
-//        menu();
+        menu();
 //        escrever_lista();
-        obter_dados_lista_criada ob = new obter_dados_lista_criada();
-        
-        String[] itens_da_lista = ob.obter_itens_da_lista();
-        for (int i = 0; i < itens_da_lista.length; i++) {
-            String x = itens_da_lista[i];
-            System.out.println("-->" + x);
-        }
+//        obter_dados_lista_criada ob = new obter_dados_lista_criada();
+//        
+//        String[] itens_da_lista = ob.obter_itens_da_lista();
+//        for (int i = 0; i < itens_da_lista.length; i++) {
+//            String x = itens_da_lista[i];
+//            System.out.println("-->" + x);
+//        }
         
         
 //        banco.excluir_todas_as_tabelas_criadas();
