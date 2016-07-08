@@ -92,8 +92,12 @@ public class Trei_big {
         //... Start up GUI.
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-//               painel_escrever_lista es = new painel_escrever_lista(lista);
-//                System.out.println("->" + es.getItens());
+                
+               painel_escrever_lista es = new painel_escrever_lista(lista);
+               Thread run = new Thread(es);
+               run.start();
+               es.setThread(run);
+               
             }
         });
     }
@@ -112,8 +116,6 @@ public class Trei_big {
 //        banco.excluir_todas_as_tabelas_criadas();
 //        banco.excluir_formularios_criados();
 //        banco.exibir_tabelas();
-//    new popup().exibir_texto("exibir texto", "fasnifasinfnasifsb gmsg igngag\nafwnufasi\nbfus\nbasl\n\n\n\n\nbduasb\n\nyudavv\nfh");
-        
         
     }
 

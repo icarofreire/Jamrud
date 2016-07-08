@@ -33,7 +33,7 @@ import trei_big.operacoes_painel;
  *
  * @author icaro
  */
-public class painel_escrever_lista extends JDialog {
+public class painel_escrever_lista extends JDialog implements Runnable {
     
     private JPanel painel = new JPanel(new GridBagLayout());
     private GBHelper pos = new GBHelper();
@@ -60,7 +60,8 @@ public class painel_escrever_lista extends JDialog {
     private JList lista = new JList(model);
     private JScrollPane scroll = new JScrollPane(lista);
     
-    public static Vector<String> itens;// = new Vector<String>();
+    public static Vector<String> itens = new Vector<String>();
+    private Thread thread_criar_lista;
     
     public painel_escrever_lista() {
         gui();
@@ -204,17 +205,10 @@ public class painel_escrever_lista extends JDialog {
             public void actionPerformed(ActionEvent ae) {
                 if( model.size() > 0 )
                 {
-                    for (int i = 0; i < model.size(); i++) {
-                        String item = (String) model.getElementAt(i);
-                        itens.add(item);System.out.println(item+"<-");
-                    }
-
-                    for (int i = 0; i < itens.size(); i++) {
-                         String iten = itens.get(i);
-                         System.out.println(iten);
-                     }
-//                    dispose();
-                    System.out.println("tt:" + itens.size());
+                    atualizar_itens();
+                    encerrar_thread();
+                    dispose();
+                    exibir_itens_lista();
                 }else{
                     aviso.mensagem_atencao("Adicione itens na sua lista.", "Lista vazia");
                 }
@@ -223,6 +217,7 @@ public class painel_escrever_lista extends JDialog {
         botao_fechar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
+                encerrar_thread();
                 dispose();
             }
         });
@@ -235,8 +230,49 @@ public class painel_escrever_lista extends JDialog {
         
     }
 
-    public Vector<String> getItens() {
-        return itens;
+    private void encerrar_thread() {
+        if( thread_criar_lista != null ){
+            thread_criar_lista.stop();
+        }
+    }
+
+    public void setThread(Thread thread) {
+        this.thread_criar_lista = thread;
+    }
+    
+    private void atualizar_itens()
+    {
+        itens.clear();
+        for (int i = 0; i < model.size(); i++) {
+            String item = (String) model.getElementAt(i);
+            itens.add(item);
+        }
+    }
+    
+    private void exibir_itens_lista()
+    {
+        for (int i = 0; i < itens.size(); i++) {
+            System.out.println( itens.get(i) );
+        }
+    }
+    
+    public String[] getItens() {
+        return itens.toArray(new String[]{});
+    }
+
+    @Override
+    public void run() {
+        while(true)
+        {
+            try {
+                Thread.sleep(500);// 1000 = um segundo;
+                
+//                System.out.println("executando para lista;");
+                
+            } catch (InterruptedException ie) {
+                System.out.println("Child thread interrupted! " + ie);
+            }
+        }
     }
     
 
