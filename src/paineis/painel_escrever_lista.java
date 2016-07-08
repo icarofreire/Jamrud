@@ -33,13 +33,13 @@ import trei_big.operacoes_painel;
  *
  * @author icaro
  */
-public class painel_escrever_lista extends JDialog implements Runnable {
+public class painel_escrever_lista extends JDialog {
     
     private JPanel painel = new JPanel(new GridBagLayout());
     private GBHelper pos = new GBHelper();
     private JButton botao_aplicar = new JButton("Aplicar", new ImageIcon("icones/2-aplicar-24.png"));
     private JButton botao_fechar = new JButton("Fechar", new ImageIcon("icones/erro-24.png"));
-    
+    public boolean se_botao_fechar_clicado = false;
     private String titulo_janela = "Criar Lista";
     
     private JPanel painel_direito = new JPanel(new GridBagLayout());
@@ -61,14 +61,14 @@ public class painel_escrever_lista extends JDialog implements Runnable {
     private JScrollPane scroll = new JScrollPane(lista);
     
     public static Vector<String> itens = new Vector<String>();
-    private Thread thread_criar_lista;
     
     public painel_escrever_lista() {
         gui();
     }
     
     public painel_escrever_lista(Vector<String> itens) {
-        this.itens = itens;gui();
+        this.itens = itens;
+        gui();
     }
     
     /*\/ construtor criado para editar uma lista; inserir a lista como parametro. */
@@ -191,7 +191,6 @@ public class painel_escrever_lista extends JDialog implements Runnable {
                     btn_del.setEnabled(false);
                     btn_del_tudo.setEnabled(false);
                     alterar_titulo_lista();
-                    System.out.println(model.size()+"<<");
                 }
             }
         });
@@ -206,18 +205,17 @@ public class painel_escrever_lista extends JDialog implements Runnable {
                 if( model.size() > 0 )
                 {
                     atualizar_itens();
-                    encerrar_thread();
                     dispose();
-                    exibir_itens_lista();
                 }else{
                     aviso.mensagem_atencao("Adicione itens na sua lista.", "Lista vazia");
                 }
             }
         });
+        
         botao_fechar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                encerrar_thread();
+                se_botao_fechar_clicado = true;
                 dispose();
             }
         });
@@ -228,16 +226,6 @@ public class painel_escrever_lista extends JDialog implements Runnable {
         super.setVisible(true);
         super.setLocationRelativeTo(null);
         
-    }
-
-    private void encerrar_thread() {
-        if( thread_criar_lista != null ){
-            thread_criar_lista.stop();
-        }
-    }
-
-    public void setThread(Thread thread) {
-        this.thread_criar_lista = thread;
     }
     
     private void atualizar_itens()
@@ -259,21 +247,5 @@ public class painel_escrever_lista extends JDialog implements Runnable {
     public String[] getItens() {
         return itens.toArray(new String[]{});
     }
-
-    @Override
-    public void run() {
-        while(true)
-        {
-            try {
-                Thread.sleep(500);// 1000 = um segundo;
-                
-//                System.out.println("executando para lista;");
-                
-            } catch (InterruptedException ie) {
-                System.out.println("Child thread interrupted! " + ie);
-            }
-        }
-    }
     
-
 }

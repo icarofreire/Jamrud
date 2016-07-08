@@ -92,12 +92,7 @@ public class Trei_big {
         //... Start up GUI.
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                
                painel_escrever_lista es = new painel_escrever_lista(lista);
-               Thread run = new Thread(es);
-               run.start();
-               es.setThread(run);
-               
             }
         });
     }
@@ -107,12 +102,19 @@ public class Trei_big {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
           
-        menu();
+//        menu();
 //        escrever_lista();
+        obter_dados_lista_criada ob = new obter_dados_lista_criada();
         
-
+        String[] itens_da_lista = ob.obter_itens_da_lista();
+        for (int i = 0; i < itens_da_lista.length; i++) {
+            String x = itens_da_lista[i];
+            System.out.println("-->" + x);
+        }
+        
+        
 //        banco.excluir_todas_as_tabelas_criadas();
 //        banco.excluir_formularios_criados();
 //        banco.exibir_tabelas();
