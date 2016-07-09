@@ -37,6 +37,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import menu_modulos.*;
+import paineis.painel_historico;
+import painel_criar_editar_texto.obter_texto_editado;
+import painel_criar_lista.obter_dados_lista_criada;
 import painel_criar_lista.painel_escrever_lista;
 
 /**
@@ -80,23 +83,6 @@ public class Trei_big {
             }
         });
     }
-    
-    public static void escrever_lista(){
-        final String[] lista = new String[]{"fabn","ve","vtry","w3","x45","wcar","yjt"};
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception unused) {
-            // Nothing can be done, so just ignore it.
-        }
-        
-        //... Start up GUI.
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-               painel_escrever_lista es = new painel_escrever_lista(lista);
-            }
-        });
-    }
-    
         
     
     /**
@@ -104,15 +90,39 @@ public class Trei_big {
      */
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
           
-        menu();
-//        escrever_lista();
+//        menu();
+        
+//        *******************************************************
+        // exemplo de como criar uma lista e obter o array;
 //        obter_dados_lista_criada ob = new obter_dados_lista_criada();
-//        
 //        String[] itens_da_lista = ob.obter_itens_da_lista();
 //        for (int i = 0; i < itens_da_lista.length; i++) {
 //            String x = itens_da_lista[i];
 //            System.out.println("-->" + x);
 //        }
+        
+        // exemplo de como editar uma lista e obter o array
+//        String[] lista = new String[]{"fabn","ve","vtry","w3","x45","wcar","yjt"};
+//        obter_dados_lista_criada ob = new obter_dados_lista_criada(lista);
+//        String[] itens_da_lista = ob.obter_itens_da_lista();
+//        for (int i = 0; i < itens_da_lista.length; i++) {
+//            String x = itens_da_lista[i];
+//            System.out.println("-->" + x);
+//        }
+//        *******************************************************
+        
+        
+        
+//        *******************************************************
+        // exemplo para editar um texto e obter o valor editado;
+//        obter_texto_editado edt = new obter_texto_editado("Edite","fbasbfksfban");
+//        System.out.println("->" + edt.retornar_texto_editado() );
+        
+        // exemplo para criar um texto e obter o valor criado;
+//        obter_texto_editado edt = new obter_texto_editado("Crie um texto/titulo");
+//        System.out.println("->" + edt.retornar_texto_editado() );
+//        *******************************************************
+        
         
         
 //        banco.excluir_todas_as_tabelas_criadas();
