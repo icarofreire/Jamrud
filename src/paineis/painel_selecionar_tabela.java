@@ -162,7 +162,7 @@ public class painel_selecionar_tabela {
                             btn_enviar.addActionListener(new ActionListener(){
                                 @Override
                                 public void actionPerformed(ActionEvent ae) {
-                                    System.out.println("ENVIAR");
+//                                    System.out.println("ENVIAR");
                                     
                                     dados_form.apagar_dados();
                                     dados_form.zerar_numero_painel_radios();

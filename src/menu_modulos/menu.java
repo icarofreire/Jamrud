@@ -225,6 +225,13 @@ public class menu extends JFrame {
                               p_intermediario.add(painel_planilha);
                               painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, p_intermediario, "scroll_painel_cadastrar", pos);
                        }
+                       else if( menu_lateral.se_chave(MenuLateral.excluir_formulario, index) )
+                       {
+                              JPanel painel_excluir_form = new painel_excluir_formulario().excluir_formulario();
+                              JPanel p_intermediario = new JPanel();
+                              p_intermediario.add(painel_excluir_form);
+                              painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, p_intermediario, "scroll_painel_temas", pos);
+                       }
                        
                  }
                 

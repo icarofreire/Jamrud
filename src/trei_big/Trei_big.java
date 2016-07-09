@@ -37,7 +37,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import menu_modulos.*;
-import paineis.painel_escrever_lista;
+import painel_criar_lista.painel_escrever_lista;
 
 /**
  *
@@ -118,6 +118,7 @@ public class Trei_big {
 //        banco.excluir_todas_as_tabelas_criadas();
 //        banco.excluir_formularios_criados();
 //        banco.exibir_tabelas();
+//        banco.exibir_tabela(SQL.nome_tabela_formulario);
         
     }
 

@@ -87,7 +87,7 @@ public class painel_selecionar_formulario {
                 int ind = select.getSelectedIndex();                
                 if( ind > 0 )
                 {
-                    System.out.println("selecionado: " + ind );
+//                    System.out.println("selecionado: " + ind );
                     try{
                             String form = select.getSelectedItem().toString().replaceAll(" ", "_");
                             if( nome_hash_form.containsKey(form) )

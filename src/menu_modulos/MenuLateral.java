@@ -30,6 +30,7 @@ public class MenuLateral {
     public static String temas = "Aparência";
     public static String historico = "Historico";
     public static String criar_formulario = "Criar formulário";
+    public static String excluir_formulario = "Excluir Formulário";
     public static String gerar_planilha = "Gerar planilha";
     
     public Vector<Vector<String>> formularios = new Vector<Vector<String>>();
@@ -43,49 +44,12 @@ public class MenuLateral {
         
         /* \/ A ordem em que forem adicionados será a ordem em que aparecerá no menu. \/ */
         nomes.add(form_cadastrar); /* => */ icones.add("icones/cadastrar.png");
-        nomes.add(pesquisar_editar); /* => */ icones.add("icones/pesquisar_e_editar.png");
-        
-        /* \/ Criar links no menu para os formulários cadastrados no banco; \/ */
-//        formularios = banco.obter_dados_da_tabela(SQL.nome_tabela_formulario);
-//        if( (formularios != null) && (!formularios.isEmpty()) )
-//        {
-//            Vector<String> nomes_p_tabelas = new Vector<String>();
-//            for(int i=0; i<formularios.size(); i++)
-//            {
-//                Vector<String> linha = formularios.get(i);
-//                if( !linha.lastElement().isEmpty() ){
-//                    String nome_formulario = linha.get(1);
-//                    
-//                    String token_procurar = "_";
-//                    String token_substituir = " ";
-//                    if( nome_formulario.indexOf(token_procurar) != -1 ){
-//                        nome_formulario = nome_formulario.replaceAll(token_procurar, token_substituir);
-//                    }
-//                    
-//                    String hash = linha.get(2);
-//                    
-//                    /* \/ Primeiro insere no menu os itens de todos os formulários; 
-//                    Depois, através do vetor 'nomes_p_tabelas', será adicionado no menu todos os itens
-//                    para as tabelas de registros de cada formulário. */
-//                    nomes.add(nome_formulario); /* => */ icones.add("icones/cadastrar.png");
-//                    nomes_p_tabelas.add(nome_formulario);
-//                }
-//            }
-//            /* \/ O menu ficará organizado em: 
-//            primeiros os itens dos formulários, e depois os itens das tabelas dos formulários; */
-//            if(!nomes_p_tabelas.isEmpty()){
-//                for (int i = 0; i < nomes_p_tabelas.size(); i++) {
-//                    String get = nomes_p_tabelas.get(i);
-//                    nomes.add("Tabela:" + get); /* => */ icones.add("icones/pesquisar_e_editar.png");
-//                }
-//            }
-//        }
-        
-        
+        nomes.add(pesquisar_editar); /* => */ icones.add("icones/pesquisar_e_editar.png");   
         nomes.add(gerar_planilha); /* => */ icones.add("icones/planilha.png");
         //        nomes.add("Lixeira"); /* => */ icones.add("icones/lixo2.png");
 //                nomes.add(backup_banco); /* => */ icones.add("icones/1460597575_document-save.png");
         nomes.add(criar_formulario); /* => */ icones.add("icones/criar.png");
+        nomes.add(excluir_formulario); /* => */ icones.add("icones/remover.png");
         nomes.add(historico); /* => */ icones.add("icones/historico.png");
         nomes.add(temas); /* => */ icones.add("icones/aparencia1.png");
 

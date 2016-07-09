@@ -8,6 +8,8 @@ package paineis;
 import elementos.popup;
 import ferramenta_gui.GBHelper;
 import java.awt.GridBagLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Vector;
@@ -24,6 +26,7 @@ public class painel_historico {
     private static final int GAP = 5;   // Default gap btwn components.
     private JPanel painel = new JPanel(new GridBagLayout());
     private GBHelper pos = new GBHelper();
+    private JList list;
     
     public JPanel painel_p_historico()
     {
@@ -33,7 +36,7 @@ public class painel_historico {
             nomes.add("Hora: 00:00 | Data: 99/99/9999 | titulo da ação no software. " + (i+1) );
         }        
         
-        JList list = new JList(nomes);
+        list = new JList(nomes);
         JScrollPane scroll = new JScrollPane(list);
         painel.add(scroll, pos.expandir());
         
@@ -51,6 +54,28 @@ public class painel_historico {
                     }
 
                 }
+            }
+        });
+        
+        list.addKeyListener(new KeyListener(){
+            @Override
+            public void keyTyped(KeyEvent ke) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent ke) {
+                if( ke.getKeyCode() == KeyEvent.VK_ENTER )
+                {
+                    Object conteudo_obj = list.getSelectedValue();
+                    if( conteudo_obj != null ){
+                        String conteudo = conteudo_obj.toString();
+                        new popup().exibir_texto("Registro de número: " + (list.getSelectedIndex()+1), conteudo);
+                    }
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent ke) {
             }
         });
         

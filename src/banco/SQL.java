@@ -41,6 +41,11 @@ public class SQL {
         return "DELETE FROM "+ nome_da_tabela.toUpperCase() +" WHERE id = "+ ID +"";
     }
     
+    public static String montar_sql_deletar_linha(String nome_da_tabela, String coluna, String valor)
+    {
+        return "DELETE FROM "+ nome_da_tabela.toUpperCase() +" WHERE "+ coluna.toUpperCase() +" = '"+ valor +"'";
+    }
+    
     public static String montar_sql_insert(String nome_da_tabela, String[] colunas, String[] valores)
     {        
         String j1 = "";
