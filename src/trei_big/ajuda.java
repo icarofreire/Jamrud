@@ -14,6 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -28,6 +29,7 @@ public class ajuda extends JDialog {
     private GBHelper pos = new GBHelper();
     private JTextArea campo_valor = new JTextArea();
     private JButton botao_fechar = new JButton("Fechar", new ImageIcon("icones/erro-24.png"));
+    private JLabel l_info = new JLabel("Informações de ajuda.");
     private int largura = 600;
     private int altura = 600;
     
@@ -36,9 +38,22 @@ public class ajuda extends JDialog {
             + "Realizar um simples tutorial;\n"
             + "exibir como manupilar o programa.";
     
-    public ajuda() {
-      
-        campo_valor.setText(texto);
+    public ajuda()
+    {
+        gui_ajuda(texto);
+    }
+    
+    public ajuda(String conteudo, int largura, int altura)
+    {
+        this.largura = largura;
+        this.altura = altura;
+        gui_ajuda(conteudo);
+    }
+    
+    private void gui_ajuda(String conteudo)
+    {
+        l_info.setIcon(new ImageIcon("icones/informacao-64.png"));
+        campo_valor.setText(conteudo);
         campo_valor.setEditable(false);
         
         campo_valor.setColumns(20);
@@ -49,9 +64,9 @@ public class ajuda extends JDialog {
         
         painel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         
-        painel.add(scroll_observacoes, pos.expandir());
+        painel.add(l_info);
+        painel.add(scroll_observacoes, pos.nextRow().expandir());
         painel.add(operacoes_painel.add_botao_em_painel(botao_fechar), pos.nextRow().expandW());
-        
         
         botao_fechar.addActionListener(new ActionListener() {
             @Override
@@ -66,7 +81,5 @@ public class ajuda extends JDialog {
         super.setSize(new Dimension(largura, altura));
         super.setVisible(true);
         super.setLocationRelativeTo(null);
-        
-    }
-        
+    }        
 }

@@ -20,7 +20,7 @@ public class obter_dados_lista_criada {
     private String[] itens_da_lista;
     private Thread thre;
             
-    public obter_dados_lista_criada(final String[] lista) {
+    public obter_dados_lista_criada(final String[] lista, final int numero_maximo_de_itens) {
         
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -32,14 +32,13 @@ public class obter_dados_lista_criada {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 
-               es = new painel_escrever_lista(lista);
-               
+               es = new painel_escrever_lista(lista, numero_maximo_de_itens);
             }
         });
         
     }
     
-    public obter_dados_lista_criada() {
+    public obter_dados_lista_criada(final int numero_maximo_de_itens) {
         
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -51,7 +50,7 @@ public class obter_dados_lista_criada {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 
-               es = new painel_escrever_lista();
+               es = new painel_escrever_lista(numero_maximo_de_itens);
                
             }
         });

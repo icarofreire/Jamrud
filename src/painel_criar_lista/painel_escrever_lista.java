@@ -23,6 +23,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -64,29 +65,34 @@ public class painel_escrever_lista extends JDialog {
     private DefaultListModel model = new DefaultListModel();
     private JList lista = new JList(model);
     private JScrollPane scroll = new JScrollPane(lista);
+    
     private Color cor_natural_item_selecionado;
     private int indice_da_lista_para_editar = -1;
+    private int numero_maximo_de_itens = -1;
+    
     public static Vector<String> itens = new Vector<String>();
     
-    public painel_escrever_lista() {
+    public painel_escrever_lista(int numero_maximo_de_itens) {
+        this.numero_maximo_de_itens = numero_maximo_de_itens;
         gui();
     }
     
-    public painel_escrever_lista(Vector<String> itens) {
+    public painel_escrever_lista(Vector<String> itens, int numero_maximo_de_itens) {
         this.itens = itens;
+        this.numero_maximo_de_itens = numero_maximo_de_itens;
         gui();
-    }
+    } 
     
     /*\/ construtor criado para editar uma lista; inserir a lista como parametro. */
-    public painel_escrever_lista(String[] itens_da_lista) {
+    public painel_escrever_lista(String[] itens_da_lista, int numero_maximo_de_itens) {
         
         for (int i = 0; i < itens_da_lista.length; i++) {
             String itens_da_lista1 = itens_da_lista[i];
             model.addElement(itens_da_lista1);
         }
+        this.numero_maximo_de_itens = numero_maximo_de_itens;
         gui();
     }
-
     
     private void alterar_titulo_lista()
     {
@@ -96,19 +102,28 @@ public class painel_escrever_lista extends JDialog {
     private void procedimento_para_add_na_lista()
     {
         String dado = campo.getText().trim();
-        if( !dado.isEmpty() )
+        if( (!dado.isEmpty()) )
         {
-            if( indice_da_lista_para_editar != -1 )
+            if( model.size() < this.numero_maximo_de_itens )
             {
-                model.remove(indice_da_lista_para_editar);
-                model.add(indice_da_lista_para_editar, dado);
-                campo.setText(null);
-                indice_da_lista_para_editar = -1;
+                campo.setForeground(null);
+                if( indice_da_lista_para_editar != -1 )
+                {
+                    model.remove(indice_da_lista_para_editar);
+                    model.add(indice_da_lista_para_editar, dado);
+                    campo.setText(null);
+                    indice_da_lista_para_editar = -1;
+                }else{
+                    model.addElement(dado);
+                    campo.setText(null);
+                    alterar_titulo_lista();
+                    se_ativar_ou_nao_botao_remover_tudo();
+                }
             }else{
-                model.addElement(dado);
-                campo.setText(null);
-                alterar_titulo_lista();
-                se_ativar_ou_nao_botao_remover_tudo();
+                JOptionPane.showMessageDialog(this,  
+                        model.size() + " é o número máximo de itens definido para esta lista.", 
+                        "Limite máximo alcançado",
+                JOptionPane.WARNING_MESSAGE);
             }
         }
     }

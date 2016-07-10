@@ -105,6 +105,21 @@ public class Trei_big {
             }
         });
     }
+    
+    public static void ajuda(){
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception unused) {
+            // Nothing can be done, so just ignore it.
+        }
+        
+        //... Start up GUI.
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new ajuda("Informações de ajuda.", 600, 400);
+            }
+        });
+    }
         
     
     /**
@@ -113,6 +128,7 @@ public class Trei_big {
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
           
 //        menu();
+//        ajuda();
         editar();
         
 //        *******************************************************
@@ -126,7 +142,8 @@ public class Trei_big {
         
         // exemplo de como editar uma lista e obter o array
 //        String[] lista = new String[]{"1","2","3","4","5","6","7","8","9","10"};
-//        obter_dados_lista_criada ob = new obter_dados_lista_criada(lista);
+//        obter_dados_lista_criada ob = new obter_dados_lista_criada(lista, lista.length);
+//        
 //        String[] itens_da_lista = ob.obter_itens_da_lista();
 //        for (int i = 0; i < itens_da_lista.length; i++) {
 //            String x = itens_da_lista[i];

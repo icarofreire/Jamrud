@@ -148,7 +148,9 @@ public class editar_formulario {
                                                         {
                                                             try {
                                                                     String titulo_editado = edt.retornar_texto_editado();
-                                                                    get.setText(titulo_editado);
+                                                                    if(titulo_editado != null){
+                                                                        get.setText(titulo_editado);
+                                                                    }
                                                                     pinterno.setBorder(null);//<= retirar borda;
                                                                 } catch (InterruptedException ex) {
                                                                     Logger.getLogger(editar_formulario.class.getName()).log(Level.SEVERE, null, ex);
@@ -189,7 +191,8 @@ public class editar_formulario {
                                         {
                                             @Override
                                             public void run(){
-                                                ob = new obter_dados_lista_criada( titulos_editar.toArray(new String[]{}) );
+                                                String[] titulos_editar__ =  titulos_editar.toArray(new String[]{});
+                                                ob = new obter_dados_lista_criada( titulos_editar__, titulos_editar__.length );
                                                 thre = new Thread(new Runnable()
                                                 {
                                                     @Override
