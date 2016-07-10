@@ -17,10 +17,18 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.SwingUtilities;
 import menu_modulos.obter_dados_formulario;
+import painel_criar_editar_texto.obter_texto_editado;
+import painel_criar_lista.obter_dados_lista_criada;
+import trei_big.aviso;
 import trei_big.operacoes_painel;
 
 /**
@@ -29,19 +37,40 @@ import trei_big.operacoes_painel;
  */
 public class editar_formulario {
     
-//    private static int cy = -1;
+    private static int cy = -1;
+    private JPanel painel_deserializado;
+    private obter_texto_editado edt;
+    private obter_dados_lista_criada ob;
+    private Thread thre;
     
-//    public editar_formulario() {
+    public editar_formulario() throws InterruptedException {
         
-//        Vector<Vector<String>> dd = banco.obter_dados_da_tabela(SQL.nome_tabela_formulario.toUpperCase());
-//        final JPanel pi = (JPanel)operacoes_painel.deserializar_obj(dd.lastElement().get(2));
-//        new popup("teste", pi );
+        Vector<Vector<String>> dd = banco.obter_dados_da_tabela(SQL.nome_tabela_formulario);
+        final JPanel painel_deserializado = (JPanel)operacoes_painel.deserializar_obj(dd.lastElement().get(2));
+//        new popup("Editar", painel_deserializado );
+        
+        
+
+            SwingUtilities.invokeLater(new Runnable(){
+                @Override
+                public void run(){
+                    new popup("Editar", painel_deserializado );
+                }
+            });
+            
+      
+                            
+                            
+
+        
+        
+        final obter_dados_formulario dados_form = new obter_dados_formulario();
 //        
-//        final obter_dados_formulario dados_form = new obter_dados_formulario();
-//        
-//        JPanel p_botao = (JPanel) operacoes_painel.pegar_componente_em_painel(pi, prefixos.prefixo_painel_interno_para_botao);
-//                        JButton btn_enviar = (JButton) operacoes_painel.pegar_componente_em_painel(p_botao, prefixos.prefixo_botao_enviar);
+        JPanel p_botao = (JPanel) operacoes_painel.pegar_componente_em_painel(painel_deserializado, prefixos.prefixo_painel_interno_para_botao);
+                        JButton btn_enviar = (JButton) operacoes_painel.pegar_componente_em_painel(p_botao, prefixos.prefixo_botao_enviar);
 //                        
+                        setEnabled_recursivo(painel_deserializado, false);
+                        
 //                        // \/\/ >> aqui o evento do click no botao ENVIAR em cada formulário; << \/\/
 //                        if( btn_enviar != null )
 //                        {
@@ -55,49 +84,179 @@ public class editar_formulario {
 //                        }
 //                        // /\/\ >> aqui o evento do click no botao ENVIAR em cada formulário; << /\/\
 //        
-//    }
+    }
 // 
 //    
 //    
 //    /* habilita ou desabilita todos os componentes filhos de um componente pai recirsivamente; */
-//    public static void setEnabled_recursivo(Component component, boolean enabled, final JPanel painel) {
-//        component.setEnabled(enabled);
-//        if (component instanceof Container) {
-//            for (Component child : ((Container) component).getComponents()) {
-//                
-//                setEnabled_recursivo(child, enabled, painel);
-////                buscar_componentes_recursivo(child);
-//                            //---
-//                           child.addMouseListener(new MouseListener(){
-//                                @Override
-//                                public void mouseClicked(MouseEvent me) {
-//                                    if( me.getY() != cy ){
-//                                    painel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
-//                                    cy = me.getY();
-//                                    System.out.println("["+ painel.getLocation().x + ", " + cy+"]");
-//                                    }
-//                                }
-//
-//                                @Override
-//                                public void mousePressed(MouseEvent me) {
-//                                }
-//
-//                                @Override
-//                                public void mouseReleased(MouseEvent me) {
-//                                }
-//
-//                                @Override
-//                                public void mouseEntered(MouseEvent me) {
-//                                }
-//
-//                                @Override
-//                                public void mouseExited(MouseEvent me) {
-////                                    painel.setBorder(BorderFactory.createEmptyBorder());
-//                                }
-//                            });
-                        //---
-//            }
-//        }
-//    }
+    public void setEnabled_recursivo(Component component, boolean enabled) {
+        component.setEnabled(enabled);
+        if (component instanceof Container) {
+            for (Component child : ((Container) component).getComponents()) {
+                
+                setEnabled_recursivo(child, enabled);
+                
+                String name = child.getName();
+                if(  (name != null) && 
+                        ( (name.indexOf("pfx_painel_interno") != -1) || (name.indexOf("painel_opcoes") != -1) )
+                  )
+                {
+                    final JPanel pin = (JPanel) child;
+                    filhos_clicaveis(pin, false, pin);
+                }
+            }
+        }
+    }
+    
+    public void filhos_clicaveis(Component component, boolean enabled, final JPanel pinterno) {
+        component.setEnabled(enabled);
+        if (component instanceof Container) {
+            for (Component child : ((Container) component).getComponents()) {
+                
+                filhos_clicaveis(child, enabled, pinterno);
+//                System.out.println("classe: " + child.getName() );
+                
+                    child.addMouseListener(new MouseListener(){
+                        @Override
+                        public void mouseClicked(MouseEvent me) {
+                            if( me.getClickCount() == 2 )
+                            {
+                                
+                                System.out.println( "Pintar: " + pinterno.getName() );
+                                
+                                if( (pinterno.getName().indexOf("pfx_painel_interno") != -1) )
+                                {
+                                    pinterno.setBorder(BorderFactory.createLineBorder(Color.RED));
+                                    Vector<Component> tits = operacoes_painel.pegar_todos_componentes_em_painel_com_prefixo(pinterno, "pfx_titulos_componentes");
+                                    
+                                    final JLabel get = (JLabel) tits.firstElement();
+                                    final String titulo = get.getText();
+                                    System.out.println("titulo: " + titulo);
+                                    
+                                    SwingUtilities.invokeLater(new Runnable()
+                                    {
+                                        @Override
+                                        public void run(){
+                                            edt = new obter_texto_editado("Edite", titulo);
+                                            thre = new Thread(new Runnable()
+                                            {
+                                                @Override
+                                                public void run() {
+                                                    while( (!Thread.currentThread().isInterrupted()) )
+                                                    {
+                                                        if( edt != null )
+                                                        {
+                                                            try {
+                                                                    String titulo_editado = edt.retornar_texto_editado();
+                                                                    get.setText(titulo_editado);
+                                                                    pinterno.setBorder(null);//<= retirar borda;
+                                                                } catch (InterruptedException ex) {
+                                                                    Logger.getLogger(editar_formulario.class.getName()).log(Level.SEVERE, null, ex);
+                                                                }
+                                                            thre.interrupt();
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            );
+                                            thre.start();
+                                        }
+                                    });
+                                    
+                                    
+                                }
+                                
+                                if( (pinterno.getName().indexOf("painel_opcoes") != -1) )
+                                {
+                                    final Vector<String> titulos_editar = new Vector<String>();
+                                    Vector<Component> tits = operacoes_painel.pegar_todos_componentes_em_painel_com_prefixo(pinterno, "pfx_titulos_componentes");
+                                    final JPanel pr = (JPanel) operacoes_painel.pegar_componente_em_painel(pinterno, "painel_radios");
+                                    if( pr != null )
+                                    {
+                                        final JLabel get = (JLabel) tits.firstElement();
+                                        final String titulo = get.getText();
+                                        titulos_editar.add(titulo);
+//                                        System.out.println("titulo: " + titulo);
+                                        
+                                        final Component[] cc = pr.getComponents();
+                                        for (int i = 0; i < cc.length; i++) {
+                                            JRadioButton cc1 = (JRadioButton) cc[i];
+//                                            System.out.println("--" + cc1.getText());
+                                            titulos_editar.add( cc1.getText() );
+                                        }
+                                        
+                                        SwingUtilities.invokeLater(new Runnable()
+                                        {
+                                            @Override
+                                            public void run(){
+                                                ob = new obter_dados_lista_criada( titulos_editar.toArray(new String[]{}) );
+                                                thre = new Thread(new Runnable()
+                                                {
+                                                    @Override
+                                                    public void run() {
+                                                        while( (!Thread.currentThread().isInterrupted()) )
+                                                        {
+                                                            if( ob != null )
+                                                            {
+                                                                try {
+                                                                        String[] itens_da_lista = ob.obter_itens_da_lista();
+                                                                        if( itens_da_lista.length == titulos_editar.size() )
+                                                                        {
+                                                                            get.setText( itens_da_lista[0] );
+
+                                                                            for (int i = 0; i < cc.length; i++) {
+                                                                                String itens_da_lista1 = itens_da_lista[i+1];
+
+                                                                                JRadioButton cc1 = (JRadioButton) cc[i];
+                                                                                cc1.setText(itens_da_lista1);
+                                                                                System.out.println("lista: " + itens_da_lista1);
+                                                                             }
+
+                                                                            pinterno.setBorder(null);//<= retirar borda;
+                                                                        }else{
+                                                                            aviso.mensagem_atencao("O número de titulos na sua lista deve ser"
+                                                                                    + " o \nmesmo número de titulos no componente de seu formulário.");
+                                                                        }
+                                                                    } catch (InterruptedException ex) {
+                                                                        Logger.getLogger(editar_formulario.class.getName()).log(Level.SEVERE, null, ex);
+                                                                    }
+                                                                thre.interrupt();
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                );
+                                                thre.start();
+                                            }
+                                        });
+
+                                    }
+//                                    operacoes_painel.exibir_names_em_painel(pr);
+                                }
+                                
+                            }
+                        }
+
+                        @Override
+                        public void mousePressed(MouseEvent me) {
+                        }
+
+                        @Override
+                        public void mouseReleased(MouseEvent me) {
+                        }
+
+                        @Override
+                        public void mouseEntered(MouseEvent me) {
+                        }
+
+                        @Override
+                        public void mouseExited(MouseEvent me) {
+                        }
+                    });
+
+                
+            }
+        }
+    }
     
 }

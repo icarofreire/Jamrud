@@ -7,12 +7,15 @@ package painel_criar_lista;
 
 import ferramenta_gui.GBHelper;
 import ferramenta_gui.Gap;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -48,7 +51,9 @@ public class painel_escrever_lista extends JDialog {
     private JTextField campo = new JTextField(20);
     private JButton btn_add = new JButton("Adicionar", new ImageIcon("icones/add-24.png"));
     private JButton btn_del = new JButton("Remover", new ImageIcon("icones/deletar-24.png"));
-    private JButton btn_del_tudo = new JButton("Remover Tudo", new ImageIcon("icones/deletar-24.png"));
+    private JButton btn_del_tudo = new JButton("Remover tudo", new ImageIcon("icones/deletar-24.png"));
+    private JButton btn_mover_cima = new JButton("Mover para cima", new ImageIcon("icones/cima-24.png"));
+    private JButton btn_mover_baixo = new JButton("Mover para baixo", new ImageIcon("icones/baixo-24.png"));
     
     private JPanel painel_esquerdo = new JPanel(new GridBagLayout());
     private GBHelper pos_painel_esquerdo= new GBHelper();
@@ -59,7 +64,8 @@ public class painel_escrever_lista extends JDialog {
     private DefaultListModel model = new DefaultListModel();
     private JList lista = new JList(model);
     private JScrollPane scroll = new JScrollPane(lista);
-    
+    private Color cor_natural_item_selecionado;
+    private int indice_da_lista_para_editar = -1;
     public static Vector<String> itens = new Vector<String>();
     
     public painel_escrever_lista() {
@@ -90,11 +96,20 @@ public class painel_escrever_lista extends JDialog {
     private void procedimento_para_add_na_lista()
     {
         String dado = campo.getText().trim();
-        if( !dado.isEmpty() ){
-            model.addElement(dado);
-            campo.setText(null);
-            alterar_titulo_lista();
-            se_ativar_ou_nao_botao_remover_tudo();
+        if( !dado.isEmpty() )
+        {
+            if( indice_da_lista_para_editar != -1 )
+            {
+                model.remove(indice_da_lista_para_editar);
+                model.add(indice_da_lista_para_editar, dado);
+                campo.setText(null);
+                indice_da_lista_para_editar = -1;
+            }else{
+                model.addElement(dado);
+                campo.setText(null);
+                alterar_titulo_lista();
+                se_ativar_ou_nao_botao_remover_tudo();
+            }
         }
     }
     
@@ -108,7 +123,8 @@ public class painel_escrever_lista extends JDialog {
     }
     
     public void gui() {
-      
+        
+        cor_natural_item_selecionado = lista.getSelectionBackground();
         alterar_titulo_lista();
         btn_del.setEnabled(false);
         se_ativar_ou_nao_botao_remover_tudo();
@@ -120,6 +136,8 @@ public class painel_escrever_lista extends JDialog {
         painel_direito.add(btn_add, pos_painel_direito.nextRow().expandW());
         painel_direito.add(btn_del, pos_painel_direito.nextRow().expandW());
         painel_direito.add(btn_del_tudo, pos_painel_direito.nextRow().expandW());
+        painel_direito.add(btn_mover_cima, pos_painel_direito.nextRow().expandW());
+        painel_direito.add(btn_mover_baixo, pos_painel_direito.nextRow().expandW());
         painel.add(painel_direito, pos.expandir());
         painel.add(new Gap(10), pos.nextCol());
         
@@ -147,6 +165,27 @@ public class painel_escrever_lista extends JDialog {
             }
         });
         
+        lista.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                JList list = (JList)evt.getSource();
+                
+                if (evt.getClickCount() == 2)
+                {
+                    int index = list.locationToIndex(evt.getPoint());
+                    campo.setText( model.get(index).toString() );
+                    campo.requestFocusInWindow();
+                    list.setSelectionBackground(Color.orange);
+                    indice_da_lista_para_editar = lista.getSelectedIndex();
+                }
+                else if (evt.getClickCount() == 1)
+                {
+                    campo.setText(null);
+                    list.setSelectionBackground(cor_natural_item_selecionado);
+                }
+            }
+        });
+        
         btn_add.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -163,6 +202,24 @@ public class painel_escrever_lista extends JDialog {
             public void keyPressed(KeyEvent ke) {
                 if( ke.getKeyCode() == KeyEvent.VK_ENTER ){
                     procedimento_para_add_na_lista();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent ke) {
+            }
+        });
+        
+        lista.addKeyListener(new KeyListener(){
+            @Override
+            public void keyTyped(KeyEvent ke) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent ke) {
+                if( (ke.getKeyCode() == KeyEvent.VK_UP) || (ke.getKeyCode() == KeyEvent.VK_DOWN) ){
+                    indice_da_lista_para_editar = -1;
+                    lista.setSelectionBackground(cor_natural_item_selecionado);
                 }
             }
 
@@ -191,6 +248,49 @@ public class painel_escrever_lista extends JDialog {
                     btn_del.setEnabled(false);
                     btn_del_tudo.setEnabled(false);
                     alterar_titulo_lista();
+                }
+            }
+        });
+        
+        btn_mover_cima.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if( indice_da_lista_para_editar == -1 )
+                {
+                    if( !lista.isSelectionEmpty() )
+                    {
+                        int index = lista.getSelectedIndex();
+                        if( index > 0 )
+                        {
+                            Object item = model.elementAt(index-1);//peguei o anterior ao selecionado;
+                            model.remove(index-1);//removi o anterior ao selecionado;
+                            model.add(index, item);//adicionei o anterior que tinha guardado no lugar do selecionado; 
+                        }
+                    }else{
+                        aviso.mensagem_atencao("Selecione um item na lista para mover.");
+                    }
+                }
+            }
+        });
+        
+        btn_mover_baixo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if( indice_da_lista_para_editar == -1 )
+                {
+                    if( !lista.isSelectionEmpty() )
+                    {
+                        int index = lista.getSelectedIndex();
+                        if( index < (model.size()-1) )
+                        {
+                            Object item = model.elementAt(index+1);//peguei o posterior ao selecionado;
+                            model.remove(index+1);//removi o posterior ao selecionado;
+                            model.add(index, item);//adicionei o posterior que tinha guardado no lugar do selecionado;
+                            lista.setSelectedIndex(index+1);
+                        }
+                    }else{
+                        aviso.mensagem_atencao("Selecione um item na lista para mover.");
+                    }
                 }
             }
         });
