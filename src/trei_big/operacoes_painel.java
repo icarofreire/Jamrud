@@ -45,6 +45,7 @@ import tabela_listagem.exibir_listagem;
  */
 public class operacoes_painel {
     
+    private static final long serialVersionUID = 1L;
     private static final int GAP = 5;   // Default gap btwn components.
     
     public static void atualizar_painel(JPanel painel) {
@@ -160,7 +161,7 @@ public class operacoes_painel {
             so.flush();
             serializedObject = new String(Base64.encode(bo.toByteArray()));//bo.toString();
         } catch (Exception e) {
-            System.out.println("->" + e);
+            System.out.println("Erro serializar->" + e);
         }
         return serializedObject;
     }
@@ -174,7 +175,7 @@ public class operacoes_painel {
              ObjectInputStream si = new ObjectInputStream(bi);
              myObject = si.readObject();
          } catch (Exception e) {
-             System.out.println("x->" + e);
+             System.out.println("Erro deserializar->" + e);
          }
          return myObject;
     }
