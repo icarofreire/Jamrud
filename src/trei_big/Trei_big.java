@@ -98,7 +98,8 @@ public class Trei_big {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new editar_formulario();
+                    new editar_formulario("testfulk");
+//                    new editar_formulario("gsrt");
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Trei_big.class.getName()).log(Level.SEVERE, null, ex);
                 }

@@ -21,6 +21,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -42,11 +44,22 @@ public class editar_formulario {
     private obter_texto_editado edt;
     private obter_dados_lista_criada ob;
     private Thread thre;
+    private int f_radios_ou_checks_ou_select = -1;
     
-    public editar_formulario() throws InterruptedException {
+    public editar_formulario(String nome_do_formulario) throws InterruptedException {
         
         Vector<Vector<String>> dd = banco.obter_dados_da_tabela(SQL.nome_tabela_formulario);
-        final JPanel painel_deserializado = (JPanel)operacoes_painel.deserializar_obj(dd.lastElement().get(2));
+        
+        String hash_formulario = null;
+        for (int i = 0; i < dd.size(); i++) {
+            Vector<String> get = dd.get(i);
+            String nome = get.get(1);
+            if( nome_do_formulario.equalsIgnoreCase(nome) ){
+                hash_formulario = get.get(2);
+            }
+        }
+        
+        final JPanel painel_deserializado = (JPanel)operacoes_painel.deserializar_obj(/*dd.lastElement().get(2)*/hash_formulario);
 //        new popup("Editar", painel_deserializado );
         
         
@@ -170,21 +183,54 @@ public class editar_formulario {
                                 
                                 if( (pinterno.getName().indexOf("painel_opcoes") != -1) )
                                 {
+                                    pinterno.setBorder(BorderFactory.createLineBorder(Color.RED));
                                     final Vector<String> titulos_editar = new Vector<String>();
                                     Vector<Component> tits = operacoes_painel.pegar_todos_componentes_em_painel_com_prefixo(pinterno, "pfx_titulos_componentes");
-                                    final JPanel pr = (JPanel) operacoes_painel.pegar_componente_em_painel(pinterno, "painel_radios");
+                                    operacoes_painel.exibir_names_em_painel(pinterno);
+                                    
+                                    JPanel radios = (JPanel) operacoes_painel.pegar_componente_em_painel(pinterno, "painel_radios");
+                                    JPanel checks = (JPanel) operacoes_painel.pegar_componente_em_painel(pinterno, "painel_checkbox");
+                                    JPanel select = (JPanel) operacoes_painel.pegar_componente_em_painel(pinterno, "painel_select");
+                                    
+                                    
+                                    JPanel pr = null;
+                                    if(radios != null){
+                                        pr = radios; f_radios_ou_checks_ou_select = 1;
+                                        
+                                    }else if(checks != null){
+                                        pr = checks; f_radios_ou_checks_ou_select = 2;
+                                        
+                                    }else if(select != null){
+                                        pr = select; f_radios_ou_checks_ou_select = 3;
+                                    }
+                                    
                                     if( pr != null )
                                     {
                                         final JLabel get = (JLabel) tits.firstElement();
                                         final String titulo = get.getText();
                                         titulos_editar.add(titulo);
-//                                        System.out.println("titulo: " + titulo);
                                         
                                         final Component[] cc = pr.getComponents();
-                                        for (int i = 0; i < cc.length; i++) {
-                                            JRadioButton cc1 = (JRadioButton) cc[i];
-//                                            System.out.println("--" + cc1.getText());
-                                            titulos_editar.add( cc1.getText() );
+                                        for (int i = 0; i < cc.length; i++) 
+                                        {
+                                            if( f_radios_ou_checks_ou_select == 1 )
+                                            {
+                                                JRadioButton cc1 = (JRadioButton) cc[i];
+                                                titulos_editar.add( cc1.getText() );
+                                            }
+                                            else if( f_radios_ou_checks_ou_select == 2 )
+                                            {
+                                                JCheckBox cc1 = (JCheckBox) cc[i];
+                                                titulos_editar.add( cc1.getText() );
+                                            }
+                                            else if( f_radios_ou_checks_ou_select == 3 )
+                                            {
+                                                JComboBox cc1 = (JComboBox) cc[i];
+                                                for (int j = 0; j < cc1.getItemCount(); j++) {
+                                                    String opcao_select = cc1.getItemAt(j).toString();
+                                                    titulos_editar.add( opcao_select );                                             
+                                                }
+                                            }
                                         }
                                         
                                         SwingUtilities.invokeLater(new Runnable()
@@ -203,19 +249,38 @@ public class editar_formulario {
                                                             {
                                                                 try {
                                                                         String[] itens_da_lista = ob.obter_itens_da_lista();
-                                                                        
+                                                                        if( itens_da_lista.length > 0 )
+                                                                        {
                                                                             get.setText( itens_da_lista[0] );
 
-                                                                            for (int i = 0; i < cc.length; i++) {
+                                                                            for (int i = 0; i < cc.length; i++) 
+                                                                            {
                                                                                 String itens_da_lista1 = itens_da_lista[i+1];
-
-                                                                                JRadioButton cc1 = (JRadioButton) cc[i];
-                                                                                cc1.setText(itens_da_lista1);
-                                                                                System.out.println("lista: " + itens_da_lista1);
+                                                                                
+                                                                                if( f_radios_ou_checks_ou_select == 1 )
+                                                                                {
+                                                                                    JRadioButton cc1 = (JRadioButton) cc[i];
+                                                                                    cc1.setText(itens_da_lista1);
+                                                                                }
+                                                                                else if( f_radios_ou_checks_ou_select == 2 )
+                                                                                {
+                                                                                    JCheckBox cc1 = (JCheckBox) cc[i];
+                                                                                    cc1.setText(itens_da_lista1);
+                                                                                }
+                                                                                else if( f_radios_ou_checks_ou_select == 3 )
+                                                                                {
+                                                                                    JComboBox cc1 = (JComboBox) cc[i];
+                                                                                    cc1.removeAllItems();
+                                                                                    for (int j = 1; j < itens_da_lista.length; j++) {
+                                                                                        String get1 = itens_da_lista[j];
+                                                                                        cc1.addItem( get1 );
+                                                                                    }
+                                                                                }
                                                                              }
 
                                                                             pinterno.setBorder(null);//<= retirar borda;
-                                                                        
+//                                                                            operacoes_painel.atualizar_painel(pinterno);
+                                                                        }
                                                                     } catch (InterruptedException ex) {
                                                                         Logger.getLogger(editar_formulario.class.getName()).log(Level.SEVERE, null, ex);
                                                                     }
@@ -228,7 +293,6 @@ public class editar_formulario {
                                                 thre.start();
                                             }
                                         });
-
                                     }
 //                                    operacoes_painel.exibir_names_em_painel(pr);
                                 }
