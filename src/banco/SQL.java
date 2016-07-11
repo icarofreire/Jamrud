@@ -50,7 +50,7 @@ public class SQL {
     {        
         String j1 = "";
         String j2 = "";
-        String SQL = "";
+        String SQL = null;
         if( colunas.length == valores.length )
         {
             for(int i=0; i<colunas.length; i++){

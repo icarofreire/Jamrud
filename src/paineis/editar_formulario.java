@@ -198,7 +198,7 @@ public class editar_formulario {
                                         pr = radios; f_radios_ou_checks_ou_select = 1;
                                         
                                     }else if(checks != null){
-                                        pr = checks; f_radios_ou_checks_ou_select = 2;System.out.println("pegou painel");
+                                        pr = checks; f_radios_ou_checks_ou_select = 2;
                                         
                                     }else if(select != null){
                                         pr = select; f_radios_ou_checks_ou_select = 3;
@@ -221,7 +221,7 @@ public class editar_formulario {
                                             else if( f_radios_ou_checks_ou_select == 2 )
                                             {
                                                 JCheckBox cc1 = (JCheckBox) cc[i];
-                                                titulos_editar.add( cc1.getText() );System.out.println("pegou titulos");
+                                                titulos_editar.add( cc1.getText() );
                                             }
                                             else if( f_radios_ou_checks_ou_select == 3 )
                                             {
@@ -265,7 +265,7 @@ public class editar_formulario {
                                                                                 else if( f_radios_ou_checks_ou_select == 2 )
                                                                                 {
                                                                                     JCheckBox cc1 = (JCheckBox) cc[i];
-                                                                                    cc1.setText(itens_da_lista1);System.out.println("atualizou");
+                                                                                    cc1.setText(itens_da_lista1);
                                                                                 }
                                                                                 else if( f_radios_ou_checks_ou_select == 3 )
                                                                                 {
@@ -279,13 +279,11 @@ public class editar_formulario {
                                                                              }
 
                                                                             pinterno.setBorder(null);//<= retirar borda;
-//                                                                            operacoes_painel.atualizar_painel(pinterno);
                                                                         }
                                                                     } catch (InterruptedException ex) {
                                                                         Logger.getLogger(editar_formulario.class.getName()).log(Level.SEVERE, null, ex);
                                                                     }
                                                                 thre.interrupt();
-                                                                System.out.println("se morto: " + thre.isInterrupted());
                                                             }
                                                         }
                                                     }
@@ -294,10 +292,7 @@ public class editar_formulario {
                                                 thre.start();
                                             }
                                         });
-//                                        operacoes_painel.atualizar_painel(pr);
-//                                        operacoes_painel.atualizar_painel(pinterno);
                                     }
-//                                    operacoes_painel.exibir_names_em_painel(pr);
                                 }
                                 
                             }

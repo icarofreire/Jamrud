@@ -38,82 +38,27 @@ public class popup extends JDialog {
     }
     
     public popup(String nome_formulario, String painel_serializado) {
-      
-        this.titulo_janela = nome_formulario;
-        painel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+
         JComponent comp = (JComponent) operacoes_painel.deserializar_obj(painel_serializado);
-        painel.add( comp, pos.expandir());
-        painel.add(operacoes_painel.add_botao_em_painel(botao_fechar), pos.nextRow().expandW());
-        
-        
-        botao_fechar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                dispose();
-            }
-        });
-        
-        super.setContentPane( operacoes_painel.painel_com_scroll_sem_borda(painel) );
-        super.pack();
-        super.setTitle(titulo_janela);
-        super.setSize(new Dimension(largura, altura));
-        super.setVisible(true);
-        super.setLocationRelativeTo(null);
+        gui_popup(nome_formulario, comp, largura, altura);
     }
     
     public popup(String nome_formulario, Object form) {
       
-        this.titulo_janela = nome_formulario;
-        painel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         JComponent comp = (JComponent) form;
-        painel.add( comp, pos.expandir());
-        painel.add(operacoes_painel.add_botao_em_painel(botao_fechar), pos.nextRow().expandW());
-        
-        
-        botao_fechar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                dispose();
-            }
-        });
-        
-        super.setContentPane( operacoes_painel.painel_com_scroll_sem_borda(painel) );
-        super.pack();
-        super.setTitle(titulo_janela);
-        super.setSize(new Dimension(largura, altura));
-        super.setVisible(true);
-        super.setLocationRelativeTo(null);
+        gui_popup(nome_formulario, comp, largura, altura);
     }
     
     public popup(String nome_formulario, Object form, int largura, int altura) {
       
-        this.titulo_janela = nome_formulario;
-        painel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         JComponent comp = (JComponent) form;
-        painel.add( comp, pos.expandir());
-        painel.add(operacoes_painel.add_botao_em_painel(botao_fechar), pos.nextRow().expandW());
-        
-        
-        botao_fechar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                dispose();
-            }
-        });
-        
-        super.setContentPane( operacoes_painel.painel_com_scroll_sem_borda(painel) );
-        super.pack();
-        super.setTitle(titulo_janela);
-        super.setSize(new Dimension(largura, altura));
-        super.setVisible(true);
-        super.setLocationRelativeTo(null);
+        gui_popup(nome_formulario, comp, largura, altura);
     }
     
     public void exibir_texto(String titulo_janela, String texto) {
         
         this.largura = 500;
         this.altura = 200;
-    
         campo_exibir_texto.setText(texto);
         campo_exibir_texto.setEditable(false);
         campo_exibir_texto.setColumns(20);
@@ -122,11 +67,16 @@ public class popup extends JDialog {
         scroll_observacoes.setViewportView(campo_exibir_texto);
         scroll_observacoes.setViewportBorder(null);// <= remover a borda quadrada do scroll dentro do painel;
         
+        JComponent comp = (JComponent) scroll_observacoes;
+        gui_popup(titulo_janela, comp, largura, altura);
+    }
+    
+    public void gui_popup(String nome_formulario, JComponent comp, int largura, int altura) {
+      
+        this.titulo_janela = nome_formulario;
         painel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        
-        painel.add(scroll_observacoes, pos.expandir());
+        painel.add( comp, pos.expandir());
         painel.add(operacoes_painel.add_botao_em_painel(botao_fechar), pos.nextRow().expandW());
-        
         
         botao_fechar.addActionListener(new ActionListener() {
             @Override
@@ -135,7 +85,7 @@ public class popup extends JDialog {
             }
         });
         
-        super.setContentPane(painel);
+        super.setContentPane( operacoes_painel.painel_com_scroll_sem_borda(painel) );
         super.pack();
         super.setTitle(titulo_janela);
         super.setSize(new Dimension(largura, altura));

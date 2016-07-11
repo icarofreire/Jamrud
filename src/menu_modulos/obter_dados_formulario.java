@@ -16,7 +16,9 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import trei_big.debugar;
 import trei_big.operacoes;
+import trei_big.operacoes_painel;
 
 /**
  *
@@ -27,11 +29,12 @@ public class obter_dados_formulario {
     private Vector<String> titulos;
     private Vector<String> dados;
     private Vector<String> dados_checkbox;
+    public Vector<Vector<String>> v_dados_checkbox = new Vector<Vector<String>>();
     private String titulo_para_campo_vazio = "Campo vazio";
-    private String token_separador_dados_checkbox = "|::|";
+    public static String token_separador_dados_checkbox = "|::|";
+    public static String regex_token_separador_dados_checkbox = "\\|\\:\\:\\|";
     private int n_painel_radios = 0;
     public static String sufixo_selecionado_campo_radio = "__opc_radio_selecionado";
-    
 
     public obter_dados_formulario() {
         titulos = new Vector<String>();
@@ -68,12 +71,17 @@ public class obter_dados_formulario {
 
     public Vector<String> getDados() {
         
-        String dados_checkbos_serializados = serializar_dados_checkbox();
-        if( dados.indexOf(token_separador_dados_checkbox) != -1 ){
-            dados.setElementAt(dados_checkbos_serializados, 
-                    dados.indexOf(token_separador_dados_checkbox)
-            );
+        dados = operacoes.remover_visinhos_duplicados(dados);
+        if( v_dados_checkbox.size() > 0 ){
+            for (int i = 0; i < v_dados_checkbox.size(); i++) {
+                Vector<String> get = v_dados_checkbox.get(i);
+                if( get.size() > 0 ){
+                    String ser = operacoes.serializar_string(get.toArray(new String[]{}));
+                    dados_checkbox.add(ser);
+                }
+            }
         }
+        operacoes.modificar_dadosV1_por_dadosV2_por_token("JCheckBox", dados, dados_checkbox);
         
         for (int i = 0; i < dados.size(); i++) {
             String get = dados.get(i);
@@ -92,15 +100,6 @@ public class obter_dados_formulario {
         titulos.clear();
         dados.clear();
         dados_checkbox.clear();
-    }
-    
-    public String serializar_dados_checkbox()
-    {
-        String ser = titulo_para_campo_vazio;
-        if( !dados_checkbox.isEmpty() ){
-            ser = operacoes.serializar_string( dados_checkbox.toArray(new String[]{}) );
-        }
-        return ser;
     }
         
     public void buscar_componentes_recursivo(Component component) {
@@ -164,22 +163,11 @@ public class obter_dados_formulario {
                         String dado_campo = (String) campo.getText();
                         dados.add(dado_campo + sufixo_selecionado_campo_radio);
                     }
-                    
                 }
                 
                 if( nome_classe.equalsIgnoreCase("JCheckBox") )
                 {
-                    if(!dados.contains(token_separador_dados_checkbox)){
-                        dados.add(token_separador_dados_checkbox);
-                    }
-                    JCheckBox campo = (JCheckBox) child;
-                    if( campo.isSelected() ){
-                        String dado_campo = (String) campo.getText();
-                        dados_checkbox.add(dado_campo);
-                        if( titulos.contains(dado_campo) ){
-                            titulos.remove(dado_campo);
-                        }
-                    }
+                    dados.add("JCheckBox");
                 }
 
             }
@@ -204,4 +192,35 @@ public class obter_dados_formulario {
         }
     }// fim;
     
+    public void pegar_chekbox_selecionados(JPanel painel_formulario) {
+        
+        Vector<Component> paineis_opcoes = operacoes_painel.pegar_todos_componentes_em_painel_com_prefixo(painel_formulario, "painel_opcoes_");
+                                    
+        for (int i = 0; i < paineis_opcoes.size(); i++) 
+        {
+            Component get = paineis_opcoes.get(i);
+            JPanel p_cheks = (JPanel) get;
+            Vector<Component> cheks = operacoes_painel.pegar_todos_componentes_em_painel_com_prefixo(p_cheks, "painel_checkbox");
+            
+            for (int j = 0; j < cheks.size(); j++) {
+                Component chek = cheks.get(j);
+                JPanel pp = (JPanel) chek;
+                
+                debugar.exibir_names_em_painel(pp);
+                Vector<Component> comps = operacoes_painel.pegar_todos_componentes_em_painel(pp);
+                
+                Vector<String> v = new Vector<String>();
+                for (int k = 0; k < comps.size(); k++) {
+                    Component get1 = comps.get(k);
+                    JCheckBox campo = (JCheckBox) get1;
+                    if( campo.isSelected() ){
+                        String dado_campo = (String) campo.getText();
+                        v.add(dado_campo);
+                    }
+                }
+                v_dados_checkbox.add(v);
+            }
+        } 
+    }
+  
 }

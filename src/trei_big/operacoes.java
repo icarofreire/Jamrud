@@ -7,7 +7,9 @@ package trei_big;
 
 import elementos.prefixos;
 import java.awt.Component;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.Vector;
@@ -125,6 +127,39 @@ public class operacoes {
     public static String[] deserializar_string(String str_serializada)
     {
         return str_serializada.split("\\|\\:\\:\\|");
+    }
+    
+    public static Vector<String> remover_visinhos_duplicados(Vector<String> vetor)
+    {
+        
+        List<String> list = new ArrayList<>(vetor);
+        for(int i = list.size() - 1; i > 0; i--){
+            if(list.get(i).compareTo(list.get(i-1)) == 0){
+                list.remove(i);
+            }
+        }
+        Vector<String> novo = new Vector<String>();
+        String[] arr = list.toArray(new String[]{});
+        for (int i = 0; i < arr.length; i++) {
+            novo.add(arr[i]);
+        }
+        return novo;
+    }
+    
+    public static Vector<String> modificar_dadosV1_por_dadosV2_por_token(String token_dos_lugares, Vector<String> v1, Vector<String>v2)
+    {
+        int prox = 0;
+        for (int i = 0; i < v1.size(); i++) {
+            String get1 = v1.get(i);
+            if(get1.compareTo(token_dos_lugares) == 0)
+            {
+                System.out.println("v1: " + i);
+                if( prox < v2.size() ){
+                    v1.set(i, v2.get(prox) ); prox++;
+                }
+            }  
+        }
+        return v1;
     }
     
 }

@@ -20,6 +20,9 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -128,9 +131,9 @@ public class Trei_big {
      */
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
           
-//        menu();
+        menu();
 //        ajuda();
-        editar();
+//        editar();
         
 //        *******************************************************
         // exemplo de como criar uma lista e obter o array;
@@ -166,10 +169,62 @@ public class Trei_big {
         
         
         
-//        banco.excluir_todas_as_tabelas_criadas();
-//        banco.excluir_formularios_criados();
-//        banco.exibir_tabelas();
-//        banco.exibir_tabela(SQL.nome_tabela_formulario);
+//        debugar.excluir_tabelas_e_formularios_criados();
+//        debugar.exibir_tabelas();
+//        debugar.exibir_tabela(SQL.nome_tabela_formulario);
+//        debugar.exibir_tabela("mara");
+        
+//        Vector<String> fila_componentes_em_form = new Vector<String>();
+//        
+//        fila_componentes_em_form.add( "JLabel" );
+//        fila_componentes_em_form.add( "JCheckBox" );
+//        fila_componentes_em_form.add( "JCheckBox" );
+//        fila_componentes_em_form.add( "JCheckBox" );
+//        fila_componentes_em_form.add( "JCheckBox" );
+//        fila_componentes_em_form.add( "JCheckBox" );
+//        fila_componentes_em_form.add( "JLabel" );
+//        fila_componentes_em_form.add( "JTextField" );
+//        fila_componentes_em_form.add( "JLabel" );
+//        fila_componentes_em_form.add( "JCheckBox" );
+//        fila_componentes_em_form.add( "JCheckBox" );
+//        fila_componentes_em_form.add( "JCheckBox" );
+//        fila_componentes_em_form.add( "JCheckBox" );
+//        fila_componentes_em_form.add( "JCheckBox" );
+//        fila_componentes_em_form.add( "JCheckBox" );
+//        fila_componentes_em_form.add( "JCheckBox" );
+//        fila_componentes_em_form.add( "JLabel" );
+//        fila_componentes_em_form.add( "JTextArea" );
+//        fila_componentes_em_form.add( "JLabel" );
+//        fila_componentes_em_form.add( "JCheckBox" );
+//        fila_componentes_em_form.add( "JCheckBox" );
+//        fila_componentes_em_form.add( "JCheckBox" );
+//        fila_componentes_em_form.add( "JCheckBox" );
+//        fila_componentes_em_form.add( "JCheckBox" );
+//        fila_componentes_em_form.add( "JCheckBox" );
+//        fila_componentes_em_form.add( "JCheckBox" );
+//        fila_componentes_em_form.add( "JCheckBox" );
+//        
+//        Vector<String> nova_fila = operacoes.remover_visinhos_duplicados(fila_componentes_em_form);
+//        debugar.exibir_array( nova_fila.toArray(new String[]{}));
+//        
+//        Vector<String> v2 = new Vector<String>();
+//        v2.add( "JCheckBox-1" );
+//        v2.add( "JCheckBox-2" );
+//        v2.add( "JCheckBox-3" );
+//        v2.add( "JCheckBox-4" );
+//        v2.add( "JCheckBox-5" );
+//        v2.add( "JCheckBox-6" );
+//        v2.add( "JCheckBox-7" );
+//        v2.add( "JCheckBox-8" );
+//        
+//        String token_dos_lugares = "JCheckBox";
+//        
+//        Vector<String> v1 = nova_fila;
+//        
+//        v1 = operacoes.modificar_dadosV1_por_dadosV2_por_token(token_dos_lugares, v1, v2);
+//        
+//        debugar.exibir_array(v1.toArray(new String[]{}));
+        
         
     }
 

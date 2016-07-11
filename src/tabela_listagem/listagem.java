@@ -28,7 +28,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
+import menu_modulos.obter_dados_formulario;
 import trei_big.aviso;
 import trei_big.operacoes_painel;
 
@@ -73,6 +75,10 @@ public class listagem extends JPanel {
     private JComboBox coluna_busca = new JComboBox();
     
     public JPanel replaceDialog = new JPanel();
+    
+    
+    private Vector<Integer> indices_colunas_checkbox = new Vector<Integer>();
+    private Vector<String[]> valores_checkbox = new Vector<String[]>();
     
     
     /* \/\/ se uma linha da tabela for modificada; \/\/ */
@@ -159,12 +165,34 @@ public class listagem extends JPanel {
         
         
         for (int count = 0; count < this.dados_tabela.size(); count++) {
-            model.addRow( this.dados_tabela.get(count) );
+            
+            // \/ procurar a coluna com dados do tipo checkbox;
+            for (int i = 0; i < this.dados_tabela.get(count).length; i++) {
+                String dd = this.dados_tabela.get(count)[i].toString();
+                if( dd.indexOf(obter_dados_formulario.token_separador_dados_checkbox) != -1 )
+                {
+                    indices_colunas_checkbox.add( i );
+                    valores_checkbox.add( dd.split(obter_dados_formulario.regex_token_separador_dados_checkbox) );
+                }
+            }       
+            // /\ procurar a coluna com dados do tipo checkbox;
+            
+            model.addRow( this.dados_tabela.get(count) );   
         }
         
         table.setModel(model);
         exibir_numero_registros();
         
+        // \/ adiciona um componente select na coluna dos dados do tipo checkbox;
+        for (int i = 0; i < indices_colunas_checkbox.size(); i++) {
+            int coluna_check = indices_colunas_checkbox.get(i);
+            TableColumn col = table.getColumnModel().getColumn(coluna_check);
+            col.setCellEditor(new MyComboBoxEditor(valores_checkbox.get(i)));
+            col.setCellRenderer(new MyComboBoxRenderer(valores_checkbox.get(i)));
+        }
+        indices_colunas_checkbox.clear();
+        valores_checkbox.clear();
+        // /\ adiciona um componente select na coluna dos dados do tipo checkbox;
         
 //        table.setDefaultRenderer(Object.class, new colorir_linha_tabela(estado));
         
@@ -382,5 +410,31 @@ public class listagem extends JPanel {
     }
     
 
+}
+
+//---
+class MyComboBoxRenderer extends JComboBox implements TableCellRenderer {
+  public MyComboBoxRenderer(String[] items) {
+    super(items);
+  }
+
+  public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+      boolean hasFocus, int row, int column) {
+    if (isSelected) {
+      setForeground(table.getSelectionForeground());
+      super.setBackground(table.getSelectionBackground());
+    } else {
+      setForeground(table.getForeground());
+      setBackground(table.getBackground());
+    }
+    setSelectedItem(value);
+    return this;
+  }
+}
+
+class MyComboBoxEditor extends DefaultCellEditor {
+  public MyComboBoxEditor(String[] items) {
+    super(new JComboBox(items));
+  }
 }
 

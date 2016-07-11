@@ -33,6 +33,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import menu_modulos.obter_dados_formulario;
 import trei_big.aviso;
+import trei_big.debugar;
 import trei_big.operacoes_painel;
 
 /**
@@ -132,19 +133,21 @@ public class painel_selecionar_formulario {
                             btn_enviar.addActionListener(new ActionListener(){
                                 @Override
                                 public void actionPerformed(ActionEvent ae) {
-                                    System.out.println("ENVIAR");
+//                                    System.out.println("ENVIAR");
                                     
                                     dados_form.apagar_dados();
                                     dados_form.zerar_numero_painel_radios();
                                     dados_form.quantos_paineis_radios(painel_formulario);
                                     dados_form.buscar_componentes_recursivo(painel_formulario);
+                                    dados_form.pegar_chekbox_selecionados(painel_formulario);
                                     
                                     if( dados_form.verifica_se_radios_selecionados() )
                                     {
                                         String[] titulos = dados_form.getTitulos().toArray(new String[]{});
                                         String[] dados = dados_form.getDados().toArray(new String[]{});
                                         String sql_inserir = SQL.montar_sql_insert(nome_tabela_cadastrar, titulos, dados);
-                                        if( banco.executar_query(sql_inserir) ){
+                                        
+                                        if( (sql_inserir != null) && banco.executar_query(sql_inserir) ){
                                             aviso.mensagem_sucesso("Informações inseridas com sucesso!");
                                             
                                             operacoes_painel.remover_componente_em_painel(painel, "formulario_deserializado_do_banco");

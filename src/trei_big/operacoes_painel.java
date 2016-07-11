@@ -23,6 +23,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -130,6 +131,15 @@ public class operacoes_painel {
                 if( (name_componente != null) && (name_componente.indexOf(prefixo_componente_no_painel) != -1)  ){
                     vc.add(components[i]);
                 }
+            }//fim for;
+        return vc;
+    }
+    
+    public static Vector<Component> pegar_todos_componentes_em_painel(JPanel painel) {
+        Vector<Component> vc = new Vector<Component>();
+        Component[] components = painel.getComponents();
+            for (int i=0; i < components.length; i++) {
+                vc.add(components[i]);
             }//fim for;
         return vc;
     }
