@@ -365,4 +365,8 @@ public class painel_escrever_lista extends JDialog {
         return itens.toArray(new String[]{});
     }
     
+    public void apagar_itens() {
+        itens.clear();
+    }
+    
 }

@@ -75,6 +75,7 @@ public class obter_dados_lista_criada {
                             if( (itens_da_lista != null) && itens_da_lista.length > 0 )
                             {
                                 thre.interrupt();
+                                es.apagar_itens();
                             }
                         }catch(java.lang.NullPointerException nn){}
 
