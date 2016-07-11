@@ -104,7 +104,7 @@ public class painel_escrever_lista extends JDialog {
         String dado = campo.getText().trim();
         if( (!dado.isEmpty()) )
         {
-            if( model.size() < this.numero_maximo_de_itens )
+            if( (model.size() < this.numero_maximo_de_itens) || (indice_da_lista_para_editar != -1) )
             {
                 campo.setForeground(null);
                 if( indice_da_lista_para_editar != -1 )
