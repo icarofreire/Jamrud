@@ -129,7 +129,7 @@ public class Trei_big {
           
 //        menu();
 //        ajuda();
-        editar();
+//        editar();
         
 //        *******************************************************
         // exemplo de como criar uma lista e obter o array;
@@ -141,14 +141,14 @@ public class Trei_big {
 //        }
         
         // exemplo de como editar uma lista e obter o array
-//        String[] lista = new String[]{"1","2","3","4","5","6","7","8","9","10"};
-//        obter_dados_lista_criada ob = new obter_dados_lista_criada(lista, lista.length);
-//        
-//        String[] itens_da_lista = ob.obter_itens_da_lista();
-//        for (int i = 0; i < itens_da_lista.length; i++) {
-//            String x = itens_da_lista[i];
-//            System.out.println("-->" + x);
-//        }
+        String[] lista = new String[]{"1","2","3","4","5","6","7","8","9","10"};
+        obter_dados_lista_criada ob = new obter_dados_lista_criada(lista, lista.length);
+        
+        String[] itens_da_lista = ob.obter_itens_da_lista();
+        for (int i = 0; i < itens_da_lista.length; i++) {
+            String x = itens_da_lista[i];
+            System.out.println("-->" + x);
+        }
 //        *******************************************************
         
         

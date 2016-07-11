@@ -203,8 +203,7 @@ public class editar_formulario {
                                                             {
                                                                 try {
                                                                         String[] itens_da_lista = ob.obter_itens_da_lista();
-                                                                        if( itens_da_lista.length == titulos_editar.size() )
-                                                                        {
+                                                                        
                                                                             get.setText( itens_da_lista[0] );
 
                                                                             for (int i = 0; i < cc.length; i++) {
@@ -216,10 +215,7 @@ public class editar_formulario {
                                                                              }
 
                                                                             pinterno.setBorder(null);//<= retirar borda;
-                                                                        }else{
-                                                                            aviso.mensagem_atencao("O número de titulos na sua lista deve ser"
-                                                                                    + " o \nmesmo número de titulos no componente de seu formulário.");
-                                                                        }
+                                                                        
                                                                     } catch (InterruptedException ex) {
                                                                         Logger.getLogger(editar_formulario.class.getName()).log(Level.SEVERE, null, ex);
                                                                     }

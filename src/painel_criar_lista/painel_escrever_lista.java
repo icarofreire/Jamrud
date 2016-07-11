@@ -30,7 +30,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import trei_big.aviso;
 import trei_big.operacoes_painel;
 
 /**
@@ -120,10 +119,7 @@ public class painel_escrever_lista extends JDialog {
                     se_ativar_ou_nao_botao_remover_tudo();
                 }
             }else{
-                JOptionPane.showMessageDialog(this,  
-                        model.size() + " é o número máximo de itens definido para esta lista.", 
-                        "Limite máximo alcançado",
-                JOptionPane.WARNING_MESSAGE);
+                aviso("Limite máximo alcançado", model.size() + " é o número máximo de itens definido para esta lista.");
             }
         }
     }
@@ -137,11 +133,15 @@ public class painel_escrever_lista extends JDialog {
         }
     }
     
+    private void aviso(String titulo, String mensagem)
+    {
+        JOptionPane.showMessageDialog(null, mensagem, titulo, JOptionPane.WARNING_MESSAGE);
+    }
+    
     public void gui() {
         
         cor_natural_item_selecionado = lista.getSelectionBackground();
         alterar_titulo_lista();
-        btn_del.setEnabled(false);
         se_ativar_ou_nao_botao_remover_tudo();
         painel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         
@@ -175,7 +175,6 @@ public class painel_escrever_lista extends JDialog {
         lista.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent lse) {
-                btn_del.setEnabled(true);
                 int index = lista.getSelectedIndex();
             }
         });
@@ -246,11 +245,15 @@ public class painel_escrever_lista extends JDialog {
         btn_del.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                int index = lista.getSelectedIndex();
-                model.remove(index);
-                btn_del.setEnabled(false);
-                alterar_titulo_lista();
-                se_ativar_ou_nao_botao_remover_tudo();
+                if( !lista.isSelectionEmpty() )
+                {
+                    int index = lista.getSelectedIndex();
+                    model.remove(index);
+                    alterar_titulo_lista();
+                    se_ativar_ou_nao_botao_remover_tudo();
+                }else{
+                    aviso("Item não selecionado", "Selecione um item na lista para remover.");
+                }
             }
         });
         
@@ -260,7 +263,6 @@ public class painel_escrever_lista extends JDialog {
                 if( model.size() > 0 )
                 {
                     model.removeAllElements();
-                    btn_del.setEnabled(false);
                     btn_del_tudo.setEnabled(false);
                     alterar_titulo_lista();
                 }
@@ -282,7 +284,7 @@ public class painel_escrever_lista extends JDialog {
                             model.add(index, item);//adicionei o anterior que tinha guardado no lugar do selecionado; 
                         }
                     }else{
-                        aviso.mensagem_atencao("Selecione um item na lista para mover.");
+                        aviso("Item não selecionado", "Selecione um item na lista para mover.");
                     }
                 }
             }
@@ -304,7 +306,7 @@ public class painel_escrever_lista extends JDialog {
                             lista.setSelectedIndex(index+1);
                         }
                     }else{
-                        aviso.mensagem_atencao("Selecione um item na lista para mover.");
+                        aviso("Item não selecionado", "Selecione um item na lista para mover.");
                     }
                 }
             }
@@ -322,7 +324,7 @@ public class painel_escrever_lista extends JDialog {
                     atualizar_itens();
                     dispose();
                 }else{
-                    aviso.mensagem_atencao("Adicione itens na sua lista.", "Lista vazia");
+                    aviso("Lista vazia", "Adicione itens na sua lista.");
                 }
             }
         });
