@@ -153,7 +153,21 @@ public class operacoes {
             String get1 = v1.get(i);
             if(get1.compareTo(token_dos_lugares) == 0)
             {
-                System.out.println("v1: " + i);
+                if( prox < v2.size() ){
+                    v1.set(i, v2.get(prox) ); prox++;
+                }
+            }  
+        }
+        return v1;
+    }
+    
+    public static Vector<String> modificar_dadosV1_por_dadosV2_por_token_parecido(String token_dos_lugares, Vector<String> v1, Vector<String>v2)
+    {
+        int prox = 0;
+        for (int i = 0; i < v1.size(); i++) {
+            String get1 = v1.get(i);
+            if(get1.indexOf(token_dos_lugares) != -1)
+            {
                 if( prox < v2.size() ){
                     v1.set(i, v2.get(prox) ); prox++;
                 }

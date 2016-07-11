@@ -141,6 +141,10 @@ public class painel_selecionar_formulario {
                                     dados_form.buscar_componentes_recursivo(painel_formulario);
                                     dados_form.pegar_chekbox_selecionados(painel_formulario);
                                     
+//                                    debugar.exibir_array(dados_form.getTitulos().toArray(new String[]{}));
+//                                    debugar.exibir_array(dados_form.getDados().toArray(new String[]{}));
+//                                    debugar.exibir_classes_do_painel(painel_formulario);
+                                    
                                     if( dados_form.verifica_se_radios_selecionados() )
                                     {
                                         String[] titulos = dados_form.getTitulos().toArray(new String[]{});

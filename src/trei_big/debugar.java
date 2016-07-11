@@ -6,6 +6,8 @@
 package trei_big;
 
 import banco.banco;
+import java.awt.Component;
+import java.util.Vector;
 import javax.swing.JPanel;
 
 /**
@@ -42,6 +44,15 @@ public class debugar {
     public static void exibir_names_em_painel(JPanel painel)
     {
         operacoes_painel.exibir_names_em_painel(painel);
+    }
+    
+    public static void exibir_classes_do_painel(JPanel painel)
+    {
+        Vector<Component> comps = operacoes_painel.pegar_todos_componentes_em_painel(painel);
+        for (int i = 0; i < comps.size(); i++) {
+            String classe = comps.get(i).getClass().getSimpleName();
+            System.out.println("classe: " + classe);
+        }
     }
     
 }

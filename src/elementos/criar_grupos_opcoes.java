@@ -101,7 +101,7 @@ public class criar_grupos_opcoes {
         
         JPanel p_group = new JPanel(new GridBagLayout());
         GBHelper pos_p_group = new GBHelper();
-        p_group.setName("painel_checkbox");
+        p_group.setName(operacoes.gerar_name_para_componente("painel_checkbox"));
         
         int numero_colunas = 6;
         int con = 0;

@@ -81,7 +81,8 @@ public class obter_dados_formulario {
                 }
             }
         }
-        operacoes.modificar_dadosV1_por_dadosV2_por_token("JCheckBox", dados, dados_checkbox);
+//        debugar.exibir_array(dados.toArray(new String[]{}));
+        operacoes.modificar_dadosV1_por_dadosV2_por_token_parecido("painel_checkbox", dados, dados_checkbox);
         
         for (int i = 0; i < dados.size(); i++) {
             String get = dados.get(i);
@@ -100,6 +101,7 @@ public class obter_dados_formulario {
         titulos.clear();
         dados.clear();
         dados_checkbox.clear();
+        v_dados_checkbox.clear();
     }
         
     public void buscar_componentes_recursivo(Component component) {
@@ -167,7 +169,8 @@ public class obter_dados_formulario {
                 
                 if( nome_classe.equalsIgnoreCase("JCheckBox") )
                 {
-                    dados.add("JCheckBox");
+                    dados.add(component.getName());
+                    System.out.println(">>"+component.getName());
                 }
 
             }
@@ -206,7 +209,7 @@ public class obter_dados_formulario {
                 Component chek = cheks.get(j);
                 JPanel pp = (JPanel) chek;
                 
-                debugar.exibir_names_em_painel(pp);
+//                debugar.exibir_names_em_painel(pp);
                 Vector<Component> comps = operacoes_painel.pegar_todos_componentes_em_painel(pp);
                 
                 Vector<String> v = new Vector<String>();
