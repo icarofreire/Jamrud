@@ -89,25 +89,22 @@ public class listagem extends JPanel {
             @Override
             public void tableChanged(TableModelEvent tme) {
                   if(!em_busca){
-//                        System.out.println("[FORA] celula modificada: " +  tme.getLastRow() );
+                    if( !indices_colunas_checkbox.contains(tme.getColumn()) ){
                         editar.setEnabled(true);
+                    }
                   }else{// \/\/ tabela modificada nos resultados da busca;
-//                        System.out.println("[BUSCA] celula modificada: " +  tme.getLastRow() );
-                        editar.setEnabled(true);
-                        
-                            
-                        Object[] linha_modificada = busca.obter_linha_tabela_model(linhas_resultado_busca, tme.getLastRow()+1);
-                            
-                        int lug = map_IDlinha_indice.get( operacoes_painel.obj_to_int(linha_modificada[0]) );
-                            
-//                        System.out.println( "ID: " + linha_modificada[0] + " lug: " + lug );
-                            
-                        Object[] linha_modificada_p = busca.obter_linha_tabela_model(model, lug+1);
+                      if( !indices_colunas_checkbox.contains(tme.getColumn()) )
+                      {
+                            editar.setEnabled(true);
+                            Object[] linha_modificada = busca.obter_linha_tabela_model(linhas_resultado_busca, tme.getLastRow()+1);
 
-                        model.insertRow(lug, linha_modificada);
-                        model.removeRow(lug-1);
+                            int lug = map_IDlinha_indice.get( operacoes_painel.obj_to_int(linha_modificada[0]) );
 
-                        
+                            Object[] linha_modificada_p = busca.obter_linha_tabela_model(model, lug+1);
+
+                            model.insertRow(lug, linha_modificada);
+                            model.removeRow(lug-1);
+                      }
                   }
             }
         });
@@ -183,16 +180,9 @@ public class listagem extends JPanel {
         table.setModel(model);
         exibir_numero_registros();
         
-        // \/ adiciona um componente select na coluna dos dados do tipo checkbox;
-        for (int i = 0; i < indices_colunas_checkbox.size(); i++) {
-            int coluna_check = indices_colunas_checkbox.get(i);
-            TableColumn col = table.getColumnModel().getColumn(coluna_check);
-            col.setCellEditor(new MyComboBoxEditor(valores_checkbox.get(i)));
-            col.setCellRenderer(new MyComboBoxRenderer(valores_checkbox.get(i)));
-        }
-        indices_colunas_checkbox.clear();
-        valores_checkbox.clear();
-        // /\ adiciona um componente select na coluna dos dados do tipo checkbox;
+        add_select_na_coluna_checkbox();
+//        indices_colunas_checkbox.clear();
+//        valores_checkbox.clear();
         
 //        table.setDefaultRenderer(Object.class, new colorir_linha_tabela(estado));
         
@@ -336,7 +326,8 @@ public class listagem extends JPanel {
                         if( linhas_resultado_busca.getRowCount() > 0 ){
                             table.setModel(linhas_resultado_busca);
                             resultados.setText( "Busca: " + linhas_resultado_busca.getRowCount() + " Resultados." );
-
+                            
+                            add_select_na_coluna_checkbox();
                             se_tabela_for_modificada(true);
                         }else{
                             aviso.mensagem_falha("Nenhum registro encontrado.", "Não encontrado");
@@ -361,6 +352,7 @@ public class listagem extends JPanel {
                 exibir_numero_registros();
                 coluna_busca.setSelectedIndex(0);
                 table.setModel(model);
+                add_select_na_coluna_checkbox();
             }
         });
                 
@@ -409,32 +401,44 @@ public class listagem extends JPanel {
         painel_principal.add(p_botoes_finais  , pos.width(3));
     }
     
+    // \/ adiciona um componente select na coluna dos dados do tipo checkbox;
+    private void add_select_na_coluna_checkbox()
+    {
+        for (int i = 0; i < indices_colunas_checkbox.size(); i++) {
+            int coluna_check = indices_colunas_checkbox.get(i);
+            TableColumn col = table.getColumnModel().getColumn(coluna_check);
+            col.setCellEditor(new MyComboBoxEditor(valores_checkbox.get(i)));
+            col.setCellRenderer(new MyComboBoxRenderer(valores_checkbox.get(i)));
+        }
+    }
 
 }
 
 //---
-class MyComboBoxRenderer extends JComboBox implements TableCellRenderer {
-  public MyComboBoxRenderer(String[] items) {
-    super(items);
-  }
-
-  public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-      boolean hasFocus, int row, int column) {
-    if (isSelected) {
-      setForeground(table.getSelectionForeground());
-      super.setBackground(table.getSelectionBackground());
-    } else {
-      setForeground(table.getForeground());
-      setBackground(table.getBackground());
+class MyComboBoxRenderer extends JComboBox implements TableCellRenderer 
+{
+    public MyComboBoxRenderer(String[] items) {
+      super(items);
     }
-    setSelectedItem(value);
-    return this;
-  }
+
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+        boolean hasFocus, int row, int column) {
+      if (isSelected) {
+        setForeground(table.getSelectionForeground());
+        super.setBackground(table.getSelectionBackground());
+      } else {
+        setForeground(table.getForeground());
+        setBackground(table.getBackground());
+      }
+      setSelectedItem(value);
+      return this;
+    }
 }
 
-class MyComboBoxEditor extends DefaultCellEditor {
-  public MyComboBoxEditor(String[] items) {
-    super(new JComboBox(items));
-  }
+class MyComboBoxEditor extends DefaultCellEditor 
+{
+    public MyComboBoxEditor(String[] items) {
+      super(new JComboBox(items));
+    }
 }
 
