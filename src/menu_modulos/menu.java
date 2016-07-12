@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -186,10 +187,13 @@ public class menu extends JFrame {
                        }
                        else if( menu_lateral.se_chave(MenuLateral.pesquisar_editar, index) )
                        {
-                              JPanel painel_pesquisar_editar = new painel_selecionar_tabela().painel_selecionar_tabela_forms();
+                              painel_selecionar_tabela pst = new painel_selecionar_tabela();
+                              JPanel painel_pesquisar_editar = pst.painel_selecionar_tabela_forms();
+                              
                               JPanel p_intermediario = new JPanel();
                               p_intermediario.add(painel_pesquisar_editar);
-                              painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, p_intermediario, "scroll_pl", pos);
+                              pst.pegar_componente_para_esconder(scroll, painel_esquerdo);
+                              painel_direito = operacoes_painel.add_painel_filho_ao_PAI(painel_direito, painel_pesquisar_editar, "scroll_pl", pos);
                        }
                        else if( menu_lateral.se_chave(MenuLateral.historico, index) )
                        {

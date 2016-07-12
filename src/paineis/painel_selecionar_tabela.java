@@ -24,6 +24,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
@@ -32,6 +33,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import menu_modulos.obter_dados_formulario;
 import trei_big.aviso;
+import trei_big.debugar;
 import trei_big.operacoes_painel;
 
 /**
@@ -49,11 +51,20 @@ public class painel_selecionar_tabela {
     
     private JLabel lcmp1 = new JLabel("Escolha a tabela que deseja utilizar:");
     private JComboBox select = new JComboBox();
-    private JButton exibir = new JButton("Exibir", new ImageIcon("icones/exibir-popup-32.png"));
-    private JButton exibir_abaixo = new JButton("Exibir abaixo", new ImageIcon("icones/aplicar-32.png"));
+//    private JButton exibir = new JButton("Exibir", new ImageIcon("icones/exibir-popup-32.png"));
+//    private JButton exibir_abaixo = new JButton("Exibir abaixo", new ImageIcon("icones/aplicar-32.png"));
+    private JButton expandir = new JButton("Expandir tabela", new ImageIcon("icones/expandir-32.png"));
     
     private DefaultComboBoxModel model = new DefaultComboBoxModel();
     private HashMap<String, String> nome_hash_form = new HashMap<String, String>();
+    
+    private JComponent componente_esconder = null;
+    private JPanel painel_externo_esq = null;
+
+    public void pegar_componente_para_esconder(JComponent componente_esconder, JPanel painel_externo_esq) {
+        this.componente_esconder = componente_esconder;
+        this.painel_externo_esq = painel_externo_esq;
+    }
     
     public JPanel painel_selecionar_tabela_forms(){
         
@@ -61,13 +72,15 @@ public class painel_selecionar_tabela {
         painel_interno.add(lcmp1, pos_painel_interno.expandW());
         painel_interno.add(select, pos_painel_interno.nextRow().expandW());
         painel_interno.add(new Gap(GAP) , pos_painel_interno.nextCol());  // Add a gap below
-        painel_interno.add(exibir, pos_painel_interno.nextCol().expandW());
-        painel_interno.add(exibir_abaixo, pos_painel_interno.nextCol().expandW());
+        painel_interno.add(expandir, pos_painel_interno.nextCol().expandW());
         painel_interno.add(new Gap(GAP) , pos_painel_interno.nextRow());  // Add a gap below
         painel_interno.add(new JSeparator(SwingConstants.HORIZONTAL) , pos_painel_interno.nextRow().width(4).expandW());
-        painel_interno.add(new Gap(50) , pos_painel_interno.nextRow());
+        painel_interno.add(new Gap(10) , pos_painel_interno.nextRow());
         
         painel.add(painel_interno);
+        
+        JPanel painel_vazio_preenchimento = new JPanel();
+        painel.add( painel_vazio_preenchimento, pos.nextRow().expandir());
         
         Vector<Vector<String>> formularios = banco.obter_dados_da_tabela(SQL.nome_tabela_formulario);
         
@@ -80,68 +93,53 @@ public class painel_selecionar_tabela {
         
         select.setModel(model);
         
+        select.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if( select.getSelectedIndex() > 0 )
+                {                    
+                    String item = select.getSelectedItem().toString();
+                    String form = select.getSelectedItem().toString().replaceAll(" ", "_");
+                    if( nome_hash_form.containsKey(form) )
+                    {
+                        operacoes_painel.remover_componente_em_painel(painel, "tabela_de_dados_do_formulario");
+                        JPanel pl = operacoes_painel.obter_dados_banco_em_painel_listagem(form);
+                        pl.setName("tabela_de_dados_do_formulario");
+                        pl.setBorder(BorderFactory.createTitledBorder(form.replaceAll("_", " ")));
+                        painel.add(pl , pos.nextRow().expandir());
+                        operacoes_painel.atualizar_painel(painel);
+                    }
+                    painel.remove(painel_vazio_preenchimento);
+                    operacoes_painel.atualizar_painel(painel);
+                }
+            }
+        });        
         
-        exibir.addActionListener(new ActionListener() {
+        expandir.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                
                 int ind = select.getSelectedIndex();                
                 if( ind > 0 )
                 {
-//                    System.out.println("selecionado: " + ind );
-                    try{
-                            String form = select.getSelectedItem().toString().replaceAll(" ", "_");
-                            if( nome_hash_form.containsKey(form) )
-                            {
-                                operacoes_painel.remover_componente_em_painel(painel, "tabela_de_dados_do_formulario");
-                                JPanel pl = operacoes_painel.obter_dados_banco_em_painel_listagem(form);
-                                pl.setName("tabela_de_dados_do_formulario");
-                                operacoes_painel.atualizar_painel(painel);
-                                new popup("Tabela: " + form.replaceAll("_", " "), pl, 1200, 700);
-                            }
-                    }catch(Exception e)
+                    if( componente_esconder != null )
                     {
-                        //TODO exception
+                        if(componente_esconder.isVisible()){
+                            componente_esconder.setVisible(false);
+                            expandir.setText("Exibir menu");
+                            expandir.setIcon(new ImageIcon("icones/exibir-popup-32.png"));
+                        }else{
+                            componente_esconder.setVisible(true);
+                            expandir.setText("Expandir tabela");
+                            expandir.setIcon(new ImageIcon("icones/expandir-32.png"));
+                        }
+                        operacoes_painel.atualizar_painel(painel_externo_esq);
+                        operacoes_painel.atualizar_painel(painel);
                     }
-                    
                 }else{
                     aviso.mensagem_atencao("Selecione um formulário.");
                 }
             }
         });
-        
-        
-        
-        exibir_abaixo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                
-                int ind = select.getSelectedIndex();                
-                if( ind > 0 )
-                {
-//                    System.out.println("selecionado: " + ind );
-                    try{
-                            String form = select.getSelectedItem().toString().replaceAll(" ", "_");
-                            if( nome_hash_form.containsKey(form) )
-                            {
-                                operacoes_painel.remover_componente_em_painel(painel, "tabela_de_dados_do_formulario");
-                                JPanel pl = operacoes_painel.obter_dados_banco_em_painel_listagem(form);
-                                pl.setName("tabela_de_dados_do_formulario");
-                                pl.setBorder(BorderFactory.createTitledBorder(form.replaceAll("_", " ")));
-                                painel.add(pl , pos.nextRow());
-                                operacoes_painel.atualizar_painel(painel);
-                            }
-                    }catch(Exception e)
-                    {
-                        //TODO exception
-                    }
-                    
-                }else{
-                    aviso.mensagem_atencao("Selecione um formulário.");
-                }
-            }
-        });
-        
         
         return painel;
         
