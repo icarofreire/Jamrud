@@ -230,6 +230,22 @@ public class listagem extends JPanel {
         
         se_tabela_for_modificada(false);
         
+        campo_pesquisar.addKeyListener(new KeyListener(){
+            @Override
+            public void keyTyped(KeyEvent ke) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent ke) {
+                if( ke.getKeyCode() == KeyEvent.VK_ENTER ){
+                    procedimento_realizar_busca();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent ke) {
+            }
+        });
         
         deletar.addActionListener(new ActionListener(){
             @Override
@@ -293,52 +309,7 @@ public class listagem extends JPanel {
         buscar.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent ae) {
-               
-                int ind = coluna_busca.getSelectedIndex()-1;                
-                if( ind >= 0 )
-                {
-                    String pesquisa = campo_pesquisar.getText();
-                    String coluna_pesquisar = colunas[ind];
-                    if( !pesquisa.isEmpty() )
-                    {
-                        zerar_busca.setEnabled(true);
-                        deletar.setEnabled(false);
-                        table.setModel(model);
-
-                        // \/ ... iniciar busca ... \/;
-    //                    String pesquisa = campo_pesquisar.getText();
-    //                    String coluna_pesquisar = colunas[ind];
-//                        System.out.println("buscar: " + pesquisa + " em: " + coluna_pesquisar );
-
-
-                        ArrayList<Integer> linhas_res = busca.comparacao_dados_coluna_2(table, ind, pesquisa);
-                        for(int i=0; i<linhas_res.size(); i++){
-//                            System.out.println("->"+linhas_res.get(i));
-
-                            Object[] obj_ = busca.obter_linha_tabela(table, linhas_res.get(i));
-                            map_IDlinha_indice.put(
-                                    operacoes_painel.obj_to_int( obj_[0] ),
-                                    linhas_res.get(i)
-                            );
-                        }
-
-                        linhas_resultado_busca = busca.modificar_tabela_resultados_busca(table, colunas, linhas_res);
-                        if( linhas_resultado_busca.getRowCount() > 0 ){
-                            table.setModel(linhas_resultado_busca);
-                            resultados.setText( "Busca: " + linhas_resultado_busca.getRowCount() + " Resultados." );
-                            
-                            add_select_na_coluna_checkbox();
-                            se_tabela_for_modificada(true);
-                        }else{
-                            aviso.mensagem_falha("Nenhum registro encontrado.", "Não encontrado");
-                        }
-                    }else{
-                        aviso.mensagem_atencao("Digite alguma informação que deseja buscar.", "Campo vazio");
-                    }
-                }else{
-                    aviso.mensagem_atencao("Selecione uma coluna para realizar a pesquisa.");
-                }
-                
+                procedimento_realizar_busca();
             }//fim void actionPerformed;
         });
         
@@ -358,6 +329,46 @@ public class listagem extends JPanel {
                 
         
         return scroll;
+    }
+    
+    private void procedimento_realizar_busca()
+    {
+        int ind = coluna_busca.getSelectedIndex()-1;                
+        if( ind >= 0 )
+        {
+            String pesquisa = campo_pesquisar.getText();
+            String coluna_pesquisar = colunas[ind];
+            if( !pesquisa.isEmpty() )
+            {
+                zerar_busca.setEnabled(true);
+                deletar.setEnabled(false);
+                table.setModel(model);
+
+                ArrayList<Integer> linhas_res = busca.comparacao_dados_coluna_2(table, ind, pesquisa);
+                for(int i=0; i<linhas_res.size(); i++)
+                {
+                    Object[] obj_ = busca.obter_linha_tabela(table, linhas_res.get(i));
+                    map_IDlinha_indice.put(
+                        operacoes_painel.obj_to_int( obj_[0] ),
+                        linhas_res.get(i)
+                    );
+               }
+
+                linhas_resultado_busca = busca.modificar_tabela_resultados_busca(table, colunas, linhas_res);
+                if( linhas_resultado_busca.getRowCount() > 0 ){
+                    table.setModel(linhas_resultado_busca);
+                    resultados.setText( "Busca: " + linhas_resultado_busca.getRowCount() + " Resultados." );
+                    add_select_na_coluna_checkbox();
+                    se_tabela_for_modificada(true);
+                }else{
+                    aviso.mensagem_falha("Nenhum registro encontrado.", "Não encontrado");
+                }
+            }else{
+                aviso.mensagem_atencao("Digite alguma informação que deseja buscar.", "Campo vazio");
+            }
+        }else{
+            aviso.mensagem_atencao("Selecione uma coluna para realizar a pesquisa.");
+        }
     }
     
     //======================================================== createContentPane
