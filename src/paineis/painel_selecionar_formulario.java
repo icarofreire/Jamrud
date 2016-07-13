@@ -61,8 +61,6 @@ public class painel_selecionar_formulario {
         painel_interno.setName("painel_interno_para_selecionar_formularios");
         painel_interno.add(lcmp1, pos_painel_interno.expandW());
         painel_interno.add(select, pos_painel_interno.nextRow().expandW());
-        painel_interno.add(new Gap(GAP) , pos_painel_interno.nextCol());  // Add a gap below
-        painel_interno.add(aplicar, pos_painel_interno.nextCol().expandW());
         painel_interno.add(new Gap(GAP) , pos_painel_interno.nextRow());  // Add a gap below
         painel_interno.add(new JSeparator(SwingConstants.HORIZONTAL) , pos_painel_interno.nextRow().width(3).expandW());
         painel_interno.add(new Gap(50) , pos_painel_interno.nextRow());
@@ -80,16 +78,11 @@ public class painel_selecionar_formulario {
         
         select.setModel(model);
         
-        
-        aplicar.addActionListener(new ActionListener() {
+        select.addActionListener(new ActionListener(){
             @Override
-            public void actionPerformed(ActionEvent ae) {
-                
-                int ind = select.getSelectedIndex();                
-                if( ind > 0 )
-                {
-//                    System.out.println("selecionado: " + ind );
-                    try{
+            public void actionPerformed(ActionEvent e) {
+                if( select.getSelectedIndex() > 0 )
+                {                    
                             String form = select.getSelectedItem().toString().replaceAll(" ", "_");
                             if( nome_hash_form.containsKey(form) )
                             {
@@ -102,20 +95,11 @@ public class painel_selecionar_formulario {
                                 operacoes_painel.atualizar_painel(painel);
                                 eventos_botao_enviar_e_data_hora(form, painel_formulario);                                
                             }
-                    }catch(Exception e)
-                    {
-                        //TODO exception
-                    }
-                    
-                }else{
-                    aviso.mensagem_atencao("Selecione um formulário.");
                 }
             }
         });
         
-        
         return painel;
-        
     }
     
     
