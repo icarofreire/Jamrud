@@ -46,8 +46,6 @@ public class MenuLateral {
         nomes.add(form_cadastrar); /* => */ icones.add("icones/cadastrar.png");
         nomes.add(pesquisar_editar); /* => */ icones.add("icones/pesquisar_e_editar.png");   
         nomes.add(gerar_planilha); /* => */ icones.add("icones/planilha.png");
-        //        nomes.add("Lixeira"); /* => */ icones.add("icones/lixo2.png");
-//                nomes.add(backup_banco); /* => */ icones.add("icones/1460597575_document-save.png");
         nomes.add(criar_formulario); /* => */ icones.add("icones/criar.png");
         nomes.add(excluir_formulario); /* => */ icones.add("icones/remover.png");
         nomes.add(historico); /* => */ icones.add("icones/historico.png");

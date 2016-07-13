@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
@@ -31,7 +32,6 @@ import trei_big.operacoes_painel;
  */
 public class painel_excluir_formulario {
     
-        
     private static final int GAP = 5;   // Default gap btwn components.
     private JPanel painel = new JPanel(new GridBagLayout());
     private GBHelper pos = new GBHelper();
@@ -45,6 +45,8 @@ public class painel_excluir_formulario {
     
     private DefaultComboBoxModel model = new DefaultComboBoxModel();
     private HashMap<String, String> nome_hash_form = new HashMap<String, String>();
+    
+    private String senha_excluir_formulario = "8086";
     
     public JPanel excluir_formulario(){
         
@@ -78,25 +80,27 @@ public class painel_excluir_formulario {
                 int ind = select.getSelectedIndex();                
                 if( ind > 0 )
                 {
-                    try{
-                            String form = select.getSelectedItem().toString().replaceAll(" ", "_");
-                            
-                            if(
-                                banco.executar_query(
-                                        SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), "NOME", form)
-                                )
-                                &&
-                                banco.executar_query( "DROP TABLE " + form.toUpperCase() )
-                            ){
-                                aviso.mensagem_sucesso("Formulário excluído com sucesso.");
-                                model.removeElementAt(select.getSelectedIndex());
-                                select.setSelectedIndex(0);
-                            }
-                    }catch(Exception e)
+                    String senha = JOptionPane.showInputDialog(null, "Informe a senha:");
+                    if( senha.equals(senha_excluir_formulario) )
                     {
-                        //TODO exception
+                        try{
+                                String form = select.getSelectedItem().toString().replaceAll(" ", "_");
+
+                                if(
+                                    banco.executar_query(
+                                            SQL.montar_sql_deletar_linha(SQL.nome_tabela_formulario.toUpperCase(), "NOME", form)
+                                    )
+                                    &&
+                                    banco.executar_query( "DROP TABLE " + form.toUpperCase() )
+                                ){
+                                    aviso.mensagem_sucesso("Formulário excluído com sucesso.");
+                                    model.removeElementAt(select.getSelectedIndex());
+                                    select.setSelectedIndex(0);
+                                }
+                        }catch(Exception e){}
+                    }else{
+                        aviso.mensagem_erro("Senha incorreta.");
                     }
-                    
                 }else{
                     aviso.mensagem_atencao("Selecione um formulário.");
                 }
