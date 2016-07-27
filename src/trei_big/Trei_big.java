@@ -177,17 +177,17 @@ public class Trei_big {
 //        debugar.exibir_tabela("mara");
 //        banco.executar_query( "DROP TABLE IMAGENS_FORMULARIO" );
         
-        String img = "/home/icaro/Imagens/img_19922_monica-bellucci.jpg";
-        banco.add_imagem("teste-img", img);
-        
-        img = "/home/icaro/Imagens/Atheris-Squamigera.jpeg";
-        banco.add_imagem("teste-img", img);
-        
-        img = "/home/icaro/Imagens/Anton-Chigurh.jpg";
-        banco.add_imagem("teste-img", img);
-        
-        img = "/home/icaro/Imagens/GARRAFA.jpg";
-        banco.add_imagem("teste-img", img);
+//        String img = "/home/icaro/Imagens/img_19922_monica-bellucci.jpg";
+//        banco.add_imagem("teste-img", img);
+//        
+//        img = "/home/icaro/Imagens/Atheris-Squamigera.jpeg";
+//        banco.add_imagem("teste-img", img);
+//        
+//        img = "/home/icaro/Imagens/Anton-Chigurh.jpg";
+//        banco.add_imagem("teste-img", img);
+//        
+//        img = "/home/icaro/Imagens/GARRAFA.jpg";
+//        banco.add_imagem("teste-img", img);
         
 //        banco.executar_query(SQL.montar_sql_deletar_linha("IMAGENS_FORMULARIO", 101));
 //        debugar.exibir_tabela("IMAGENS_FORMULARIO");
@@ -203,7 +203,7 @@ public class Trei_big {
 //            }
 //        }
         
-//        new popup_lista_imagens("teste-img");
+        new popup_lista_imagens("teste-img");
 
         
     }

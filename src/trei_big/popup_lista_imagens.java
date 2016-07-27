@@ -25,6 +25,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -57,6 +58,8 @@ public class popup_lista_imagens extends JDialog {
     private GBHelper pos_lista = new GBHelper();
     private JList lista;
     private Vector<HashMap<String, Object>> imagens;
+    private JPanel p_in_painel_lista;
+    private DefaultListModel nomes = new DefaultListModel();
     
 
     public popup_lista_imagens() {
@@ -64,8 +67,8 @@ public class popup_lista_imagens extends JDialog {
     
     public popup_lista_imagens(String nome_do_formulario) {
       
-        JPanel painel = painel_p_historico(nome_do_formulario);
-        gui_popup(nome_do_formulario, painel, largura, altura);
+        p_in_painel_lista = painel_p_listar_imagens(nome_do_formulario);
+        gui_popup(nome_do_formulario, p_in_painel_lista, largura, altura);
     }
     
     private void gui_popup(String nome_formulario, JComponent comp, int largura, int altura) {
@@ -110,13 +113,13 @@ public class popup_lista_imagens extends JDialog {
                             if( nome_img.equals(nome) ){
                                 String ID = (String) imagens.get(i).get("id");
                                 int ID__ = Integer.parseInt(ID);
+                                
                                 if(
                                         banco.executar_query(SQL.montar_sql_deletar_linha(SQL.nome_tabela_imagens, ID__))
                                   ){
                                         aviso.mensagem_sucesso("Imagem excluída com sucesso!");
-                                        lista.remove(lista.getSelectedIndex());
+                                        nomes.remove( lista.getSelectedIndex() );
                                    }
-//                                System.out.println("deletar: " + ID__ );
                             }
                         }
                         
@@ -133,17 +136,15 @@ public class popup_lista_imagens extends JDialog {
         super.setLocationRelativeTo(null);
     }
     
-    public JPanel painel_p_historico(String nome_do_formulario)
+    public JPanel painel_p_listar_imagens(String nome_do_formulario)
     {
-        Vector<String> nomes = new Vector<String>();
-        
         try {
             imagens = banco.obter_imagens_banco(nome_do_formulario);
             if( !imagens.isEmpty() ){
                 for (int i = 0; i < imagens.size(); i++) {
                     BufferedImage get = (BufferedImage) imagens.get(i).get("imagem");
                     String nome = (String) imagens.get(i).get("nome");
-                    nomes.add( nome );
+                    nomes.addElement( nome );
                 }
             }
             
