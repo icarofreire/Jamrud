@@ -13,19 +13,19 @@ import java.io.File;
  */
 public class SQL {
     
-    public static String nome_tabela = "cadastro_1";
-    public static String listar = "select * from " + nome_tabela;
-    
-    public static String sql_tabela = 
-    "CREATE table "+ nome_tabela +" (\n" +
-    "ID INTEGER NOT NULL \n" +
-    "PRIMARY KEY GENERATED ALWAYS AS IDENTITY \n" +
-    "(START WITH 1, INCREMENT BY 1),\n" +
-    "NOME VARCHAR(100), \n" +
-    "ENDERECO VARCHAR(100),\n" +
-    "TELEFONE VARCHAR(100),\n" +
-    "DATA VARCHAR(100),\n" +
-    "OBSERVACOES VARCHAR(100) )";
+//    public static String nome_tabela = "cadastro_1";
+//    public static String listar = "select * from " + nome_tabela;
+//    
+//    public static String sql_tabela = 
+//    "CREATE table "+ nome_tabela +" (\n" +
+//    "ID INTEGER NOT NULL \n" +
+//    "PRIMARY KEY GENERATED ALWAYS AS IDENTITY \n" +
+//    "(START WITH 1, INCREMENT BY 1),\n" +
+//    "NOME VARCHAR(100), \n" +
+//    "ENDERECO VARCHAR(100),\n" +
+//    "TELEFONE VARCHAR(100),\n" +
+//    "DATA VARCHAR(100),\n" +
+//    "OBSERVACOES VARCHAR(100) )";
     
     public static String nome_tabela_formulario = "formularios_cadastros";
     public static String sql_tabela_formulario = 
@@ -35,6 +35,16 @@ public class SQL {
     "(START WITH 1, INCREMENT BY 1),\n" +
     "NOME VARCHAR(200), \n" +
     "HASH_FORMULARIO CLOB )";
+    
+    public static String nome_tabela_imagens = "imagens_formulario";
+    public static String sql_tabela_imagens = 
+    "CREATE table "+ nome_tabela_imagens +" (\n" +
+    "ID INTEGER NOT NULL \n" +
+    "PRIMARY KEY GENERATED ALWAYS AS IDENTITY \n" +
+    "(START WITH 1, INCREMENT BY 1),\n" +
+    "NOME_FORMULARIO VARCHAR(200), \n" +
+    "NOME_IMAGEM VARCHAR(200), \n" +
+    "IMAGEM BLOB )";
 
     public static String montar_sql_deletar_linha(String nome_da_tabela, int ID)
     {

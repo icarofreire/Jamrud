@@ -17,11 +17,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -58,7 +60,7 @@ public class Trei_big {
     
     public static void menu(){
         banco.criar_tabela_para_os_formularios();
-//        banco.executar_query(SQL.sql_tabela_local_arquivos);
+        banco.executar_query(SQL.sql_tabela_imagens);
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception unused) {
@@ -131,7 +133,7 @@ public class Trei_big {
      */
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
           
-        menu();
+//        menu();
 //        ajuda();
 //        editar();
         
@@ -173,58 +175,36 @@ public class Trei_big {
 //        debugar.exibir_tabelas();
 //        debugar.exibir_tabela(SQL.nome_tabela_formulario);
 //        debugar.exibir_tabela("mara");
+//        banco.executar_query( "DROP TABLE IMAGENS_FORMULARIO" );
         
-//        Vector<String> fila_componentes_em_form = new Vector<String>();
-//        
-//        fila_componentes_em_form.add( "JLabel" );
-//        fila_componentes_em_form.add( "JCheckBox" );
-//        fila_componentes_em_form.add( "JCheckBox" );
-//        fila_componentes_em_form.add( "JCheckBox" );
-//        fila_componentes_em_form.add( "JCheckBox" );
-//        fila_componentes_em_form.add( "JCheckBox" );
-//        fila_componentes_em_form.add( "JLabel" );
-//        fila_componentes_em_form.add( "JTextField" );
-//        fila_componentes_em_form.add( "JLabel" );
-//        fila_componentes_em_form.add( "JCheckBox" );
-//        fila_componentes_em_form.add( "JCheckBox" );
-//        fila_componentes_em_form.add( "JCheckBox" );
-//        fila_componentes_em_form.add( "JCheckBox" );
-//        fila_componentes_em_form.add( "JCheckBox" );
-//        fila_componentes_em_form.add( "JCheckBox" );
-//        fila_componentes_em_form.add( "JCheckBox" );
-//        fila_componentes_em_form.add( "JLabel" );
-//        fila_componentes_em_form.add( "JTextArea" );
-//        fila_componentes_em_form.add( "JLabel" );
-//        fila_componentes_em_form.add( "JCheckBox" );
-//        fila_componentes_em_form.add( "JCheckBox" );
-//        fila_componentes_em_form.add( "JCheckBox" );
-//        fila_componentes_em_form.add( "JCheckBox" );
-//        fila_componentes_em_form.add( "JCheckBox" );
-//        fila_componentes_em_form.add( "JCheckBox" );
-//        fila_componentes_em_form.add( "JCheckBox" );
-//        fila_componentes_em_form.add( "JCheckBox" );
-//        
-//        Vector<String> nova_fila = operacoes.remover_visinhos_duplicados(fila_componentes_em_form);
-//        debugar.exibir_array( nova_fila.toArray(new String[]{}));
-//        
-//        Vector<String> v2 = new Vector<String>();
-//        v2.add( "JCheckBox-1" );
-//        v2.add( "JCheckBox-2" );
-//        v2.add( "JCheckBox-3" );
-//        v2.add( "JCheckBox-4" );
-//        v2.add( "JCheckBox-5" );
-//        v2.add( "JCheckBox-6" );
-//        v2.add( "JCheckBox-7" );
-//        v2.add( "JCheckBox-8" );
-//        
-//        String token_dos_lugares = "JCheckBox";
-//        
-//        Vector<String> v1 = nova_fila;
-//        
-//        v1 = operacoes.modificar_dadosV1_por_dadosV2_por_token(token_dos_lugares, v1, v2);
-//        
-//        debugar.exibir_array(v1.toArray(new String[]{}));
+        String img = "/home/icaro/Imagens/img_19922_monica-bellucci.jpg";
+        banco.add_imagem("teste-img", img);
         
+        img = "/home/icaro/Imagens/Atheris-Squamigera.jpeg";
+        banco.add_imagem("teste-img", img);
+        
+        img = "/home/icaro/Imagens/Anton-Chigurh.jpg";
+        banco.add_imagem("teste-img", img);
+        
+        img = "/home/icaro/Imagens/GARRAFA.jpg";
+        banco.add_imagem("teste-img", img);
+        
+//        banco.executar_query(SQL.montar_sql_deletar_linha("IMAGENS_FORMULARIO", 101));
+//        debugar.exibir_tabela("IMAGENS_FORMULARIO");
+        
+//        Vector<HashMap<String, Object>> imagens = banco.obter_imagens_banco("teste-img");
+//        if( !imagens.isEmpty() ){
+//            for (int i = 0; i < imagens.size(); i++) {
+//                BufferedImage get = (BufferedImage) imagens.get(i).get("imagem");
+//                String nome = (String) imagens.get(i).get("nome");
+//                
+//                exibir_imagem exi = new exibir_imagem();
+//                exi.popup_imagem( nome, get );
+//            }
+//        }
+        
+//        new popup_lista_imagens("teste-img");
+
         
     }
 

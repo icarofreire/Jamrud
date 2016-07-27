@@ -110,17 +110,17 @@ public class painel_backup {
                 
                 if( !pasta_selecionada.isEmpty() )
                 {
-                    String sufixo_ateatorio = banco.gerar_nome(5);
-                    if(
-                        banco.executar_query("CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE(null,'" + 
-                                SQL.nome_tabela.toUpperCase() + 
-                                "','" + 
-                                pasta_selecionada + SQL.nome_tabela.toUpperCase() + "-" + sufixo_ateatorio +
-                                ".del',';','%',null)")
-                      )
-                    {
-                        aviso.mensagem_sucesso("Dados exportados com sucesso.");
-                    }
+//                    String sufixo_ateatorio = banco.gerar_nome(5);
+//                    if(
+//                        banco.executar_query("CALL SYSCS_UTIL.SYSCS_EXPORT_TABLE(null,'" + 
+//                                SQL.nome_tabela.toUpperCase() + 
+//                                "','" + 
+//                                pasta_selecionada + SQL.nome_tabela.toUpperCase() + "-" + sufixo_ateatorio +
+//                                ".del',';','%',null)")
+//                      )
+//                    {
+//                        aviso.mensagem_sucesso("Dados exportados com sucesso.");
+//                    }
                 }
                 
             }
@@ -150,13 +150,13 @@ public class painel_backup {
                 {
                     String nome_colunas = "NOME,ENDERECO,TELEFONE,DATA,OBSERVACOES";//<= para inserir;
                     String indice_colunas = "2,3,4,5,6";//<= para inserir;
-                    if(
-                        banco.executar_query("CALL SYSCS_UTIL.SYSCS_IMPORT_DATA_LOBS_FROM_EXTFILE(null, '" + SQL.nome_tabela.toUpperCase() + 
-                                "', '"+ nome_colunas +"', '"+ indice_colunas +"','" + arquivo_selecionado + "', ';','%',null,  0)")
-                      )
-                    {
-                        aviso.mensagem_sucesso("Dados importados com sucesso.");
-                    }
+//                    if(
+//                        banco.executar_query("CALL SYSCS_UTIL.SYSCS_IMPORT_DATA_LOBS_FROM_EXTFILE(null, '" + SQL.nome_tabela.toUpperCase() + 
+//                                "', '"+ nome_colunas +"', '"+ indice_colunas +"','" + arquivo_selecionado + "', ';','%',null,  0)")
+//                      )
+//                    {
+//                        aviso.mensagem_sucesso("Dados importados com sucesso.");
+//                    }
                 }
                 
             }

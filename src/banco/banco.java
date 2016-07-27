@@ -6,7 +6,14 @@
 package banco;
 
 import banco.*;
-import static banco.SQL.nome_tabela;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.sql.Blob;
+//import static banco.SQL.nome_tabela;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -15,8 +22,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSetMetaData;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -26,13 +37,13 @@ import javax.swing.table.DefaultTableModel;
 public class banco {
     
     private static String dbURL = "jdbc:derby:DefaultAddressBook;create=true;user=me;password=mine";
-    private static String nome_tabela = SQL.nome_tabela;
+//    private static String nome_tabela = SQL.nome_tabela;
     
     // jdbc Connection
     private static Connection conn = null;
     private static Statement stmt = null;
     
-    private static String sql_tabela = SQL.sql_tabela;
+//    private static String sql_tabela = SQL.sql_tabela;
     public static Vector<String> nome_colunas_consulta;
     
     public static void criar_tabela_para_os_formularios()
@@ -143,19 +154,19 @@ public class banco {
         return flag;
     }
     
-    private static void insertRestaurants(String[] colunas, String[] valores)
-    {
-        try
-        {
-            stmt = conn.createStatement();
-            stmt.execute( SQL.montar_sql_insert(SQL.nome_tabela, colunas, valores) );
-            stmt.close();
-        }
-        catch (SQLException sqlExcept)
-        {
-            sqlExcept.printStackTrace();
-        }
-    }
+//    private static void insertRestaurants(String[] colunas, String[] valores)
+//    {
+//        try
+//        {
+//            stmt = conn.createStatement();
+//            stmt.execute( SQL.montar_sql_insert(SQL.nome_tabela, colunas, valores) );
+//            stmt.close();
+//        }
+//        catch (SQLException sqlExcept)
+//        {
+//            sqlExcept.printStackTrace();
+//        }
+//    }
     
     public static Vector<Vector<String>> obter_dados_da_tabela(String nome_da_tabela)
     {
@@ -443,6 +454,71 @@ public class banco {
     public static void excluir_formularios_criados()
     {
         banco.executar_query( "DELETE FROM " + SQL.nome_tabela_formulario.toUpperCase() );
+    }
+    
+    public static void add_imagem(String nome_formulario, String arquivo_imagem) throws IOException
+    {
+        conectar_banco();
+        PreparedStatement ps;
+        try {
+            File arq_img = new File( arquivo_imagem );
+            ps = conn.prepareStatement("INSERT INTO " + SQL.nome_tabela_imagens.toUpperCase() + "(NOME_FORMULARIO,NOME_IMAGEM,IMAGEM) " + "VALUES(?,?,?)");
+            ps.setString(1, nome_formulario);
+            ps.setString(2, arq_img.getName());
+            
+            Blob blob = conn.createBlob();
+            ImageIcon ii = new ImageIcon(arquivo_imagem);
+
+            ObjectOutputStream oos;
+            oos = new ObjectOutputStream(blob.setBinaryStream(1));
+            oos.writeObject(ii);
+            oos.close();
+            ps.setBlob(3, blob);
+            ps.execute();
+            blob.free();
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(banco.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static Vector<HashMap<String, Object>> obter_imagens_banco(String nome_do_formulario) throws IOException, ClassNotFoundException
+    {
+        Vector<HashMap<String, Object>> imagens = new Vector<HashMap<String, Object>>();
+        conectar_banco();
+        ResultSet rs;
+        try {
+            Statement s = conn.createStatement();
+            rs = s.executeQuery("SELECT * FROM "+ SQL.nome_tabela_imagens.toUpperCase() +" WHERE NOME_FORMULARIO = '"+ nome_do_formulario +"'");
+            while (rs.next())
+            {
+                Blob photo = rs.getBlob(4);
+                ObjectInputStream ois = null;
+                ois = new ObjectInputStream(photo.getBinaryStream());
+
+                ImageIcon image = (ImageIcon) ois.readObject();
+                BufferedImage bi = new BufferedImage(
+                        image.getIconWidth(),
+                        image.getIconHeight(),
+                        BufferedImage.TYPE_INT_RGB
+                );
+
+                Graphics g = bi.createGraphics();
+                image.paintIcon(null, g, 0, 0);
+                g.dispose();
+                
+                HashMap<String, Object> mapa = new HashMap<String, Object>();
+                mapa.put("imagem", bi);
+                mapa.put("nome", rs.getString(3) );
+                mapa.put(rs.getString(3), bi );
+                mapa.put("id", rs.getString(1) );
+                imagens.add(mapa);
+            }
+            s.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(banco.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return imagens;
     }
     
 }
