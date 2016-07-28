@@ -204,18 +204,21 @@ public class Trei_big {
 //        }
         
 //        new popup_lista_imagens("teste-img");
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception unused) {
-            // Nothing can be done, so just ignore it.
-        }
-        //... Start up GUI.
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new popup_lista_imagens("teste-img");
-            }
-        });
+//        try {
+//            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//        } catch (Exception unused) {
+//            // Nothing can be done, so just ignore it.
+//        }
+//        //... Start up GUI.
+//        SwingUtilities.invokeLater(new Runnable() {
+//            public void run() {
+//                new popup_lista_imagens("teste-img");
+//            }
+//        });
 
+//        String dado = "/home/icaro/Imagens/img_19922_monica-bellucci.jpg";
+//        System.out.println( operacoes.se_arquivo_de_imagem(dado) );
+        
         
     }
 

@@ -34,6 +34,7 @@ import javax.swing.UIManager;
 import menu_modulos.obter_dados_formulario;
 import trei_big.aviso;
 import trei_big.debugar;
+import trei_big.operacoes;
 import trei_big.operacoes_painel;
 
 /**
@@ -130,6 +131,13 @@ public class painel_selecionar_formulario {
                                         String[] titulos = dados_form.getTitulos().toArray(new String[]{});
                                         String[] dados = dados_form.getDados().toArray(new String[]{});
                                         String sql_inserir = SQL.montar_sql_insert(nome_tabela_cadastrar, titulos, dados);
+                                        
+//                                        for (int i = 0; i < dados.length; i++) {
+//                                            String dado = dados[i];
+//                                            if( operacoes.se_arquivo_de_imagem(dado) ){
+//                                               //... 
+//                                            }
+//                                        }
                                         
                                         if( (sql_inserir != null) && banco.executar_query(sql_inserir) ){
                                             aviso.mensagem_sucesso("Informações inseridas com sucesso!");

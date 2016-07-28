@@ -7,6 +7,7 @@ package trei_big;
 
 import elementos.prefixos;
 import java.awt.Component;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -174,6 +175,27 @@ public class operacoes {
             }  
         }
         return v1;
+    }
+    
+    public static boolean se_arquivo_de_imagem(String dado)
+    {
+        boolean f = false;
+        File arq = new File(dado);
+        if( arq.exists() && arq.isFile() ){
+            int i = dado.lastIndexOf('.');
+            if ( i > 0 ) {
+                String extensao = dado.substring(i+1);
+                if( 
+                        extensao.equalsIgnoreCase("jpg") ||
+                        extensao.equalsIgnoreCase("jpeg") ||
+                        extensao.equalsIgnoreCase("png") ||
+                        extensao.equalsIgnoreCase("gif")
+                  ){
+                    f = true;
+                }
+            }
+        }
+        return f;
     }
     
 }
